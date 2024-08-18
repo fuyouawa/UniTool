@@ -27,7 +27,7 @@ namespace UniTool.Utils
         }
     }
 
-    public abstract class Singleton<T> where T : Singleton<T>, new()
+    public class Singleton<T> where T : Singleton<T>
     {
         private static readonly Lazy<T> _instance = new Lazy<T>(SingletonCreator.CreateSingleton<T>);
 
@@ -35,8 +35,8 @@ namespace UniTool.Utils
     }
 
 
-    public abstract class MonoSingleton<T> : MonoBehaviour
-        where T : MonoSingleton<T>, new()
+    public class MonoSingleton<T> : MonoBehaviour
+        where T : MonoSingleton<T>
     {
         private static T _instance;
 
