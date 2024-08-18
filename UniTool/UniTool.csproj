@@ -47,19 +47,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\UniToolConfig.cs" />
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Extension\GameObjectExtension.cs" />
     <Compile Include="Extension\LayerExtension.cs" />
     <Compile Include="Extension\ReflectExtension.cs" />
     <Compile Include="Graphic\GizmosHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="internal\DebugHelper.cs" />
     <Compile Include="Utils\LayerHelper.cs" />
     <Compile Include="Utils\MathHelper.cs" />
     <Compile Include="Utils\Physics2DHelper.cs" />
     <Compile Include="Extension\VectorExtension.cs" />
     <Compile Include="Utils\Singleton.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Config\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Reflection;
-using UniTool.Config;
-using UnityEngine.SceneManagement;
+using UniTool.Internal;
 using UnityEngine;
 
 namespace UniTool.Utils
 {
+    public interface ISingleton
+    {
+        /// <summary>
+        /// 单例初始化(继承当前接口的类都需要实现该方法)
+        /// </summary>
+        void OnSingletonInit();
+    }
+
     internal class SingletonCreator
     {
         public static T CreateSingleton<T>() where T : class
@@ -15,14 +22,39 @@ namespace UniTool.Utils
 
             var ctor = Array.Find(ctorInfos, c => c.GetParameters().Length == 0)
                        ?? throw new Exception($"单例({type})必须要有一个非public的无参构造函数!");
-            if (UniToolConfig.DebugMode)
+
+            DebugHelper.AssertCall(() =>
             {
                 var publicCtorInfos = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
-                if (publicCtorInfos.Length != 0)
-                    throw new Exception($"单例({type})不能有public构造函数!");
-            }
+                return publicCtorInfos.Length == 0;
+            }, $"单例({type})不能有public构造函数!");
+
             var inst = ctor.Invoke(null) as T;
-            System.Diagnostics.Debug.Assert(inst != null);
+            DebugHelper.Assert(inst != null);
+            return inst;
+        }
+
+        public static T CreateMonoSingleton<T>() where T : Component, ISingleton
+        {
+            if (!Application.isPlaying)
+                return null;
+
+            var instances = UnityEngine.Object.FindObjectsOfType<T>();
+            if (instances.Length > 1)
+            {
+                throw new Exception($"Mono单例({nameof(T)})在场景中存在的实例只能有1个!");
+            }
+            if (instances.Length == 1)
+            {
+                instances[0].OnSingletonInit();
+                return instances[0];
+            }
+
+            var obj = new GameObject(nameof(T));
+            UnityEngine.Object.DontDestroyOnLoad(obj);
+            var inst = obj.AddComponent<T>();
+
+            inst.OnSingletonInit();
             return inst;
         }
     }
@@ -35,7 +67,7 @@ namespace UniTool.Utils
     }
 
 
-    public class MonoSingleton<T> : MonoBehaviour
+    public class MonoSingleton<T> : MonoBehaviour, ISingleton
         where T : MonoSingleton<T>
     {
         private static T _instance;
@@ -46,22 +78,26 @@ namespace UniTool.Utils
             {
                 if (_instance == null)
                 {
-                    var obj = new GameObject(nameof(T));
-                    SceneManager.MoveGameObjectToScene(obj, SceneManager.GetActiveScene());
-                    _instance = obj.AddComponent<T>();
+                    _instance = SingletonCreator.CreateMonoSingleton<T>();
                 }
                 return _instance;
             }
         }
 
-        protected virtual void Awake()
+        public virtual void OnSingletonInit()
         {
-            if (_instance != null)
-            {
-                Destroy(_instance.gameObject);
-            }
+        }
 
-            _instance = this as T;
+        protected virtual void OnApplicationQuit()
+        {
+            if (_instance == null) return;
+            Destroy(_instance.gameObject);
+            _instance = null;
+        }
+
+        protected virtual void OnDestroy()
+        {
+            _instance = null;
         }
     }
 }
