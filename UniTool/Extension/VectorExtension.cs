@@ -27,9 +27,30 @@ namespace UniTool.Extension
             return new Vector2(newX, newY);
         }
 
-        public static bool IsVertical(this Vector2 v)
+        public static Vector2 ToCrossDirection(this Vector2 v, float precision = 0.1f)
         {
             v = v.normalized;
+            var absX = Mathf.Abs(v.x);
+            var absY = Mathf.Abs(v.y);
+
+            if (absX < precision && absY < precision)
+                return Vector2.zero;
+
+            if (absX < precision)
+            {
+                return v.y > precision ? Vector2.up : Vector2.down;
+            }
+
+            if (absY < precision)
+            {
+                return v.x > precision ? Vector2.right : Vector2.left;
+            }
+            return Vector2.zero;
+        }
+
+        public static bool IsVertical(this Vector2 v)
+        {
+            v = v.ToCrossDirection();
             return v == Vector2.up || v == Vector2.down;
         }
     }

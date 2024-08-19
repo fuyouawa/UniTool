@@ -42,7 +42,7 @@ namespace UniTool.Utils
             var instances = UnityEngine.Object.FindObjectsOfType<T>();
             if (instances.Length > 1)
             {
-                throw new Exception($"Mono单例({nameof(T)})在场景中存在的实例只能有1个!");
+                throw new Exception($"Mono单例({typeof(T).Name})在场景中存在的实例只能有1个!");
             }
             if (instances.Length == 1)
             {
@@ -50,7 +50,7 @@ namespace UniTool.Utils
                 return instances[0];
             }
 
-            var obj = new GameObject(nameof(T));
+            var obj = new GameObject(typeof(T).Name);
             UnityEngine.Object.DontDestroyOnLoad(obj);
             var inst = obj.AddComponent<T>();
 

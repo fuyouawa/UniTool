@@ -47,6 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\UniToolConfig.cs" />
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Extension\GameObjectExtension.cs" />
     <Compile Include="Extension\LayerExtension.cs" />
@@ -60,8 +61,6 @@
     <Compile Include="Extension\VectorExtension.cs" />
     <Compile Include="Utils\Singleton.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Config\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
