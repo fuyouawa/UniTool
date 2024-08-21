@@ -2,9 +2,8 @@
 using System;
 using UnityEngine;
 using System.Linq;
-using UniTool.Helper;
 
-namespace UniTool.Utils
+namespace UniTool.Helper
 {
     public class RaycastHit2DEqualityComparer : IEqualityComparer<RaycastHit2D>
     {

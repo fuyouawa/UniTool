@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace UniTool.Helper
+namespace UniTool.Extension
 {
-    public static class LayerHelper
+    public static class LayerExtension
     {
         public static bool Contains(this LayerMask mask, int layer)
         {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UniTool.Extension;
 using UniTool.Helper;
 using UnityEngine;
 
@@ -134,8 +135,9 @@ namespace UniTool.Event
         static void InitializeStatics()
         {
             _handlers = new Dictionary<Type, Delegate>();
+
         }
-    
+
         static EventManager()
         {
             _handlers = new Dictionary<Type, Delegate>();

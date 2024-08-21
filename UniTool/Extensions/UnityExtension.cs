@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace UniTool.Helper
+namespace UniTool.Extension
 {
-    public static class UnityHelper
+    public static class UnityExtension
     {
         public static T GetOrAddComponent<T>(this GameObject obj) where T : Component
         {
