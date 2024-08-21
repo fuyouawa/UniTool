@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using UniTool.Internal;
+using UniTool.Helper;
 using UnityEngine;
 
 namespace UniTool.Utils

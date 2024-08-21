@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UniTool.Extension;
+using UniTool.Helper;
 using UnityEngine;
 
 namespace UniTool.Event
@@ -172,7 +171,7 @@ namespace UniTool.Event
                 var p = h.GetParameters();
                 if (p.Length != 1)
                 {
-                    throw new ArgumentException($"事件处理器({h.GetSignature()})的参数数量必须是1!");
+                    throw new ArgumentException($"事件处理器({ReflectHelper.GetSignature(h)})的参数数量必须是1!");
                 }
 
                 var et = p[0].ParameterType;

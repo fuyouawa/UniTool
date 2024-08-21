@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniTool", "UniTool\UniTool.csproj", "{E5801885-43EB-4830-BB78-5B12F9CAD6E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniTool.Editor", "UniTool.Editor\UniTool.Editor.csproj", "{BF6F5F39-CA29-44CD-9575-8BF92DD1C933}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E5801885-43EB-4830-BB78-5B12F9CAD6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5801885-43EB-4830-BB78-5B12F9CAD6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5801885-43EB-4830-BB78-5B12F9CAD6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF6F5F39-CA29-44CD-9575-8BF92DD1C933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6F5F39-CA29-44CD-9575-8BF92DD1C933}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6F5F39-CA29-44CD-9575-8BF92DD1C933}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6F5F39-CA29-44CD-9575-8BF92DD1C933}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

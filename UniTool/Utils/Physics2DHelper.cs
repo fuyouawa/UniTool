@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
-using UniTool.Extension;
 using UnityEngine;
 using System.Linq;
+using UniTool.Helper;
 
 namespace UniTool.Utils
 {
@@ -81,7 +81,7 @@ namespace UniTool.Utils
 
             var total = new List<RaycastHit2D>();
 
-            if (direction.IsVertical())
+            if (VectorHelper.IsVertical(direction))
             {
                 total.Add(DirectedSegmentCast(p2, p3, direction, layerMask));
                 total.Add(DirectedSegmentCast(p4, p1, direction, layerMask));
