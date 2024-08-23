@@ -48,7 +48,7 @@ namespace UniTool.PropertyPicker
             var c = GetTargetComponent();
             if (c == null)
                 return null;
-            _targetMember = c.GetType().GetMethods(BindingFlagsHelper.AllInstance)
+            _targetMember = c.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 .FirstOrDefault(m => ReflectHelper.GetSignature(m) == TargetMemberName);
 
             return _targetMember;
@@ -102,7 +102,7 @@ namespace UniTool.PropertyPicker
             if (c == null)
                 return total;
 
-            total.AddRange(c.GetType().GetMembers(BindingFlagsHelper.AllInstance)
+            total.AddRange(c.GetType().GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(MemberFilter)
                 .Select(m => new ValueDropdownItem<string>(
                     GetMemberValueDropdownName(m),

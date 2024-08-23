@@ -60,8 +60,9 @@
     <Compile Include="Extensions\UnityExtension.cs" />
     <Compile Include="Extensions\VectorExtension.cs" />
     <Compile Include="Graphic\GizmosHelper.cs" />
+    <Compile Include="Helper\AppDomainHelper.cs" />
     <Compile Include="Helper\BindingFlagsHelper.cs" />
-    <Compile Include="Helper\DebugHelper.cs" />
+    <Compile Include="Internal\DebugHelper.cs" />
     <Compile Include="Helper\MathHelper.cs" />
     <Compile Include="Helper\Physics2DHelper.cs" />
     <Compile Include="Helper\ReflectHelper.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Utils\MonoSingleton.cs" />
     <Compile Include="Utils\Singleton.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

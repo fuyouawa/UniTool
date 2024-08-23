@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    [CustomFeedback("GameObject/Instantiate", "实例化一个GameObject")]
+    [FeedbackHelper("实例化一个GameObject")]
+    [AddFeedbackMenu("GameObject/Instantiate")]
     public class FeedbackGameObjectInstantiate : AbstractFeedback
     {
         [FoldoutGroup("Instantiate")]

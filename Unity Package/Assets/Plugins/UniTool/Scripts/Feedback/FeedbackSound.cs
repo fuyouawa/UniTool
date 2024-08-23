@@ -7,7 +7,8 @@ using Random = UnityEngine.Random;
 
 namespace UniTool.Feedbacks
 {
-    [CustomFeedback("Audio/Sound", "配置一个声音用于播放, 在初始化时会自动创建对应的AudioSource")]
+    [FeedbackHelper("配置一个声音用于播放, 在初始化时会自动创建对应的AudioSource")]
+    [AddFeedbackMenu("Audio/Sound")]
     public class FeedbackSound : AbstractFeedback
     {
         public enum PlayMethods { Cached, OnDemand, Pool }

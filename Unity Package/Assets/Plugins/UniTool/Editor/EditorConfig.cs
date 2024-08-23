@@ -1,4 +1,4 @@
-﻿using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities.Editor;
 using System;
 using UnityEngine;
@@ -66,6 +66,8 @@ namespace UniTool.Editor
         public int MessageBoxFontSize = 12;
         [LabelText("Margin")]
         public RectOffset MessageBoxMargin;
+        [LabelText("Padding")]
+        public RectOffset MessageBoxPadding;
 
         public GUIStyle GetMessageBoxStyle()
         {
@@ -73,7 +75,8 @@ namespace UniTool.Editor
             {
                 font = MessageBoxFont,
                 fontSize = MessageBoxFontSize,
-                margin = MessageBoxMargin
+                margin = MessageBoxMargin,
+                padding = MessageBoxPadding
             };
         }
     }

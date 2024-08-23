@@ -6,7 +6,8 @@ using UnityEngine;
 
  namespace UniTool.Feedbacks
 {
-    [CustomFeedback("Light/Control", "光照控制")]
+    [FeedbackHelper("光照控制")]
+    [AddFeedbackMenu("Light/Control")]
     public class FeedbackLightControl : AbstractFeedback
     {
         public enum Modes { OverTime, Instant }

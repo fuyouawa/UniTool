@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UniTool.Utilities
 {
-    public static class DebugHelper
+    internal static class DebugHelper
     {
         public static void Assert(bool condition, string message)
         {

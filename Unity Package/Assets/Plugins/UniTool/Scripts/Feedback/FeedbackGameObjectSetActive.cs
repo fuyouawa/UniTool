@@ -1,11 +1,10 @@
-using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace UniTool.Feedbacks
 {
-    [CustomFeedback("GameObject/Set Active", "设置GameObject激活状态")]
+    [FeedbackHelper("设置GameObject激活状态")]
+    [AddFeedbackMenu("GameObject/Set Active")]
     public class FeedbackGameObjectSetActive : AbstractFeedback
     {
         [FoldoutGroup("Set Active")]

@@ -189,9 +189,9 @@ namespace UniTool.Utilities
         {
             if (_addListener == null)
             {
-                _addListener = typeof(EventManager).GetMethod("AddListener", BindingFlags.Static | BindingFlags.NonPublic);
+                _addListener = typeof(EventManager).GetMethod(nameof(AddListener), BindingFlagsHelper.NoPublicStatic);
             }
-            System.Diagnostics.Debug.Assert(_addListener != null);
+            DebugHelper.Assert(_addListener != null);
 
             var m = _addListener.MakeGenericMethod(eventType);
             m.Invoke(null, new object[] { handler });
@@ -208,9 +208,9 @@ namespace UniTool.Utilities
         {
             if (_removeListener == null)
             {
-                _removeListener = typeof(EventManager).GetMethod("RemoveListener", BindingFlags.Static | BindingFlags.NonPublic);
+                _removeListener = typeof(EventManager).GetMethod(nameof(RemoveListener), BindingFlagsHelper.NoPublicStatic);
             }
-            System.Diagnostics.Debug.Assert(_removeListener != null);
+            DebugHelper.Assert(_removeListener != null);
 
             var m = _removeListener.MakeGenericMethod(eventType);
             m.Invoke(null, new object[] { handler });
@@ -234,13 +234,13 @@ namespace UniTool.Utilities
 
     public struct CustomUnRegister : IUnRegister
     {
-        private Action _onUnRegister { get; set; }
-        public CustomUnRegister(Action onUnRegister) => _onUnRegister = onUnRegister;
+        private Action OnUnRegister { get; set; }
+        public CustomUnRegister(Action onUnRegister) => OnUnRegister = onUnRegister;
 
         public void UnRegister()
         {
-            _onUnRegister.Invoke();
-            _onUnRegister = null;
+            OnUnRegister.Invoke();
+            OnUnRegister = null;
         }
     }
 

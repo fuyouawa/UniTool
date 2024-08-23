@@ -3,7 +3,8 @@ using UniTool.PropertyPicker;
 
 namespace UniTool.Feedbacks
 {
-    [CustomFeedback("GameObject/Invoke Method", "调用GameObject上的一个函数")]
+    [FeedbackHelper("调用GameObject上的一个函数")]
+    [AddFeedbackMenu("GameObject/Invoke Method")]
     public class FeedbackGameObjectInvokeMethod : AbstractFeedback
     {
         [Required]

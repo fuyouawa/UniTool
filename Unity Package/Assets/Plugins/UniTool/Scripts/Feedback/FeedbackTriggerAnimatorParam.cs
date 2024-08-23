@@ -6,7 +6,8 @@ using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    [CustomFeedback("Animator/Trigger Parameter", "触发指定Animator的Trigger参数")]
+    [FeedbackHelper("触发指定Animator的Trigger参数")]
+    [AddFeedbackMenu("Animator/Trigger Parameter")]
     public class FeedbackTriggerAnimatorParam : AbstractFeedback
     {
         [FoldoutGroup("Trigger Param")]

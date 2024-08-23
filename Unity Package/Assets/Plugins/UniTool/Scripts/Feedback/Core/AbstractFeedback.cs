@@ -8,19 +8,22 @@ using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    public class CustomFeedbackAttribute : Attribute
+    public class AddFeedbackMenuAttribute : Attribute
     {
-        public string Path;
-        public string Message;
-        public CustomFeedbackAttribute(string path)
-        {
-            Path = path;
-            Message = string.Empty;
-        }
+        public string Path { get; }
 
-        public CustomFeedbackAttribute(string path, string message)
+        public AddFeedbackMenuAttribute(string path)
         {
             Path = path;
+        }
+    }
+
+    public class FeedbackHelperAttribute : Attribute
+    {
+        public string Message { get; }
+
+        public FeedbackHelperAttribute(string message)
+        {
             Message = message;
         }
     }
@@ -237,7 +240,7 @@ namespace UniTool.Feedbacks
             {
                 if (string.IsNullOrEmpty(_message))
                 {
-                    var attr = GetType().GetCustomAttribute<CustomFeedbackAttribute>();
+                    var attr = GetType().GetCustomAttribute<FeedbackHelperAttribute>();
                     if (attr != null)
                     {
                         _message = attr.Message;

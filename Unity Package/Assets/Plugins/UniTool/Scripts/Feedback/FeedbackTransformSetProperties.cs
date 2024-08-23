@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    [CustomFeedback("Transform/Set Properties", "修改Transform的各种属性")]
+    [FeedbackHelper("修改Transform的各种属性")]
+    [AddFeedbackMenu("Transform/Set Properties")]
     public class FeedbackTransformSetProperties : AbstractFeedback
     {
         [FoldoutGroup("Binding")]

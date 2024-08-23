@@ -238,15 +238,6 @@ namespace UniTool.Feedbacks
             }
         }
 
-        private void OnValidate()
-        {
-            foreach (var feedback in FeedbackList)
-            {
-                feedback.Setup(this);
-                feedback.OnValidate();
-            }
-        }
-
         [ButtonGroup]
         [DisableIf("@IsInitialized || !UnityEditor.EditorApplication.isPlaying")]
         private void TestInit()
@@ -281,14 +272,9 @@ namespace UniTool.Feedbacks
         static Feedbacks()
         {
             s_allFeedbackTypes = (
-                from a in AppDomain.CurrentDomain.GetAssemblies()
-                where !a.FullName.StartsWith("UnityEngine.") &&
-                      !a.FullName.StartsWith("UnityEditor.") &&
-                      !a.FullName.StartsWith("Unity.") &&
-                      !a.FullName.StartsWith("System.")
-                from t in a.GetTypes()
+                from t in AppDomainHelper.GetCustomTypes(AppDomain.CurrentDomain)
                 where typeof(AbstractFeedback).IsAssignableFrom(t) && !t.IsAbstract &&
-                      t.HasCustomAttribute<CustomFeedbackAttribute>()
+                      t.HasCustomAttribute<AddFeedbackMenuAttribute>()
                 select t).ToDictionary(x => x.FullName, y => y);
 
             s_allFeedbackDropdownItems = new ValueDropdownList<AbstractFeedback> { { "None", null } };
@@ -297,7 +283,7 @@ namespace UniTool.Feedbacks
             {
                 var inst = kv.Value.CreateInstance<AbstractFeedback>();
                 Debug.Assert(inst != null, $"创建`{kv.Value.Name}`的实例失败");
-                var attr = kv.Value.GetCustomAttribute<CustomFeedbackAttribute>();
+                var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuAttribute>();
                 inst.Label = attr.Path.Split('/').Last();
                 s_allFeedbackDropdownItems.Add($"{attr.Path}", inst);
             }

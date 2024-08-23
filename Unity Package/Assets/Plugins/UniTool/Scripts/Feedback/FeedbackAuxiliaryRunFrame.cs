@@ -3,7 +3,8 @@ using Sirenix.OdinInspector;
 
 namespace UniTool.Feedbacks
 {
-    [CustomFeedback("Auxiliary/Run Frame", "运行指定帧数")]
+    [FeedbackHelper("运行指定帧数")]
+    [AddFeedbackMenu("Auxiliary/Run Frame")]
     public class FeedbackAuxiliaryRunFrame : AbstractFeedback
     {
         [FoldoutGroup("Run Frame")]

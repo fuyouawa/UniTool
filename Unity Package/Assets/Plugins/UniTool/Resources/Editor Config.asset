@@ -19,3 +19,8 @@ MonoBehaviour:
     m_Right: 6
     m_Top: 4
     m_Bottom: 4
+  MessageBoxPadding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 6
+    m_Bottom: 6
