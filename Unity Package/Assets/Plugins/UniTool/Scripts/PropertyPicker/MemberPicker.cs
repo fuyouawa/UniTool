@@ -68,7 +68,7 @@ namespace UniTool.PropertyPicker
         //     }
         //     return $"{TargetComponent.GetType().Name}.{member.Name}[{member.MemberType}]";
         // }
-
+#if UNITY_EDITOR
         protected virtual void OnTargetComponentNameChanged()
         {
             _targetComponent = null;
@@ -124,5 +124,6 @@ namespace UniTool.PropertyPicker
             }
             return name;
         }
+#endif
     }
 }

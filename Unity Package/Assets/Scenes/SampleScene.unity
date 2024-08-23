@@ -344,7 +344,7 @@ MonoBehaviour:
         Assembly-CSharp-firstpass]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
       Data: 1|UniTool.Feedbacks.FeedbackSound, Assembly-CSharp-firstpass
@@ -457,42 +457,6 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: SpreadCurve
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 3|UniTool.Feedbacks.FeedbackEventUniToolEvent, Assembly-CSharp-firstpass
-    - Name: Label
-      Entry: 1
-      Data: UniTool Event
-    - Name: Enable
-      Entry: 5
-      Data: true
-    - Name: DelayBeforePlay
-      Entry: 4
-      Data: 0
-    - Name: Blocking
-      Entry: 5
-      Data: false
-    - Name: RepeatForever
-      Entry: 5
-      Data: false
-    - Name: AmountOfRepeat
-      Entry: 3
-      Data: 1
-    - Name: DelayBetweenRepeats
-      Entry: 4
-      Data: 0
-    - Name: StopAfterDuration
-      Entry: 5
-      Data: true
-    - Name: FullName
-      Entry: 6
-      Data: 
-    - Name: EventObject
       Entry: 6
       Data: 
     - Name: 

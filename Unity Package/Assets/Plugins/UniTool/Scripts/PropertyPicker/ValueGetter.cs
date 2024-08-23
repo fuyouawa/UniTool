@@ -24,6 +24,7 @@ namespace UniTool.PropertyPicker
             }
         }
 
+#if UNITY_EDITOR
         protected override bool MemberFilter(MemberInfo member)
         {
             if (!ReflectHelper.TryGetValueType(member, out var type))
@@ -34,6 +35,7 @@ namespace UniTool.PropertyPicker
                 return method.GetParameters().Length == 0 && !method.IsSpecialName;
             return true;
         }
+#endif
     }
 
     [Serializable]
@@ -44,6 +46,7 @@ namespace UniTool.PropertyPicker
             return (TReturn)base.GetRawValue();
         }
 
+#if UNITY_EDITOR
         protected override bool MemberFilter(MemberInfo member)
         {
             if (base.MemberFilter(member) && ReflectHelper.TryGetValueType(member, out var type))
@@ -52,5 +55,6 @@ namespace UniTool.PropertyPicker
             }
             return false;
         }
+#endif
     }
 }

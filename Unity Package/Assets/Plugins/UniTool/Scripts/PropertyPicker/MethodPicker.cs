@@ -15,16 +15,6 @@ namespace UniTool.PropertyPicker
         [ListDrawerSettings(IsReadOnly = true)]
         public List<VisualObject> Parameters = new List<VisualObject>();
 
-        private bool HideParameters
-        {
-            get
-            {
-                var m = GetTargetMethod();
-                if (m == null) return true;
-                return m.GetParameters().Length == 0;
-            }
-        }
-
         public MethodInfo GetTargetMethod() => GetTargetMember() as MethodInfo;
 
         public bool TryInvoke(out object returnValue)
@@ -36,12 +26,24 @@ namespace UniTool.PropertyPicker
             return true;
         }
 
+#if UNITY_EDITOR
         protected override bool MemberFilter(MemberInfo member)
         {
             if (member.MemberType != MemberTypes.Method)
                 return false;
             var method = (MethodInfo)member;
             return method.GetParameters().All(p => VisualObject.IsAcceptedType(p.ParameterType));
+        }
+
+
+        private bool HideParameters
+        {
+            get
+            {
+                var m = GetTargetMethod();
+                if (m == null) return true;
+                return m.GetParameters().Length == 0;
+            }
         }
 
         protected override string GetMemberValueDropdownName(MemberInfo member)
@@ -82,5 +84,6 @@ namespace UniTool.PropertyPicker
             base.OnTargetMemberNameChanged();
             OnInspectorInit();
         }
+#endif
     }
 }
