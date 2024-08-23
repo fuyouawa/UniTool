@@ -5,7 +5,7 @@ using NotImplementedException = System.NotImplementedException;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("GameObject/Set Active", "ÉèÖÃGameObject¼¤»î×´Ì¬")]
+    [CustomFeedback("GameObject/Set Active", "è®¾ç½®GameObjectæ¿€æ´»çŠ¶æ€")]
     public class FeedbackGameObjectSetActive : AbstractFeedback
     {
         [FoldoutGroup("Set Active")]

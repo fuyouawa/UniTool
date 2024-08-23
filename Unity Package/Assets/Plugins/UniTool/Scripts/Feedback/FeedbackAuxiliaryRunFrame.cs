@@ -1,15 +1,15 @@
-﻿using System.Collections;
+using System.Collections;
 using Sirenix.OdinInspector;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Auxiliary/Run Frame", "运行指定帧数")]
+    [CustomFeedback("Auxiliary/Run Frame", "运行指定帧数")]
     public class FeedbackAuxiliaryRunFrame : AbstractFeedback
     {
         [FoldoutGroup("Run Frame")]
         public float Frame;
 
-        protected override IEnumerator Pause => RunFrameCo();
+        protected override IEnumerator FeedbackPlayPauser => RunFrameCo();
 
         private IEnumerator RunFrameCo()
         {

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Particle/ParticlePlay", "播放场景中指定的粒子系统")]
+    [CustomFeedback("Particle/ParticlePlay", "播放场景中指定的粒子系统")]
     public class FeedbackParticlePlay : AbstractFeedback
     {
         public enum Modes { Play, Stop, Pause, Emit }

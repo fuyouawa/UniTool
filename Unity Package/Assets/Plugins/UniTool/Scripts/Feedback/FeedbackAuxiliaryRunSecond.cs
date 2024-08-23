@@ -1,8 +1,8 @@
-﻿using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Auxiliary/Run Second", "运行指定时间(秒)")]
+    [CustomFeedback("Auxiliary/Run Second", "运行指定时间(秒)")]
     public class FeedbackAuxiliaryRunSecond : AbstractFeedback
     {
         [FoldoutGroup("Run Second")]

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Sprite/Frame Animation", "在指定的SpriteRenderer上循环赋值图集中的精灵, 实现帧动画的效果")]
+    [CustomFeedback("Sprite/Frame Animation", "在指定的SpriteRenderer上循环赋值图集中的精灵, 实现帧动画的效果")]
     public class FeedbackSpriteFrameAnimation : AbstractFeedback
     {
         public enum DelayModes
@@ -44,7 +44,7 @@ namespace UniTool.Feedbacks
             }
         }
 
-        protected override IEnumerator Pause => PlayAtlasCo();
+        protected override IEnumerator FeedbackPlayPauser => PlayAtlasCo();
 
         [FoldoutGroup("Frame Animation")]
         public SpriteRenderer SpriteRenderer;

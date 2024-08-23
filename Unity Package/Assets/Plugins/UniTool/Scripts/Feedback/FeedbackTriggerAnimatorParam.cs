@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Animator/Trigger Parameter", "触发指定Animator的Trigger参数")]
+    [CustomFeedback("Animator/Trigger Parameter", "触发指定Animator的Trigger参数")]
     public class FeedbackTriggerAnimatorParam : AbstractFeedback
     {
         [FoldoutGroup("Trigger Param")]
@@ -49,7 +49,7 @@ namespace UniTool.Feedbacks
             if (!TriggerLikeBool)
             {
                 TargetAnimator.SetTrigger(ParamId);
-                ExtraAnimators.Foreach(x => x.SetTrigger(ParamId));
+                ExtraAnimators.ForEach(x => x.SetTrigger(ParamId));
             }
             else
             {
@@ -64,10 +64,10 @@ namespace UniTool.Feedbacks
         protected virtual IEnumerator TriggerLikeBoolCo()
         {
             TargetAnimator.SetBool(ParamId, true);
-            ExtraAnimators.Foreach(x => x.SetBool(ParamId, true));
+            ExtraAnimators.ForEach(x => x.SetBool(ParamId, true));
             yield return null;
             TargetAnimator.SetBool(ParamId, false);
-            ExtraAnimators.Foreach(x => x.SetBool(ParamId, false));
+            ExtraAnimators.ForEach(x => x.SetBool(ParamId, false));
         }
     }
 }

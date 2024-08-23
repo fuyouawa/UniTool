@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Audio/Audio Source", "播放场景中指定的AudioSource")]
+    [CustomFeedback("Audio/Audio Source", "播放场景中指定的AudioSource")]
     public class FeedbackAudioSource : AbstractFeedback
     {
         public enum Modes { Play, Pause, UnPause, Stop }

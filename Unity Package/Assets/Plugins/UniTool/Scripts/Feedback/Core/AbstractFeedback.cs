@@ -2,21 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UniTool.Attributes;
+using UniTool.Utilities;
 using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    public class AddFeedbackMenuAttribute : Attribute
+    public class CustomFeedbackAttribute : Attribute
     {
         public string Path;
         public string Message;
-        public AddFeedbackMenuAttribute(string path)
+        public CustomFeedbackAttribute(string path)
         {
             Path = path;
             Message = string.Empty;
         }
 
-        public AddFeedbackMenuAttribute(string path, string message)
+        public CustomFeedbackAttribute(string path, string message)
         {
             Path = path;
             Message = message;
@@ -27,11 +29,9 @@ namespace UniTool.Feedbacks
     [Serializable]
     public abstract class AbstractFeedback
     {
-        // [Information("@")]
-        [FoldoutGroup("Feedback Settings")]
+        [Information("@Message", VisibleIf = "@!string.IsNullOrEmpty(Message)")]
         public string Label;
         // public Color BarColor = Color.black;
-        [FoldoutGroup("Feedback Settings")]
         public bool Enable = true;
 
         [FoldoutGroup("Feedback Settings")]
@@ -59,32 +59,9 @@ namespace UniTool.Feedbacks
 
         public Feedbacks Owner { get; private set; }
         public bool IsPlaying { get; protected set; }
-        public float TotalDuration => DelayBeforePlay + GetDuration();
         public float TimeSincePlay { get; protected set; }
-        public bool Expanded { get; set; }
 
-        public string TitleLabel
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(Label))
-                    return "TODO";
-                return Label;
-            }
-        }
-
-        // private string _message;
-        // private string Message
-        // {
-        //     get
-        //     {
-        //         if (string.IsNullOrEmpty(_message))
-        //         {
-        //         }
-        //     }
-        // }
-
-        protected virtual IEnumerator Pause => null;
+        protected virtual IEnumerator FeedbackPlayPauser => null;
 
         protected bool IsInitialized = false;
         private List<Coroutine> _coroutines;
@@ -151,6 +128,12 @@ namespace UniTool.Feedbacks
             var loop = Mathf.Min(AmountOfRepeat, 1);
             while (loop > 0 && IsPlaying)
             {
+                // 如果不是第一次循环, 执行循环间隔
+                if (loop < AmountOfRepeat && DelayBetweenRepeats > 0f)
+                {
+                    yield return new WaitForSeconds(DelayBetweenRepeats);
+                }
+
                 if (DelayBeforePlay > 0f)
                 {
                     yield return new WaitForSeconds(DelayBeforePlay);
@@ -160,7 +143,7 @@ namespace UniTool.Feedbacks
 
                 OnFeedbackPlay();
 
-                var p = Pause;
+                var p = FeedbackPlayPauser;
                 if (p != null)
                 {
                     yield return p;
@@ -237,6 +220,33 @@ namespace UniTool.Feedbacks
         // }
 
 #if UNITY_EDITOR
+        private string TitleLabel
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Label))
+                    return "TODO";
+                return Label;
+            }
+        }
+
+        private string _message;
+        private string Message
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_message))
+                {
+                    var attr = GetType().GetCustomAttribute<CustomFeedbackAttribute>();
+                    if (attr != null)
+                    {
+                        _message = attr.Message;
+                    }
+                }
+                return _message;
+            }
+        }
+
         public virtual void OnDrawGizmos() { }
         public virtual void OnDrawGizmosSelected() { }
         public virtual void OnValidate() { }

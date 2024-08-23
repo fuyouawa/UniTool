@@ -1,9 +1,9 @@
-﻿using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Transform/Set Properties", "修改Transform的各种属性")]
+    [CustomFeedback("Transform/Set Properties", "修改Transform的各种属性")]
     public class FeedbackTransformSetProperties : AbstractFeedback
     {
         [FoldoutGroup("Binding")]

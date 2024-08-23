@@ -148,7 +148,10 @@ namespace UniTool.Feedbacks
 
             foreach (var feedback in FeedbackList)
             {
-                yield return feedback.PlayCo();
+                if (feedback.Enable)
+                {
+                    yield return feedback.PlayCo();
+                }
             }
         }
 
@@ -280,7 +283,7 @@ namespace UniTool.Feedbacks
                       !a.FullName.StartsWith("System.")
                 from t in a.GetTypes()
                 where typeof(AbstractFeedback).IsAssignableFrom(t) && !t.IsAbstract &&
-                      t.HasCustomAttribute<AddFeedbackMenuAttribute>()
+                      t.HasCustomAttribute<CustomFeedbackAttribute>()
                 select t).ToDictionary(x => x.FullName, y => y);
 
             s_allFeedbackDropdownItems = new ValueDropdownList<AbstractFeedback> { { "None", null } };
@@ -289,7 +292,7 @@ namespace UniTool.Feedbacks
             {
                 var inst = kv.Value.CreateInstance<AbstractFeedback>();
                 Debug.Assert(inst != null, $"创建`{kv.Value.Name}`的实例失败");
-                var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuAttribute>();
+                var attr = kv.Value.GetCustomAttribute<CustomFeedbackAttribute>();
                 inst.Label = attr.Path.Split('/').Last();
                 s_allFeedbackDropdownItems.Add($"{attr.Path}", inst);
             }

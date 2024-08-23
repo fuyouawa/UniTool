@@ -6,7 +6,7 @@ using UnityEngine;
 
  namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Light/Control", "¹âÕÕ¿ØÖÆ")]
+    [CustomFeedback("Light/Control", "å…‰ç…§æŽ§åˆ¶")]
     public class FeedbackLightControl : AbstractFeedback
     {
         public enum Modes { OverTime, Instant }

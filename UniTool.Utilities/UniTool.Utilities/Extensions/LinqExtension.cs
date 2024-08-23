@@ -6,7 +6,7 @@ namespace UniTool.Utilities
 {
     public static class LinqExtension
     {
-        public static void Foreach<T>(this IEnumerable<T> enumerator, Action<T> callback)
+        public static void ForEach<T>(this IEnumerable<T> enumerator, Action<T> callback)
         {
             foreach (var elem in enumerator)
             {

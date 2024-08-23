@@ -92,6 +92,12 @@ namespace UniTool.Utilities
             return Delegate.CreateDelegate(funcType, target, method);
         }
 
+        public static T GetCustomAttribute<T>(this Type type) where T : Attribute
+        {
+            return type.GetCustomAttributes<T>().FirstOrDefault();
+        }
+
+
         public static bool HasCustomAttribute<T>(this Type type) where T : Attribute
         {
             return type.GetCustomAttributes<T>().Any();

@@ -1,9 +1,9 @@
-﻿using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("GameObject/Instantiate", "实例化一个GameObject")]
+    [CustomFeedback("GameObject/Instantiate", "实例化一个GameObject")]
     public class FeedbackGameObjectInstantiate : AbstractFeedback
     {
         [FoldoutGroup("Instantiate")]

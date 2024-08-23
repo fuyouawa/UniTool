@@ -1,9 +1,9 @@
-﻿using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace UniTool.Feedbacks
 {
-    [AddFeedbackMenu("Debug/Log", "打印调试信息")]
+    [CustomFeedback("Debug/Log", "打印调试信息")]
     public class FeedbackDebugLog : AbstractFeedback
     {
         [FoldoutGroup("Log")]
