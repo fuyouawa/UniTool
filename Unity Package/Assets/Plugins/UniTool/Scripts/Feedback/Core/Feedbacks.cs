@@ -18,12 +18,11 @@ namespace UniTool.Feedbacks
     {
         public enum InitializationModes { Awake, Start }
         [FoldoutGroup("Settings")]
+        [Title("Initialization")]
         public InitializationModes InitializationMode = InitializationModes.Awake;
-
         [FoldoutGroup("Settings")]
         [Tooltip("确保Play前所有Feedbacks都初始化")]
         public bool AutoInitialization = true;
-
         [FoldoutGroup("Settings")]
         [Tooltip("在Start时自动Play一次")]
         public bool AutoPlayOnStart;
@@ -32,6 +31,7 @@ namespace UniTool.Feedbacks
         public bool AutoPlayOnEnable;
 
         [FoldoutGroup("Settings")]
+        [Title("Play Settings")]
         [Tooltip("是否可以Play")]
         public bool CanPlay = true;
         [FoldoutGroup("Settings")]
@@ -132,10 +132,15 @@ namespace UniTool.Feedbacks
             if (HasFeedbackPlaying())
             {
                 if (!CanPlayWhileAlreadyPlaying)
-                    return;
-                if (StopCurrentPlayIfNewPlay)
                 {
-                    Stop();
+                    if (StopCurrentPlayIfNewPlay)
+                    {
+                        Stop();
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
 
