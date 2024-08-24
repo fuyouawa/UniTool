@@ -58,7 +58,6 @@ namespace UniTool.Editor
         //     EditorUtility.FocusProjectWindow();
         //     Selection.activeObject = config;
         // }
-
         [Title("MessageBox Style")]
         [LabelText("Font")]
         public Font MessageBoxFont;

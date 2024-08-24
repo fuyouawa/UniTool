@@ -5,6 +5,7 @@ namespace UniTool.Feedbacks
 {
     [FeedbackHelper("修改Transform的各种属性")]
     [AddFeedbackMenu("Transform/Set Properties")]
+    [AddFeedbackMenuCN("变换/设置属性")]
     public class FeedbackTransformSetProperties : AbstractFeedback
     {
         [FoldoutGroup("Binding")]

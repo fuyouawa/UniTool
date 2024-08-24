@@ -5,6 +5,7 @@ namespace UniTool.Feedbacks
 {
     [FeedbackHelper("实例化一个GameObject")]
     [AddFeedbackMenu("GameObject/Instantiate")]
+    [AddFeedbackMenuCN("游戏物体/实例化")]
     public class FeedbackGameObjectInstantiate : AbstractFeedback
     {
         [FoldoutGroup("Instantiate")]

@@ -11,8 +11,9 @@ namespace UniTool.Feedbacks
                     "在FullName中填写事件的类名(完整命名空间), " +
                     "然后点击旁边的\"F\"(Find)按钮反射查找对应事件类型(可能会卡一下), " +
                     "如果找到下方就会出现事件结构让你填写")]
-    [AddFeedbackMenu("Event/UniTool Event")]
-    public class FeedbackEventUniToolEvent : AbstractFeedback
+    [AddFeedbackMenu("Event/Trigger UniTool Event")]
+    [AddFeedbackMenuCN("事件/触发UniTool事件")]
+    public class FeedbackTriggerUniToolEvent : AbstractFeedback
     {
         [FoldoutGroup("UniTool Event")]
         [InlineButton("FindEventObject", " F ")]

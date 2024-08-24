@@ -5,6 +5,7 @@ namespace UniTool.Feedbacks
 {
     [FeedbackHelper("打印调试信息")]
     [AddFeedbackMenu("Debug/Log")]
+    [AddFeedbackMenuCN("调试/打印")]
     public class FeedbackDebugLog : AbstractFeedback
     {
         [FoldoutGroup("Log")]

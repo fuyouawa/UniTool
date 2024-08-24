@@ -270,21 +270,44 @@ namespace UniTool.Feedbacks
                 where typeof(AbstractFeedback).IsAssignableFrom(t) && !t.IsAbstract &&
                       t.HasCustomAttribute<AddFeedbackMenuAttribute>()
                 select t).ToDictionary(x => x.FullName, y => y);
+        }
 
+        public static void GenerateDropdownItem()
+        {
             s_allFeedbackDropdownItems = new ValueDropdownList<AbstractFeedback> { { "None", null } };
 
             foreach (var kv in s_allFeedbackTypes)
             {
                 var inst = kv.Value.CreateInstance<AbstractFeedback>();
                 Debug.Assert(inst != null, $"创建`{kv.Value.Name}`的实例失败");
-                var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuAttribute>();
-                inst.Label = attr.Path.Split('/').Last();
-                s_allFeedbackDropdownItems.Add($"{attr.Path}", inst);
+                var path = string.Empty;
+
+                if (FeedbacksConfig.Instance.CN)
+                {
+                    var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuCNAttribute>();
+                    if (attr != null)
+                    {
+                        path = attr.Path;
+                    }
+                }
+
+                if (path.IsNullOrEmpty())
+                {
+                    var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuAttribute>();
+                    path = attr.Path;
+                }
+
+                inst.Label = path.Split('/').Last();
+                s_allFeedbackDropdownItems.Add($"{path}", inst);
             }
         }
 
         private IEnumerable GetAbstractFeedbackDropdown()
         {
+            if (s_allFeedbackDropdownItems.IsNullOrEmpty())
+            {
+                GenerateDropdownItem();
+            }
             return s_allFeedbackDropdownItems;
         }
 #endif

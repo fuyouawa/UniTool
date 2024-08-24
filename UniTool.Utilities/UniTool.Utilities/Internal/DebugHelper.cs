@@ -1,37 +1,36 @@
 ﻿using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace UniTool.Utilities
 {
     internal static class DebugHelper
     {
+        [Conditional("DEBUG")]
         public static void Assert(bool condition, string message)
         {
-            if (UtilitiesConfig.Instance.CheckAssert)
+            if (!condition)
             {
-                if (!condition)
-                {
-                    Debug.unityLogger.Log(LogType.Assert, message);
-                }
+                UnityEngine.Debug.unityLogger.Log(LogType.Assert, message);
             }
         }
+
+        [Conditional("DEBUG")]
         public static void Assert(bool condition)
         {
             Assert(condition, "Assertion failed");
         }
 
+        [Conditional("DEBUG")]
         public static void AssertCall(Func<bool> condition, string message)
         {
-            if (UtilitiesConfig.Instance.CheckAssert)
-            {
-                Assert(condition(), message);
-            }
+            Assert(condition(), message);
         }
 
+        [Conditional("DEBUG")]
         public static void AssertCall(Func<bool> condition)
         {
             Assert(condition());
         }
-
     }
 }

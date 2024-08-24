@@ -17,6 +17,15 @@ namespace UniTool.Feedbacks
             Path = path;
         }
     }
+    public class AddFeedbackMenuCNAttribute : Attribute
+    {
+        public string Path { get; }
+
+        public AddFeedbackMenuCNAttribute(string path)
+        {
+            Path = path;
+        }
+    }
 
     public class FeedbackHelperAttribute : Attribute
     {

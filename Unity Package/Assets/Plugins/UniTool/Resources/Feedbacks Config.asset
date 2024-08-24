@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1427611250, guid: 468bfcf33153b4d4183a8d51c6dad427, type: 3}
-  m_Name: Utilities Config
+  m_Script: {fileID: 11500000, guid: 9474635c35bb6d241b5876330cdd0ff4, type: 3}
+  m_Name: Feedbacks Config
   m_EditorClassIdentifier: 
-  CheckAssert: 1
+  CN: 1
