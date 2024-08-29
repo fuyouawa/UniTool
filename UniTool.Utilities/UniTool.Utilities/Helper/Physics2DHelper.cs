@@ -54,7 +54,7 @@ namespace UniTool.Utilities
             }
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+                throw new ArgumentOutOfRangeException($"未知方向:{direction}");
             }
 
             return Physics2D.Raycast(

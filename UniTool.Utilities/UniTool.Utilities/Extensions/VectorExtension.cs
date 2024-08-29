@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UniTool.Utilities
 {
@@ -24,6 +25,18 @@ namespace UniTool.Utilities
             float newY = v.x * sin + v.y * cos;
 
             return new Vector2(newX, newY);
+        }
+
+
+        public static Vector2 Round(this Vector2 v, int decimals)
+        {
+            return new Vector2(v.x.Round(decimals), v.y.Round(decimals));
+        }
+
+
+        public static Vector3 Round(this Vector3 v, int decimals)
+        {
+            return new Vector3(v.x.Round(decimals), v.y.Round(decimals), v.z.Round(decimals));
         }
     }
 }

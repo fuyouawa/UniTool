@@ -14,5 +14,14 @@ namespace UniTool.Utilities
         {
             return val == null || val.Count == 0;
         }
+        public static bool IsNotNullOrEmpty(this string val)
+        {
+            return !string.IsNullOrEmpty(val);
+        }
+
+        public static bool IsNotNullOrEmpty<T>(this IList<T> val)
+        {
+            return !val.IsNullOrEmpty();
+        }
     }
 }

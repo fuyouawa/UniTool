@@ -23,8 +23,6 @@ namespace UniTool.Feedbacks
 
         protected override void OnFeedbackInit()
         {
-            if (!TargetAnimator.HasParam(ParameterName, AnimatorControllerParameterType.Trigger))
-                throw new Exception($"Animator({TargetAnimator}) has no trigger parameter({ParameterName})");
             _paramId = Animator.StringToHash(ParameterName);
         }
 
