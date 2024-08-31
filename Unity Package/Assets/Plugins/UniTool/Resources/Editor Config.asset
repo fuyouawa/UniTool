@@ -12,15 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f95be7aceae1a43a920bab552f3754, type: 3}
   m_Name: Editor Config
   m_EditorClassIdentifier: 
-  MessageBoxFont: {fileID: 12800000, guid: 48f60953d9a9eb945b14faf1dd58317b, type: 3}
-  MessageBoxFontSize: 12
-  MessageBoxMargin:
-    m_Left: 6
-    m_Right: 6
-    m_Top: 4
-    m_Bottom: 4
-  MessageBoxPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 6
-    m_Bottom: 6
+  InfoBoxCNStyle:
+    Font: {fileID: 12800000, guid: 48f60953d9a9eb945b14faf1dd58317b, type: 3}
+    FontSize: 12
+    Margin:
+      m_Left: 6
+      m_Right: 6
+      m_Top: 4
+      m_Bottom: 4
+    Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 4
+      m_Bottom: 4
+  LabelTextCNStyle:
+    Font: {fileID: 12800000, guid: 48f60953d9a9eb945b14faf1dd58317b, type: 3}
+    FontSize: 14
+    Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0

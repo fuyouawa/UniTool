@@ -58,25 +58,42 @@ namespace UniTool.Editor
         //     EditorUtility.FocusProjectWindow();
         //     Selection.activeObject = config;
         // }
-        [Title("MessageBox Style")]
-        [LabelText("Font")]
-        public Font MessageBoxFont;
-        [LabelText("Font Size")]
-        public int MessageBoxFontSize = 12;
-        [LabelText("Margin")]
-        public RectOffset MessageBoxMargin;
-        [LabelText("Padding")]
-        public RectOffset MessageBoxPadding;
-
-        public GUIStyle GetMessageBoxStyle()
+        [Serializable]
+        public struct CustomGUIStyle
         {
-            return new GUIStyle(SirenixGUIStyles.MessageBox)
+            public Font Font;
+            public int FontSize;
+            public RectOffset Margin;
+            public RectOffset Padding;
+
+            public GUIStyle ToGUI(GUIStyle other)
             {
-                font = MessageBoxFont,
-                fontSize = MessageBoxFontSize,
-                margin = MessageBoxMargin,
-                padding = MessageBoxPadding
-            };
+                return new GUIStyle(other)
+                {
+                    font = Font,
+                    fontSize = FontSize,
+                    margin = Margin,
+                    padding = Padding
+                };
+            }
+            public GUIStyle ToGUI()
+            {
+                return new GUIStyle()
+                {
+                    font = Font,
+                    fontSize = FontSize,
+                    margin = Margin,
+                    padding = Padding
+                };
+            }
         }
+
+        [BoxGroup("InfoBox Style")]
+        [HideLabel]
+        public CustomGUIStyle InfoBoxCNStyle;
+
+        [BoxGroup("LabelText Style")]
+        [HideLabel]
+        public CustomGUIStyle LabelTextCNStyle;
     }
 }

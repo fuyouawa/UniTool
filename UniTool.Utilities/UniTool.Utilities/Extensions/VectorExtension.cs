@@ -13,6 +13,14 @@ namespace UniTool.Utilities
         {
             return new Vector2(v.x, v.y);
         }
+        public static Vector3Int ToVec3Int(this Vector2Int v)
+        {
+            return new Vector3Int(v.x, v.y);
+        }
+        public static Vector2Int ToVec2Int(this Vector3Int v)
+        {
+            return new Vector2Int(v.x, v.y);
+        }
 
         public static Vector2 Rotate(this Vector2 v, float angle)
         {
@@ -28,6 +36,18 @@ namespace UniTool.Utilities
         }
 
 
+        public static Vector2 Round(this Vector2 v)
+        {
+            return new Vector2(v.x.Round(), v.y.Round());
+        }
+
+
+        public static Vector3 Round(this Vector3 v)
+        {
+            return new Vector3(v.x.Round(), v.y.Round(), v.z.Round());
+        }
+
+
         public static Vector2 Round(this Vector2 v, int decimals)
         {
             return new Vector2(v.x.Round(decimals), v.y.Round(decimals));
@@ -37,6 +57,36 @@ namespace UniTool.Utilities
         public static Vector3 Round(this Vector3 v, int decimals)
         {
             return new Vector3(v.x.Round(decimals), v.y.Round(decimals), v.z.Round(decimals));
+        }
+
+        public static Vector2Int ToVec2Int(this Vector2 v)
+        {
+            return new Vector2Int(Mathf.RoundToInt(v.x), Mathf.RoundToInt(v.y));
+        }
+
+        public static Vector2 ToVec2(this Vector2Int v)
+        {
+            return new Vector2(v.x, v.y);
+        }
+
+        public static Vector3 ToVec3(this Vector2Int v)
+        {
+            return new Vector3(v.x, v.y, 0);
+        }
+
+        public static Vector3Int ToVec3Int(this Vector3 v)
+        {
+            return new Vector3Int(Mathf.RoundToInt(v.x), Mathf.RoundToInt(v.y), Mathf.RoundToInt(v.z));
+        }
+
+        public static Vector3 ToVec3(this Vector3Int v)
+        {
+            return new Vector3(v.x, v.y, v.z);
+        }
+
+        public static Vector2 ToVec2(this Vector3Int v)
+        {
+            return new Vector2(v.x, v.y);
         }
     }
 }

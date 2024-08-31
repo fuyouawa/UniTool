@@ -9,7 +9,7 @@ namespace UniTool.PropertyPicker
     {
         public static bool IsAcceptedType(Type type)
         {
-            return ReflectHelper.IsVisualType(type);
+            return type.IsVisualType();
         }
 
         [LabelText("@Label")]
@@ -37,11 +37,11 @@ namespace UniTool.PropertyPicker
             ObjectType = type;
         }
 
-        private bool IsInteger => ReflectHelper.IsIntegerType(ObjectType);
-        private bool IsFloat => ReflectHelper.IsFloatType(ObjectType);
-        private bool IsBool => ReflectHelper.IsBoolType(ObjectType);
-        private bool IsString => ReflectHelper.IsStringType(ObjectType);
-        private bool IsUnityObject => ReflectHelper.IsUnityObjectType(ObjectType);
+        private bool IsInteger => ObjectType.IsIntegerType();
+        private bool IsFloat => ObjectType.IsFloatType();
+        private bool IsBool => ObjectType.IsBoolType();
+        private bool IsString => ObjectType.IsStringType();
+        private bool IsUnityObject => ObjectType.IsUnityObjectType();
 
         public object GetRawValue()
         {

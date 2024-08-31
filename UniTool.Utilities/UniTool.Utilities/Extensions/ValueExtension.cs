@@ -8,5 +8,9 @@ namespace UniTool.Utilities
         {
             return (float)Math.Round(value, decimals);
         }
+        public static float Round(this float value)
+        {
+            return (float)Math.Round(value);
+        }
     }
 }

@@ -83,65 +83,75 @@ namespace UniTool.Utilities
             }
             return true;
         }
-
-        public static readonly TypeCode[] IntegerTypes =
+        
+        public static object GetObjectValue(object obj, string name, BindingFlags flags)
         {
-            TypeCode.SByte, TypeCode.Byte, TypeCode.Int16, TypeCode.UInt16, TypeCode.Int32, TypeCode.UInt32,
-            TypeCode.Int64, TypeCode.UInt64
-        };
-
-        public static bool IsIntegerType(Type type)
-        {
-            return typeof(int).IsAssignableFrom(type);
-        }
-
-        public static readonly TypeCode[] FloatingPointTypes =
-        {
-            TypeCode.Double, TypeCode.Single, TypeCode.Decimal
-        };
-
-        public static bool IsFloatType(Type type)
-        {
-            return typeof(float).IsAssignableFrom(type);
-        }
-
-        public static bool IsBoolType(Type type)
-        {
-            return typeof(bool).IsAssignableFrom(type);
-        }
-
-        public static bool IsStringType(Type type)
-        {
-            return typeof(string).IsAssignableFrom(type);
-        }
-
-        public static bool IsUnityObjectType(Type type)
-        {
-            return typeof(UnityEngine.Object).IsAssignableFrom(type);
-        }
-
-        public static bool IsVisualType(Type type)
-        {
-            return type.IsPrimitive || IsUnityObjectType(type);
-        }
-
-        public static MethodInfo GetMethodEx(Type targetType, string methodName,
-            IEnumerable<string> parameterDecls, BindingFlags bindingFlags)
-        {
-            var paramTypesName = parameterDecls.Select(param => param.Trim().Split(' ')[0]).ToArray();
-
-            var method = targetType.GetMethods(bindingFlags).FirstOrDefault(x =>
+            var t = obj.GetType();
+            var f = t.GetField(name, flags);
+            if (f != null)
             {
-                if (x.Name != methodName)
-                    return false;
-                var parameters = x.GetParameters();
-                if (parameters.Length != paramTypesName.Length)
-                    return false;
-                return !parameters
-                    .Where((t, i) => t.ParameterType.Name != paramTypesName[i])
-                    .Any();
-            });
-            return method;
+                return f.GetValue(obj);
+            }
+            var p = t.GetProperty(name, flags);
+            if (p != null)
+            {
+                return p.GetValue(obj);
+            }
+
+            throw new ArgumentException($"No field or property name:{name}");
         }
+        
+        public static Type GetObjectValueType(object obj, string name, BindingFlags flags)
+        {
+            var t = obj.GetType();
+            var f = t.GetField(name, flags);
+            if (f != null)
+            {
+                return f.FieldType;
+            }
+            var p = t.GetProperty(name, flags);
+            if (p != null)
+            {
+                return p.PropertyType;
+            }
+
+            throw new ArgumentException($"No field or property name:{name}");
+        }
+        
+        public static void SetObjectValue(object obj, string name, object val, BindingFlags flags)
+        {
+            var t = obj.GetType();
+            var f = t.GetField(name, flags);
+            if (f != null)
+            {
+                f.SetValue(obj, val);
+            }
+            var p = t.GetProperty(name, flags);
+            if (p != null)
+            {
+                p.SetValue(obj, val);
+            }
+
+            throw new ArgumentException($"No field or property name:{name}");
+        }
+
+        // public static MethodInfo GetMethodEx(Type targetType, string methodName,
+        //     IEnumerable<string> parameterDecls, BindingFlags bindingFlags)
+        // {
+        //     var paramTypesName = parameterDecls.Select(param => param.Trim().Split(' ')[0]).ToArray();
+        //
+        //     var method = targetType.GetMethods(bindingFlags).FirstOrDefault(x =>
+        //     {
+        //         if (x.Name != methodName)
+        //             return false;
+        //         var parameters = x.GetParameters();
+        //         if (parameters.Length != paramTypesName.Length)
+        //             return false;
+        //         return !parameters
+        //             .Where((t, i) => t.ParameterType.Name != paramTypesName[i])
+        //             .Any();
+        //     });
+        //     return method;
+        // }
     }
 }

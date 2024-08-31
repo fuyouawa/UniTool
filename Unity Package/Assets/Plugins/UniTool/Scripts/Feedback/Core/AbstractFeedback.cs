@@ -41,7 +41,7 @@ namespace UniTool.Feedbacks
     [Serializable]
     public abstract class AbstractFeedback
     {
-        [Information("@Message", VisibleIf = "@!string.IsNullOrEmpty(Message)")]
+        [InfoBoxCN("@FeedbackHelpMessage", VisibleIf = "VisibleFeedbackHelper")]
         public string Label;
         // public Color BarColor = Color.black;
         public bool Enable = true;
@@ -243,7 +243,7 @@ namespace UniTool.Feedbacks
         }
 
         private string _message;
-        private string Message
+        private string FeedbackHelpMessage
         {
             get
             {
@@ -258,6 +258,8 @@ namespace UniTool.Feedbacks
                 return _message;
             }
         }
+
+        private bool VisibleFeedbackHelper => FeedbackHelpMessage.IsNotNullOrEmpty();
 
         public virtual void OnDrawGizmos() { }
         public virtual void OnDrawGizmosSelected() { }
