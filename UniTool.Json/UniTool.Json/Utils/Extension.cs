@@ -40,7 +40,13 @@ namespace UniTool.Json
             writer.WritePropertyName(propertyName);
             writer.WriteValue(val);
         }
+        
 
+        public static void WriteCustomProperty(this JsonWriter writer, JsonSerializer serializer, string propertyName, object val)
+        {
+            writer.WritePropertyName(propertyName);
+            serializer.Serialize(writer, val);
+        }
 
         public static bool TryGetProperty<T>(this JObject j, string propertyName, out T val)
         {
@@ -57,17 +63,34 @@ namespace UniTool.Json
             return false;
         }
 
-
-        public static T GetProperty<T>(this JObject j, string propertyName)
+        public static bool TryGetCustomProperty<T>(this JObject j, JsonSerializer serializer, string propertyName, out T val)
         {
             if (j.TryGetValue(propertyName, out var t))
             {
-                if (t.Type == GetJTokenType(typeof(T)))
-                {
-                    return t.ToObject<T>();
-                }
+                val = t.ToObject<T>(serializer);
+                return true;
             }
 
+            val = default;
+            return false;
+        }
+
+
+        public static T GetProperty<T>(this JObject j, string propertyName)
+        {
+            if (j.TryGetProperty(propertyName, out T val))
+            {
+                return val;
+            }
+            throw new ArgumentException($"No property:{propertyName}");
+        }
+
+        public static T GetCustomProperty<T>(this JObject j, JsonSerializer serializer, string propertyName)
+        {
+            if (j.TryGetCustomProperty(serializer, propertyName, out T val))
+            {
+                return val;
+            }
             throw new ArgumentException($"No property:{propertyName}");
         }
 

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace UniTool.Utilities
 {
@@ -16,16 +19,17 @@ namespace UniTool.Utilities
         public static T CreateSingleton<T>() where T : class
         {
             var type = typeof(T);
+
+            DebugHelper.AssertCall(() =>
+                {
+                    var publicCtorInfos = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
+                    return publicCtorInfos.Length == 0;
+                }, $"单例({type})不能有public构造函数!");
+
             var ctorInfos = type.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic);
 
             var ctor = Array.Find(ctorInfos, c => c.GetParameters().Length == 0)
                        ?? throw new Exception($"单例({type})必须要有一个非public的无参构造函数!");
-
-            DebugHelper.AssertCall(() =>
-            {
-                var publicCtorInfos = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
-                return publicCtorInfos.Length == 0;
-            }, $"单例({type})不能有public构造函数!");
 
             var inst = ctor.Invoke(null) as T;
             DebugHelper.Assert(inst != null);
@@ -35,8 +39,13 @@ namespace UniTool.Utilities
 
     public class Singleton<T> where T : Singleton<T>
     {
-        private static readonly Lazy<T> _instance = new Lazy<T>(SingletonCreator.CreateSingleton<T>);
+        private static readonly Lazy<T> _instance;
 
         public static T Instance => _instance.Value;
+
+        static Singleton()
+        {
+            _instance = new Lazy<T>(SingletonCreator.CreateSingleton<T>);
+        }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Linq;
+using System.Reflection;
+using Newtonsoft.Json;
 using UniTool.Utilities;
+using UnityEngine;
 
 namespace UniTool.Json
 {
@@ -9,9 +12,10 @@ namespace UniTool.Json
 
         static UniJsonConvert()
         {
-            SerializerSettings.Converters.Add(new Vector2Converter());
-            SerializerSettings.Converters.Add(new RectConverter());
             SerializerSettings.Converters.Add(new ColorConverter());
+            SerializerSettings.Converters.Add(new RectConverter());
+            SerializerSettings.Converters.Add(new Vector2Converter());
+            SerializerSettings.Converters.Add(new Vector2IntConverter());
         }
 
         public static void AddConverter(JsonConverter item)

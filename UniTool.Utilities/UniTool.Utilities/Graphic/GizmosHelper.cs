@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics;
+using UnityEngine;
 
 namespace UniTool.Utilities
 {
@@ -40,7 +41,7 @@ namespace UniTool.Utilities
                 }
             }
         }
-
+        
         public static void DrawCube(Transform transform, Vector3 offset, Vector3 cubeSize, bool wireOnly)
         {
             Matrix4x4 rotationMatrix = transform.localToWorldMatrix;
@@ -54,7 +55,7 @@ namespace UniTool.Utilities
                 Gizmos.DrawCube(offset, cubeSize);
             }
         }
-
+        
         public static void DrawMeshRect(Vector2 center, Vector2 size)
         {
             DrawMeshRect(center, size, new Vector2(0.1f, 0.1f));

@@ -133,7 +133,6 @@ namespace UniTool.Utilities
         static void InitializeStatics()
         {
             _handlers = new Dictionary<Type, Delegate>();
-
         }
 
         static EventManager()
