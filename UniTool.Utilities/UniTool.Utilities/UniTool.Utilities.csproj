@@ -62,6 +62,7 @@
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Extensions\CollectionsExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
+    <Compile Include="Extensions\VectorIntExtension.cs" />
     <Compile Include="Helper\ColorHelper.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\LayerExtension.cs" />

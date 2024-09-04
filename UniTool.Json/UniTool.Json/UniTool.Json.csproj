@@ -50,7 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converter\AnimationCurveConverter.cs" />
     <Compile Include="Converter\ColorConverter.cs" />
+    <Compile Include="Converter\KeyframeConverter.cs" />
     <Compile Include="Converter\Vector2IntConverter.cs" />
     <Compile Include="Utils\Extension.cs" />
     <Compile Include="Converter\RectConverter.cs" />

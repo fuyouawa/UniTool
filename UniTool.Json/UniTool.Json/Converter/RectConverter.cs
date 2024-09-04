@@ -28,10 +28,10 @@ namespace UniTool.Json
         {
             var obj = JObject.Load(reader);
             return new Rect(
-                obj.GetProperty<float>("x"),
-                obj.GetProperty<float>("y"),
-                obj.GetProperty<float>("width"),
-                obj.GetProperty<float>("height"));
+                obj.GetPropertyOrDefault<float>("x"),
+                obj.GetPropertyOrDefault<float>("y"),
+                obj.GetPropertyOrDefault<float>("width"),
+                obj.GetPropertyOrDefault<float>("height"));
         }
     }
 }

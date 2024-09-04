@@ -16,6 +16,8 @@ namespace UniTool.Json
             SerializerSettings.Converters.Add(new RectConverter());
             SerializerSettings.Converters.Add(new Vector2Converter());
             SerializerSettings.Converters.Add(new Vector2IntConverter());
+            SerializerSettings.Converters.Add(new KeyframeConverter());
+            SerializerSettings.Converters.Add(new AnimationCurveConverter());
         }
 
         public static void AddConverter(JsonConverter item)

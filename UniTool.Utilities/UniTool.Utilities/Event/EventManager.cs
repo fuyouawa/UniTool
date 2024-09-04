@@ -238,7 +238,8 @@ namespace UniTool.Utilities
 
         public void UnRegister()
         {
-            OnUnRegister.Invoke();
+            // 这里的null判断是因为有时可能不需要取消注册
+            OnUnRegister?.Invoke();
             OnUnRegister = null;
         }
     }
@@ -272,6 +273,11 @@ namespace UniTool.Utilities
 
     public class UnRegisterOnDisableTrigger : UnRegisterTrigger
     {
+        private void OnDestroy()
+        {
+            UnRegister();
+        }
+
         private void OnDisable()
         {
             UnRegister();

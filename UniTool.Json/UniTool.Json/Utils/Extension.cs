@@ -85,6 +85,17 @@ namespace UniTool.Json
             throw new ArgumentException($"No property:{propertyName}");
         }
 
+
+        public static T GetPropertyOrDefault<T>(this JObject j, string propertyName, T defaultValue = default)
+        {
+            if (j.TryGetProperty(propertyName, out T val))
+            {
+                return val;
+            }
+
+            return defaultValue;
+        }
+
         public static T GetCustomProperty<T>(this JObject j, JsonSerializer serializer, string propertyName)
         {
             if (j.TryGetCustomProperty(serializer, propertyName, out T val))
