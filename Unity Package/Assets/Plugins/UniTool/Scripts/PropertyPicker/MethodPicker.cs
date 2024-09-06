@@ -49,7 +49,7 @@ namespace UniTool.PropertyPicker
         protected override string GetMemberValueDropdownName(MemberInfo member)
         {
             var m = (MethodInfo)member;
-            return $"{member.Name} ({string.Join(",", m.GetParameters().Select(x => $"{x.ParameterType.GetAliases()} {x.Name}"))})";
+            return $"{member.Name} ({ReflectionUtility.GetMethodParametersSignature(m)})";
         }
 
         [OnInspectorInit]

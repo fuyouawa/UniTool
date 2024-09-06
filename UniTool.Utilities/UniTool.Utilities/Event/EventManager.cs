@@ -170,7 +170,7 @@ namespace UniTool.Utilities
                 var p = h.GetParameters();
                 if (p.Length != 1)
                 {
-                    throw new ArgumentException($"事件处理器({ReflectHelper.GetSignature(h)})的参数数量必须是1!");
+                    throw new ArgumentException($"事件处理器({ReflectionUtility.GetSignature(h)})的参数数量必须是1!");
                 }
 
                 var et = p[0].ParameterType;
@@ -188,7 +188,7 @@ namespace UniTool.Utilities
         {
             if (_addListener == null)
             {
-                _addListener = typeof(EventManager).GetMethod(nameof(AddListener), BindingFlagsHelper.NoPublicStatic);
+                _addListener = typeof(EventManager).GetMethod(nameof(AddListener), BindingFlags.NonPublic | BindingFlags.Static);
             }
             DebugHelper.Assert(_addListener != null);
 
@@ -207,7 +207,7 @@ namespace UniTool.Utilities
         {
             if (_removeListener == null)
             {
-                _removeListener = typeof(EventManager).GetMethod(nameof(RemoveListener), BindingFlagsHelper.NoPublicStatic);
+                _removeListener = typeof(EventManager).GetMethod(nameof(RemoveListener), BindingFlags.NonPublic | BindingFlags.Static);
             }
             DebugHelper.Assert(_removeListener != null);
 

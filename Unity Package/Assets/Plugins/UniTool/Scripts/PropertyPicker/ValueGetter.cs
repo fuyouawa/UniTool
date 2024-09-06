@@ -27,7 +27,7 @@ namespace UniTool.PropertyPicker
 #if UNITY_EDITOR
         protected override bool MemberFilter(MemberInfo member)
         {
-            if (!ReflectHelper.TryGetValueType(member, out var type))
+            if (!ReflectionUtility.TryGetValueType(member, out var type))
                 return false;
             if (type == typeof(void))
                 return false;
@@ -49,7 +49,7 @@ namespace UniTool.PropertyPicker
 #if UNITY_EDITOR
         protected override bool MemberFilter(MemberInfo member)
         {
-            if (base.MemberFilter(member) && ReflectHelper.TryGetValueType(member, out var type))
+            if (base.MemberFilter(member) && ReflectionUtility.TryGetValueType(member, out var type))
             {
                 return type == typeof(TReturn);
             }

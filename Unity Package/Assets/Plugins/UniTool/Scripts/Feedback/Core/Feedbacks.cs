@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Sirenix.OdinInspector;
 using UniTool.Utilities;
 using UnityEngine;
@@ -266,7 +267,7 @@ namespace UniTool.Feedbacks
         static Feedbacks()
         {
             s_allFeedbackTypes = (
-                from t in AppDomainHelper.GetCustomTypes(AppDomain.CurrentDomain)
+                from t in Assembly.GetExecutingAssembly().GetTypes()
                 where typeof(AbstractFeedback).IsAssignableFrom(t) && !t.IsAbstract &&
                       t.HasCustomAttribute<AddFeedbackMenuAttribute>()
                 select t).ToDictionary(x => x.FullName, y => y);
@@ -280,25 +281,10 @@ namespace UniTool.Feedbacks
             {
                 var inst = kv.Value.CreateInstance<AbstractFeedback>();
                 Debug.Assert(inst != null, $"创建`{kv.Value.Name}`的实例失败");
-                var path = string.Empty;
 
-                if (FeedbacksConfig.Instance.CN)
-                {
-                    var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuCNAttribute>();
-                    if (attr != null)
-                    {
-                        path = attr.Path;
-                    }
-                }
-
-                if (path.IsNullOrEmpty())
-                {
-                    var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuAttribute>();
-                    path = attr.Path;
-                }
-
-                inst.Label = path.Split('/').Last();
-                s_allFeedbackDropdownItems.Add($"{path}", inst);
+                var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuAttribute>();
+                inst.Label = attr.Path.Split('/').Last();
+                s_allFeedbackDropdownItems.Add($"{attr.Path}", inst);
             }
         }
 

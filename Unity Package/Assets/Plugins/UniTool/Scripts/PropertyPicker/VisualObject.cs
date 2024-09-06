@@ -61,7 +61,7 @@ namespace UniTool.PropertyPicker
         private string GetDefaultLabel()
         {
             var val = GetRawValue();
-            return $"`{val.GetType().GetAliases()}`";
+            return $"`{TypeUtility.GetAliases(val.GetType())}`";
         }
     }
 }

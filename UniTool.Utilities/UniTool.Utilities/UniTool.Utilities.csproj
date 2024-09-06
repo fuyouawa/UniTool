@@ -61,8 +61,12 @@
   <ItemGroup>
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Extensions\CollectionsExtension.cs" />
+    <Compile Include="Extensions\MonoBehaviorExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Extensions\VectorIntExtension.cs" />
+    <Compile Include="Helper\AppDomainHelper.cs" />
+    <Compile Include="Helper\Physics2DHelper.cs" />
+    <Compile Include="Helper\VectorHelper.cs" />
     <Compile Include="Helper\ColorHelper.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\LayerExtension.cs" />
@@ -73,14 +77,11 @@
     <Compile Include="Extensions\VectorExtension.cs" />
     <Compile Include="Graphic\GizmosHelper.cs" />
     <Compile Include="Graphic\HandlesHelper.cs" />
-    <Compile Include="Helper\AppDomainHelper.cs" />
-    <Compile Include="Helper\BindingFlagsHelper.cs" />
-    <Compile Include="Helper\TypeHelper.cs" />
+    <Compile Include="Utility\TypeUtility.cs" />
+    <Compile Include="Utility\UIUtility.cs" />
     <Compile Include="Internal\DebugHelper.cs" />
-    <Compile Include="Helper\MathHelper.cs" />
-    <Compile Include="Helper\Physics2DHelper.cs" />
-    <Compile Include="Helper\ReflectHelper.cs" />
-    <Compile Include="Helper\VectorHelper.cs" />
+    <Compile Include="Utility\MathUtility.cs" />
+    <Compile Include="Utility\ReflectionUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Circle.cs" />
     <Compile Include="Utils\MonoSingleton.cs" />

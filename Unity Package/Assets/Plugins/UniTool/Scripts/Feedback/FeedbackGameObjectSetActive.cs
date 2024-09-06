@@ -4,8 +4,7 @@ using UnityEngine;
 namespace UniTool.Feedbacks
 {
     [FeedbackHelper("设置GameObject激活状态")]
-    [AddFeedbackMenu("GameObject/Set Active")]
-    [AddFeedbackMenuCN("游戏物体/设置激活")]
+    [AddFeedbackMenu("游戏物体/设置激活")]
     public class FeedbackGameObjectSetActive : AbstractFeedback
     {
         [FoldoutGroup("Set Active")]

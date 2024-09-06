@@ -49,7 +49,7 @@ namespace UniTool.PropertyPicker
             if (c == null)
                 return null;
             _targetMember = c.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(m => ReflectHelper.GetSignature(m) == TargetMemberName);
+                .FirstOrDefault(m => ReflectionUtility.GetSignature(m) == TargetMemberName);
 
             return _targetMember;
         }
@@ -106,7 +106,7 @@ namespace UniTool.PropertyPicker
                 .Where(MemberFilter)
                 .Select(m => new ValueDropdownItem<string>(
                     GetMemberValueDropdownName(m),
-                    ReflectHelper.GetSignature(m))));
+                    ReflectionUtility.GetSignature(m))));
             return total;
         }
 
@@ -120,7 +120,7 @@ namespace UniTool.PropertyPicker
             var name = $"{member.MemberType}/{member.Name}";
             if (member is MethodInfo m)
             {
-                name += $"({string.Join(",", m.GetParameters().Select(x => $"{x.ParameterType.GetAliases()} {x.Name}"))})";
+                name += $"({ReflectionUtility.GetMethodParametersSignature(m)})";
             }
             return name;
         }

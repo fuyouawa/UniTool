@@ -9,13 +9,14 @@ namespace UniTool.Json
     {
         public override void WriteJson(JsonWriter writer, Color value, JsonSerializer serializer)
         {
-            writer.WriteValue(value.ToHex());
+            writer.WriteValue("#" + ColorUtility.ToHtmlStringRGBA(value));
         }
 
         public override Color ReadJson(JsonReader reader, Type objectType, Color existingValue, bool hasExistingValue,
             JsonSerializer serializer)
         {
-            return ColorHelper.FromHex((string)reader.Value);
+            ColorUtility.TryParseHtmlString((string)reader.Value, out var color);
+            return color;
         }
     }
 }

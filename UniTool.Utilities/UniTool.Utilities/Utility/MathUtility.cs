@@ -2,7 +2,7 @@
 
 namespace UniTool.Utilities
 {
-    public static class MathHelper
+    public static class MathUtility
     {
         /// <summary>
         /// 将一个在[A, B]区间的x, 映射到[C, D]区间

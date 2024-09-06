@@ -6,8 +6,7 @@ using UnityEngine;
 namespace UniTool.Feedbacks
 {
     [FeedbackHelper("设置指定Animator的参数")]
-    [AddFeedbackMenu("Animator/Set Parameter")]
-    [AddFeedbackMenuCN("动画器/设置参数")]
+    [AddFeedbackMenu("动画器/设置参数")]
     public class FeedbackAnimatorSetParameter : AbstractFeedback
     {
         public enum ParameterTypes

@@ -6,8 +6,7 @@ using UnityEngine;
 namespace UniTool.Feedbacks
 {
     [FeedbackHelper("在指定的SpriteRenderer上循环赋值图集中的精灵, 实现帧动画的效果")]
-    [AddFeedbackMenu("Sprite/Frame Animation")]
-    [AddFeedbackMenuCN("精灵/帧动画")]
+    [AddFeedbackMenu("精灵/帧动画")]
     public class FeedbackSpriteFrameAnimation : AbstractFeedback
     {
         public enum DelayModes

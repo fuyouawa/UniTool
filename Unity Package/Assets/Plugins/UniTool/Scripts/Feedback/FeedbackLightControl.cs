@@ -7,8 +7,7 @@ using UnityEngine;
  namespace UniTool.Feedbacks
 {
     [FeedbackHelper("光照控制")]
-    [AddFeedbackMenu("Light/Light Control")]
-    [AddFeedbackMenuCN("光照/光照控制")]
+    [AddFeedbackMenu("光照/光照控制")]
     public class FeedbackLightControl : AbstractFeedback
     {
         public enum Modes { OverTime, Instant }
@@ -140,15 +139,15 @@ using UnityEngine;
 
         protected virtual void SetLightValues(float time)
         {
-            float normalizedTime = MathHelper.Remap(time, 0, Duration, 0, 1);
+            float normalizedTime = MathUtility.Remap(time, 0, Duration, 0, 1);
 
 
-            var intensity = MathHelper.Remap(
+            var intensity = MathUtility.Remap(
                 IntensityCurve.Evaluate(normalizedTime),
                 0f, 1f,
                 RemapIntensityZero,
                 RemapIntensityOne);
-            var range = MathHelper.Remap(
+            var range = MathUtility.Remap(
                 RangeCurve.Evaluate(normalizedTime),
                 0f, 1f,
                 RemapRangeZero,

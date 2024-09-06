@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace UniTool.Utilities
 {
-    public static class ReflectHelper
+    public static class ReflectionUtility
     {
         public static string GetSignature(MemberInfo member)
         {
@@ -27,16 +27,7 @@ namespace UniTool.Utilities
             // If the member is a method, append parameter types and return type
             if (member is MethodInfo methodInfo)
             {
-                sb.Append("(");
-                var parameters = methodInfo.GetParameters();
-                for (int i = 0; i < parameters.Length; i++)
-                {
-                    if (i > 0)
-                        sb.Append(", ");
-                    sb.Append(parameters[i].ParameterType.FullName);
-                }
-                sb.Append(")");
-                sb.Append(" : ");
+                sb.Append($"({GetMethodParametersSignature(methodInfo)}) : ");
                 sb.Append(methodInfo.ReturnType.FullName);
             }
             else if (member is PropertyInfo propertyInfo)
@@ -59,6 +50,13 @@ namespace UniTool.Utilities
             }
 
             return sb.ToString();
+        }
+
+
+        public static string GetMethodParametersSignature(MethodInfo method)
+        {
+            return string.Join(", ",
+                method.GetParameters().Select(x => $"{TypeUtility.GetAliases(x.ParameterType)} {x.Name}"));
         }
 
 
