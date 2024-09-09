@@ -7,12 +7,6 @@ namespace UniTool.Utilities
 {
     public static class TypeExtension
     {
-        public static bool IsInherit<T>(this Type t)
-        {
-            return typeof(T).IsAssignableFrom(t);
-        }
-
-
         public static object CreateInstance(this Type type)
         {
             return Activator.CreateInstance(type);
