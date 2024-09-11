@@ -58,10 +58,13 @@
   <ItemGroup>
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Extensions\CollectionsExtension.cs" />
-    <Compile Include="Extensions\MonoBehaviorExtension.cs" />
+    <Compile Include="Extensions\GameObjectExtension.cs" />
+    <Compile Include="Extensions\ComponentExtension.cs" />
+    <Compile Include="Extensions\TransformExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Extensions\VectorIntExtension.cs" />
     <Compile Include="Helper\AppDomainHelper.cs" />
+    <Compile Include="Helper\GameObjectHelper.cs" />
     <Compile Include="Helper\Physics2DHelper.cs" />
     <Compile Include="Helper\TransformHelper.cs" />
     <Compile Include="Helper\VectorHelper.cs" />

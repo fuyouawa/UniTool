@@ -59,7 +59,7 @@ public sealed class TitleGroupCNAttribute : PropertyGroupAttribute
 	/// <param name="other">The other group attribute to combine with.</param>
 	protected override void CombineValuesWith(PropertyGroupAttribute other)
 	{
-		TitleGroupAttribute t = other as TitleGroupAttribute;
+        var t = other as TitleGroupCNAttribute;
 		if (Subtitle != null)
 		{
 			t.Subtitle = Subtitle;

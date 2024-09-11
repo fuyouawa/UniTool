@@ -13,5 +13,10 @@ namespace UniTool.Utilities
         {
             return !string.IsNullOrEmpty(val);
         }
+
+        public static string DefaultIfNullOrEmpty(this string val, string defaultValue)
+        {
+            return IsNullOrEmpty(val) ? defaultValue : val;
+        }
     }
 }

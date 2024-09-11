@@ -30,5 +30,30 @@ namespace UniTool.Utilities
             transform.localRotation = info.LocalRotation;
             transform.localScale = info.LocalScale;
         }
+
+        public static string GetRelativePath(GameObject child, GameObject parent)
+        {
+            if (child == parent)
+            {
+                return "";
+            }
+
+            string path = child.name;
+            Transform current = child.transform;
+
+            while (current.parent != null && current.parent.gameObject != parent)
+            {
+                current = current.parent;
+                path = current.name + "/" + path; // 构建路径
+            }
+
+            if (current.parent == null)
+            {
+                Debug.LogError("The specified parent is not an ancestor of the child object.");
+                return null;
+            }
+
+            return path;
+        }
     }
 }
