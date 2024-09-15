@@ -77,6 +77,7 @@
     <Compile Include="Extensions\ValueExtension.cs" />
     <Compile Include="Extensions\VectorExtension.cs" />
     <Compile Include="Graphic\GizmosHelper.cs" />
+    <Compile Include="Utility\PersistentObjectManager.cs" />
     <Compile Include="Utility\TypeUtility.cs" />
     <Compile Include="Utility\UIUtility.cs" />
     <Compile Include="Internal\DebugHelper.cs" />

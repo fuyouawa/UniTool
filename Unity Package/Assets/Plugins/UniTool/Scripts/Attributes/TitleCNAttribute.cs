@@ -9,7 +9,8 @@ namespace UniTool.Attributes
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
     [Conditional("UNITY_EDITOR")]
     public class TitleCNAttribute : Attribute
-    {	/// <summary>
+    {
+        /// <summary>
         /// The title displayed above the property in the inspector.
         /// </summary>
         public string Title;

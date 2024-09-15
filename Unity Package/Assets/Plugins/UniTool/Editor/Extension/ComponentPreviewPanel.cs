@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UniTool.Utilities;
 using UniTool.Utilities.Editor;
 using UnityEditor;
 using UnityEditorInternal;
@@ -35,19 +37,6 @@ namespace UniTool.Editor.Extension
         private static readonly string CopiedComponentIDPrefsKey = "Component Tool Panel Copied Component ID";
 
         private static MonoScript[] _allScripts;
-
-        private static MonoScript[] AllScripts
-        {
-            get
-            {
-                if (_allScripts == null)
-                {
-                    _allScripts = MonoImporter.GetAllRuntimeMonoScripts();
-                }
-
-                return _allScripts;
-            }
-        }
 
         private class TargetItem
         {
@@ -146,6 +135,11 @@ namespace UniTool.Editor.Extension
                         return false;
                     }
 
+                    if (Components[index] == null)
+                    {
+                        return false;
+                    }
+
                     return true;
                 };
                 _listDrawer.OnReorderCallback += internalList =>
@@ -214,18 +208,25 @@ namespace UniTool.Editor.Extension
         {
             base.OnHeaderGUI();
 
-            if (_targetItems.Count <= MaxTargetGameObjects)
+            try
             {
-                foreach (var item in _targetItems)
+                if (_targetItems.Count <= MaxTargetGameObjects)
                 {
-                    item.DrawList();
-                }
+                    foreach (var item in _targetItems)
+                    {
+                        item.DrawList();
+                    }
 
-                serializedObject.ApplyModifiedProperties();
+                    serializedObject.ApplyModifiedProperties();
+                }
+                else
+                {
+                    EditorGUILayout.LabelField($"隐藏组件管理器(选中的GameObject超过了限制:{MaxTargetGameObjects})");
+                }
             }
-            else
+            catch (Exception e)
             {
-                EditorGUILayout.LabelField($"隐藏组件管理器(选中的GameObject超过了限制:{MaxTargetGameObjects})");
+                Debug.LogException(e, this);
             }
         }
 
@@ -320,8 +321,7 @@ namespace UniTool.Editor.Extension
                 GUIUtility.ExitGUI();
             }
 
-            var script = AllScripts.FirstOrDefault(s => s.GetClass() == component.GetType());
-            if (script != null)
+            if (TryGetComponentScript(component, out var script))
             {
                 string path = AssetDatabase.GetAssetPath(script);
 
@@ -433,6 +433,26 @@ namespace UniTool.Editor.Extension
             }
 
             return total;
+        }
+
+        private bool TryGetComponentScript(Component component, out MonoScript script)
+        {
+            if (_allScripts.IsNullOrEmpty())
+            {
+                _allScripts = MonoImporter.GetAllRuntimeMonoScripts();
+            }
+
+            try
+            {
+                script = _allScripts.FirstOrDefault(s => s.GetClass() == component.GetType());
+                return script != null;
+            }
+            catch (Exception e)
+            {
+                _allScripts = MonoImporter.GetAllRuntimeMonoScripts();
+                script = _allScripts.FirstOrDefault(s => s.GetClass() == component.GetType());
+                return script != null;
+            }
         }
 
         private static bool IsVisibleComponent(Component component)

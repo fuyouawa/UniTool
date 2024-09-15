@@ -121,5 +121,21 @@ namespace UniTool.Utilities
         {
             return type.InvokeMethod(methodName, ReflectionUtility.AllBindingFlags, target, args);
         }
+
+        public static void AddEvent(this Type type, string eventName, BindingFlags flags, object target, Delegate func)
+        {
+            var e = type.GetEvent(eventName, flags);
+            if (e == null)
+            {
+                throw new ArgumentException($"类型\"{type}\"中没有名为\"{eventName}\"并且\"{flags}\"的事件!");
+            }
+
+            e.GetAddMethod().Invoke(target, new object[] { func });
+        }
+
+        public static void AddEvent(this Type type, string eventName, object target, Delegate func)
+        {
+            type.AddEvent(eventName, ReflectionUtility.AllBindingFlags, target, func);
+        }
     }
 }
