@@ -12,6 +12,8 @@ namespace UniTool.Editor.Extension
     [CanEditMultipleObjects]
     public class ComponentPreviewPanel : ExtendEditor
     {
+        public static int MaxTargetGameObjects = 10;
+
         protected override string EditorTypeName => "UnityEditor.GameObjectInspector, UnityEditor";
 
         private static class Icons
@@ -212,12 +214,19 @@ namespace UniTool.Editor.Extension
         {
             base.OnHeaderGUI();
 
-            foreach (var item in _targetItems)
+            if (_targetItems.Count <= MaxTargetGameObjects)
             {
-                item.DrawList();
-            }
+                foreach (var item in _targetItems)
+                {
+                    item.DrawList();
+                }
 
-            serializedObject.ApplyModifiedProperties();
+                serializedObject.ApplyModifiedProperties();
+            }
+            else
+            {
+                EditorGUILayout.LabelField($"隐藏组件管理器(选中的GameObject超过了限制:{MaxTargetGameObjects})");
+            }
         }
 
         private void DrawElement(Rect rect, Component component, int index)
