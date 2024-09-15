@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
 using UniTool.Utilities.Editor;
 using UnityEditor;
 using UnityEditorInternal;
@@ -18,14 +16,12 @@ namespace UniTool.Editor.Extension
 
         private static class Icons
         {
-            // public static readonly GUIContent WarnIcon = EditorGUIUtility.IconContent("console.warnicon.sml");
-            // public static readonly GUIContent CloseIcon = EditorGUIUtility.IconContent("P4_DeletedRemote@2x");
-            // public static readonly GUIContent ResetIcon = EditorGUIUtility.IconContent("playLoopOff");
-            // public static readonly GUIContent DocumentIcon = EditorGUIUtility.IconContent("UnityEditor.ConsoleWindow");
-            // public static readonly GUIContent EditorIcon = EditorGUIUtility.IconContent("ViewToolZoom");
-            // public static readonly GUIContent FolderIcon = EditorGUIUtility.IconContent("Project");
             public static readonly GUIContent Expand = EditorGUIUtility.IconContent("winbtn_win_max");
             public static readonly GUIContent Collapse = EditorGUIUtility.IconContent("winbtn_win_min");
+            public static readonly GUIContent Add = EditorGUIUtility.IconContent("d_Toolbar Plus More@2x");
+            public static readonly GUIContent Remove = EditorGUIUtility.IconContent("CrossIcon");
+            public static readonly GUIContent Edit = EditorGUIUtility.IconContent("d_Grid.PaintTool@2x");
+            public static readonly GUIContent Warn = EditorGUIUtility.IconContent("d_console.warnicon");
         }
 
         private static class Styles
@@ -90,35 +86,50 @@ namespace UniTool.Editor.Extension
                 _foldout = true;
                 _listDrawer.DrawHeaderCallback += rect =>
                 {
-                    var btnWidth = 18;
-
-                    var foldoutRect = new Rect(rect)
-                    {
-                        width = rect.width - btnWidth * 2 - 6
-                    };
-                    _foldout = EditorGUI.Foldout(foldoutRect, _foldout, new GUIContent("组件预览面板"), true);
-
                     var rightBtnRect = new Rect(rect)
                     {
-                        x = rect.xMax - btnWidth,
-                        width = btnWidth
+                        x = rect.xMax - BlockWidth,
+                        width = BlockWidth
                     };
+                    if (GUI.Button(rightBtnRect, new GUIContent(Icons.Add.image, "添加组件"), Styles.Footer))
+                    {
+                        AddComponentWindowHelper.Show(
+                            new Rect(Screen.width / 2 - 230 / 2, rect.y + BlockWidth, 230, 0),
+                            _editor._targetItems.Select(i => i._gameObject).ToArray());
+                    }
+
+                    rightBtnRect.x -= BlockWidth + 3;
+
                     if (GUI.Button(rightBtnRect, new GUIContent(Icons.Collapse.image, "折叠所有"), Styles.Footer))
                     {
                         foreach (var c in Components)
                         {
                             InternalEditorUtility.SetIsInspectorExpanded(c, false);
                         }
+
                         EditorHelper.ForceRebuildInspectors();
                     }
-                    rightBtnRect.x -= btnWidth + 3;
+
+                    rightBtnRect.x -= BlockWidth + 3;
+
                     if (GUI.Button(rightBtnRect, new GUIContent(Icons.Expand.image, "展开所有"), Styles.Footer))
                     {
                         foreach (var c in Components)
                         {
                             InternalEditorUtility.SetIsInspectorExpanded(c, true);
                         }
+
                         EditorHelper.ForceRebuildInspectors();
+                    }
+
+                    var foldoutRect = new Rect(rect);
+                    if (_editor._targetItems.Count > 1)
+                    {
+                        _foldout = EditorGUI.Foldout(foldoutRect, _foldout, new GUIContent($"组件预览面板（{_gameObject.name}）"), true);
+                    }
+                    else
+                    {
+                        _foldout = EditorGUI.Foldout(foldoutRect, _foldout, new GUIContent("组件预览面板"), true);
                     }
                 };
                 _listDrawer.DrawElementCallback += (rect, index, active, focused) =>
@@ -143,18 +154,18 @@ namespace UniTool.Editor.Extension
                         int indexOf = internalList.List.IndexOf(Components[i]);
                         int difference = indexOf - i;
                         if (difference <= 0) continue;
-                
+
                         if (i == 0)
                         {
                             break;
                         }
-                
+
                         for (int j = 0; j < Mathf.Abs(difference); j++)
                         {
                             ComponentUtility.MoveComponentDown(Components[i]);
                         }
                     }
-                
+
                     //Move Up
                     Components = GetComponents();
                     for (int i = Components.Count - 1; i >= 0; i--)
@@ -162,12 +173,12 @@ namespace UniTool.Editor.Extension
                         int indexOf = internalList.List.IndexOf(Components[i]);
                         int difference = indexOf - i;
                         if (difference >= 0) continue;
-                        
+
                         if (i == 0)
                         {
                             break;
                         }
-                
+
                         for (int j = 0; j < Mathf.Abs(difference); j++)
                         {
                             ComponentUtility.MoveComponentUp(Components[i]);
@@ -178,12 +189,6 @@ namespace UniTool.Editor.Extension
 
             public void DrawList()
             {
-                // _foldout = EditorGUILayout.Foldout(_foldout, new GUIContent("组件预览面板"), false);
-                // if (_foldout)
-                // {
-                //     _listDrawer.DoLayoutList(false, true, false);
-                // }
-                // _listDrawer.ListElementTopPadding = 0;
                 _listDrawer.HasListElementTopPadding = false;
                 _listDrawer.DoLayoutList(true, _foldout, false);
             }
@@ -219,21 +224,23 @@ namespace UniTool.Editor.Extension
         {
             if (component == null)
             {
+                rect.x += 14;
                 var iconRect = new Rect(rect);
-                iconRect.width = iconRect.height = 20;
+                iconRect.width = iconRect.height = BlockWidth;
 
-                EditorGUI.LabelField(iconRect, new GUIContent(EditorIcons.UnityWarningIcon));
-
-                rect.x += 23;
+                EditorGUI.LabelField(iconRect, Icons.Warn);
+                
+                rect.x += (BlockWidth + 1) * 2;
+                rect.y -= 2;
                 //Name Handler
                 GUIStyle guiStyle = new GUIStyle(EditorStyles.boldLabel);
                 guiStyle.normal.textColor = guiStyle.onNormal.textColor = new Color32(209, 137, 24, 255);
-                EditorGUI.LabelField(rect, "Missing Component", guiStyle);
+                EditorGUI.LabelField(rect, "Mono脚本丢失！", guiStyle);
                 return;
             }
 
             //Is the components common for every inspected GameObject?
-            
+
             var foldoutRect = new Rect(rect);
             foldoutRect.y -= 2;
 
@@ -246,7 +253,7 @@ namespace UniTool.Editor.Extension
 
             var componentLabelRect = new Rect(enableToggleRect)
             {
-                width = rect.width -125
+                width = rect.width - 125
             };
             componentLabelRect.x += BlockWidth + 1;
 
@@ -264,7 +271,7 @@ namespace UniTool.Editor.Extension
                             _targetItems.Select(x => x.Components).ToList().TrueForAll(x =>
                                 x.Exists(y => y != null &&
                                               y.GetType() == component.GetType()));
-            
+
 
             // 先绘制Enable开关
             if (EditorUtility.GetObjectEnabled(component) != -1)
@@ -283,14 +290,16 @@ namespace UniTool.Editor.Extension
             }
 
             // 删除按钮
-            if (IsRemovableComponent(component) && SirenixEditorGUI.SDFIconButton(removeBtnRect, SdfIconType.X, Styles.Footer))
+            if (IsRemovableComponent(component) &&
+                GUI.Button(removeBtnRect, new GUIContent(Icons.Remove.image, "删除组件"), Styles.Footer))
             {
                 var targetComponents = GetTargetComponents(component);
                 foreach (var t in targetComponents)
                 {
                     if (IsDependantComponent(t, out var dependantTarget))
                     {
-                        EditorUtility.DisplayDialog("错误", $"不能删除\"{t.GetType()}\"因为\"{dependantTarget.GetType()}\"依赖于它", "确认");
+                        EditorUtility.DisplayDialog("错误", $"不能删除\"{t.GetType()}\"因为\"{dependantTarget.GetType()}\"依赖于它",
+                            "确认");
                     }
                     else
                     {
@@ -298,6 +307,7 @@ namespace UniTool.Editor.Extension
                         Undo.DestroyObjectImmediate(t);
                     }
                 }
+
                 GUIUtility.ExitGUI();
             }
 
@@ -308,7 +318,7 @@ namespace UniTool.Editor.Extension
 
                 if (path.EndsWith(".cs") || path.EndsWith(".js"))
                 {
-                    if (SirenixEditorGUI.SDFIconButton(editBtnRect, SdfIconType.PencilSquare, style: Styles.Footer))
+                    if (GUI.Button(editBtnRect, new GUIContent(Icons.Edit.image, "编辑脚本"), Styles.Footer))
                     {
                         if (Event.current.button == 0)
                             AssetDatabase.OpenAsset(script);
@@ -320,7 +330,8 @@ namespace UniTool.Editor.Extension
 
             using (var check = new EditorGUI.ChangeCheckScope())
             {
-                var expand = EditorGUI.Foldout(foldoutRect, InternalEditorUtility.GetIsInspectorExpanded(component), GUIContent.none, true);
+                var expand = EditorGUI.Foldout(foldoutRect, InternalEditorUtility.GetIsInspectorExpanded(component),
+                    GUIContent.none, true);
                 InternalEditorUtility.SetIsInspectorExpanded(component, expand);
                 if (check.changed)
                 {
@@ -332,13 +343,13 @@ namespace UniTool.Editor.Extension
                     EditorHelper.ForceRebuildInspectors();
                 }
             }
-            
+
             Texture icon = EditorGUIUtility.ObjectContent(component, component.GetType()).image;
             EditorGUI.LabelField(compIconRect, new GUIContent(icon));
-            
+
             GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
             if (isCommon)
-                style.normal.textColor = style.onNormal.textColor = new Color32(0, 128, 0, 255);
+                style.normal.textColor = style.onNormal.textColor = new Color(0f, 1f, 0.3f);
             EditorGUI.LabelField(componentLabelRect, component.GetType().Name, style);
 
             // //Reset Button
@@ -399,11 +410,16 @@ namespace UniTool.Editor.Extension
         {
             var total = new List<Component>();
 
-            foreach (var c in _targetItems.SelectMany(i => i.Components))
+            if (component != null)
             {
-                if (c.GetType() == component.GetType())
+                foreach (var c in _targetItems.SelectMany(i => i.Components))
                 {
-                    total.Add(c);
+                    if (c == null)
+                        continue;
+                    if (c.GetType() == component.GetType())
+                    {
+                        total.Add(c);
+                    }
                 }
             }
 
@@ -424,10 +440,14 @@ namespace UniTool.Editor.Extension
 
         private static bool IsDependantComponent(Component component, out Component dependantTarget)
         {
+            dependantTarget = null;
+            if (component == null) return false;
+
             var components = component.GetComponents<Component>();
             var t = component.GetType();
             foreach (var c in components)
             {
+                if (c == null) continue;
                 var attrs = c.GetType().GetCustomAttributes<RequireComponent>();
                 if (attrs.Any(attr => attr.m_Type0 == t || attr.m_Type1 == t || attr.m_Type2 == t))
                 {
@@ -436,17 +456,19 @@ namespace UniTool.Editor.Extension
                 }
             }
 
-            dependantTarget = null;
             return false;
         }
 
         private static bool IsRemovableComponent(Component component)
         {
+            if (component == null) return true;
+
             var t = component.GetType();
             if (t == typeof(Transform) || t == typeof(RectTransform))
             {
                 return false;
             }
+
             return true;
         }
     }

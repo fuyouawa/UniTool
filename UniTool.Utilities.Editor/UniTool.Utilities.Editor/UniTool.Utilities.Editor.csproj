@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddComponentWindowHelper.cs" />
     <Compile Include="EditorGUIHelper.cs" />
     <Compile Include="EditorHelper.cs" />
     <Compile Include="ExtendEditor.cs" />
