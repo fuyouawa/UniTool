@@ -9,6 +9,12 @@ namespace UniTool.Utilities
 {
     public static class ReflectionUtility
     {
+        public static readonly BindingFlags AllBindingFlags =
+            BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+
+        public static readonly BindingFlags NoPublicBindingFlags =
+            BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+
         public static string GetSignature(MemberInfo member)
         {
             var sb = new StringBuilder();

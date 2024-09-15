@@ -5,7 +5,6 @@ namespace UniTool.Utilities
 {
     public static class TypeUtility
     {
-
         public static readonly TypeCode[] IntegerTypes =
         {
             TypeCode.SByte, TypeCode.Byte, TypeCode.Int16, TypeCode.UInt16, TypeCode.Int32, TypeCode.UInt32,

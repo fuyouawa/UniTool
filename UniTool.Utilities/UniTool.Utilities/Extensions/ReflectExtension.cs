@@ -29,5 +29,25 @@ namespace UniTool.Utilities
         {
             return member.GetCustomAttributes<T>().Any();
         }
+
+        public static IEnumerable<Type> GetAllTypes(this IEnumerable<Assembly> assemblies)
+        {
+            return assemblies.SelectMany(a => a.GetTypes());
+        }
+
+        public static Type FindType(this IEnumerable<Assembly> assemblies, Func<Type, bool> predicate)
+        {
+            return assemblies.GetAllTypes().FirstOrDefault(predicate);
+        }
+
+        public static Type FindTypeByName(this IEnumerable<Assembly> assemblies, string fullName)
+        {
+            return assemblies.GetAllTypes().FirstOrDefault(t => t.FullName == fullName);
+        }
+
+        public static object InvokePrivateMethod(this object target, string methodName, params object[] args)
+        {
+            return target.GetType().InvokeMethod(methodName, ReflectionUtility.NoPublicBindingFlags, target, args);
+        }
     }
 }

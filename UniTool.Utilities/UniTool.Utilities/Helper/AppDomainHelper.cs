@@ -7,18 +7,34 @@ namespace UniTool.Utilities
 {
     public static class AppDomainHelper
     {
-        public static IEnumerable<Assembly> GetCustomAssemblies(AppDomain domain)
+        public static IEnumerable<Assembly> GetProjectAssemblies(AppDomain domain)
         {
             return AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => !a.FullName.StartsWith("UnityEngine.") &&
-                            !a.FullName.StartsWith("UnityEditor.") &&
-                            !a.FullName.StartsWith("Unity.") &&
-                            !a.FullName.StartsWith("System."));
+                .Where(a => a.FullName.StartsWith("Assembly."));
         }
 
-        public static IEnumerable<Type> GetCustomTypes(AppDomain domain)
+        public static IEnumerable<Assembly> GetUnityEngineAssemblies(AppDomain domain)
         {
-            return GetCustomAssemblies(domain).SelectMany(a => a.GetTypes());
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a.FullName.StartsWith("UnityEngine."));
+        }
+
+        public static IEnumerable<Assembly> GetUnityEditorAssemblies(AppDomain domain)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a.FullName.StartsWith("UnityEditor."));
+        }
+
+        public static IEnumerable<Assembly> GetUnityAssemblies(AppDomain domain)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a.FullName.StartsWith("Unity."));
+        }
+
+        public static IEnumerable<Assembly> GetSystemAssemblies(AppDomain domain)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a.FullName.StartsWith("System."));
         }
     }
 }

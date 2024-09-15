@@ -1,9 +1,5 @@
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
-using System;
-using System.IO;
 using Sirenix.Utilities;
-using UniTool.Global;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,19 +8,8 @@ namespace UniTool.Editor.Configs
     [UniToolEditorGlobalConfig]
     public class UniToolEditorConfig : GlobalConfig<UniToolEditorConfig>
     {
-        private Font _font;
-
-        public Font Font
-        {
-            get
-            {
-                if (_font == null)
-                {
-                    _font = AssetDatabase.LoadAssetAtPath<Font>(Path.Combine(UniToolAssetPaths.EditorAssetsPath, FontAssetName));
-                }
-                return _font;
-            }
-        }
+        public Font Font =>
+            AssetDatabase.LoadAssetAtPath<Font>(UniToolEditorAssetsPath.FontsPath+ "/" + FontAssetName);
 
         public string FontAssetName;
 

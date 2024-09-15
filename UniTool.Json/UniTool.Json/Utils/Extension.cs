@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UniTool.Utilities;
@@ -72,6 +73,17 @@ namespace UniTool.Json
             }
 
             val = default;
+            return false;
+        }
+
+        public static bool TrySetCustomPropertyByRef<T>(this JObject j, JsonSerializer serializer, string propertyName, ref T val)
+        {
+            if (j.TryGetValue(propertyName, out var t))
+            {
+                val = t.ToObject<T>(serializer);
+                return true;
+            }
+
             return false;
         }
 

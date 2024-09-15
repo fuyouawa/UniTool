@@ -60,5 +60,66 @@ namespace UniTool.Utilities
         {
             return type.IsPrimitive || IsUnityObjectType(type);
         }
+
+        public static T GetPropertyValue<T>(this Type type, string propertyName, BindingFlags flags, object target)
+        {
+            var property = type.GetProperty(propertyName, flags);
+            if (property == null)
+            {
+                throw new ArgumentException($"类型:\"{type.FullName}\"没有BindingFlags为:{flags}的属性:\"{propertyName}\"");
+            }
+            return (T)property.GetValue(target, null);
+        }
+
+        public static T GetPropertyValue<T>(this Type type, string propertyName, object target)
+        {
+            return type.GetPropertyValue<T>(propertyName, ReflectionUtility.AllBindingFlags, target);
+        }
+
+        public static MethodInfo GetMethodEx(this Type type, string methodName, BindingFlags flags, Type[] argTypes)
+        {
+            return type.GetMethods(flags).FirstOrDefault(m =>
+            {
+                if (m.Name != methodName)
+                {
+                    return false;
+                }
+                var parameters = m.GetParameters();
+                if (argTypes == null)
+                {
+                    return parameters.Length == 0;
+                }
+
+                if (argTypes.Length != parameters.Length)
+                {
+                    return false;
+                }
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    if (!parameters[i].ParameterType.IsAssignableFrom(argTypes[i]))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            });
+        }
+
+        public static object InvokeMethod(this Type type, string methodName, BindingFlags flags, object target, params object[] args)
+        {
+            var method = type.GetMethodEx(methodName, flags, args.Select(a => a.GetType()).ToArray());
+
+            if (method == null)
+            {
+                throw new ArgumentException($"类型\"{type}\"中没有名为\"{methodName}\"并且\"{flags}\"的函数!");
+            }
+            return method.Invoke(target, args);
+        }
+
+        public static object InvokeMethod(this Type type, string methodName, object target,
+            params object[] args)
+        {
+            return type.InvokeMethod(methodName, ReflectionUtility.AllBindingFlags, target, args);
+        }
     }
 }
