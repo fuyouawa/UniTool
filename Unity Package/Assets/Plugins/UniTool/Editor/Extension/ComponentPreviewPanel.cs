@@ -14,8 +14,6 @@ namespace UniTool.Editor.Extension
     [CanEditMultipleObjects]
     public class ComponentPreviewPanel : ExtendEditor
     {
-        public static int MaxTargetGameObjects = 10;
-
         protected override string EditorTypeName => "UnityEditor.GameObjectInspector, UnityEditor";
 
         private static class Icons
@@ -41,27 +39,31 @@ namespace UniTool.Editor.Extension
         private class TargetItem
         {
             public List<Component> Components;
+            public GameObject Target;
+
             private UniReorderableList _listDrawer;
             private bool _foldout;
-            private GameObject _gameObject;
             private ComponentPreviewPanel _editor;
+            private bool _initialized;
 
             private List<Component> GetComponents()
             {
-                return _gameObject.GetComponents<Component>().Where(IsVisibleComponent).ToList();
+                return Target.GetComponents<Component>().Where(IsVisibleComponent).ToList();
             }
 
             public TargetItem(GameObject target, ComponentPreviewPanel editor)
             {
-                _gameObject = target;
+                Target = target;
                 _editor = editor;
                 Components = GetComponents();
-                InitListDrawer();
             }
 
 
-            private void InitListDrawer()
+            private void Initialize()
             {
+                if (_initialized) return;
+                _initialized = true;
+
                 _listDrawer = new UniReorderableList(new List<Component>(Components), true, true, true, false);
                 _listDrawer.DrawElementBackgroundCallback += (rect, index, active, focused) =>
                 {
@@ -86,7 +88,7 @@ namespace UniTool.Editor.Extension
                     {
                         AddComponentWindowHelper.Show(
                             new Rect(Screen.width / 2 - 230 / 2, rect.y + BlockWidth, 230, 0),
-                            _editor._targetItems.Select(i => i._gameObject).ToArray());
+                            _editor._targetItems.Select(i => i.Target).ToArray());
                     }
 
                     rightBtnRect.x -= BlockWidth + 3;
@@ -116,7 +118,7 @@ namespace UniTool.Editor.Extension
                     var foldoutRect = new Rect(rect);
                     if (_editor._targetItems.Count > 1)
                     {
-                        _foldout = EditorGUI.Foldout(foldoutRect, _foldout, new GUIContent($"组件预览面板（{_gameObject.name}）"), true);
+                        _foldout = EditorGUI.Foldout(foldoutRect, _foldout, new GUIContent($"{Target.name}"), true);
                     }
                     else
                     {
@@ -185,6 +187,7 @@ namespace UniTool.Editor.Extension
 
             public void DrawList()
             {
+                Initialize();
                 _listDrawer.HasListElementTopPadding = false;
                 _listDrawer.DoLayoutList(true, _foldout, false);
             }
@@ -192,6 +195,7 @@ namespace UniTool.Editor.Extension
 
         private GameObject _gameObject;
         private List<TargetItem> _targetItems;
+        private bool _expandTargets;
 
         protected override void OnEnable()
         {
@@ -207,27 +211,21 @@ namespace UniTool.Editor.Extension
         protected override void OnHeaderGUI()
         {
             base.OnHeaderGUI();
-
-            try
+            
+            if (_targetItems.Count > 1)
             {
-                if (_targetItems.Count <= MaxTargetGameObjects)
-                {
-                    foreach (var item in _targetItems)
-                    {
-                        item.DrawList();
-                    }
+                _expandTargets = EditorGUILayout.Foldout(_expandTargets, $"多个游戏对象的组件预览面板（数量：{_targetItems.Count}）", true);
+            }
 
-                    serializedObject.ApplyModifiedProperties();
-                }
-                else
+            if (_targetItems.Count == 1 || _expandTargets)
+            {
+                foreach (var item in _targetItems)
                 {
-                    EditorGUILayout.LabelField($"隐藏组件管理器(选中的GameObject超过了限制:{MaxTargetGameObjects})");
+                    item.DrawList();
                 }
             }
-            catch (Exception e)
-            {
-                Debug.LogException(e, this);
-            }
+
+            serializedObject.ApplyModifiedProperties();
         }
 
         private void DrawElement(Rect rect, Component component, int index)
@@ -277,11 +275,7 @@ namespace UniTool.Editor.Extension
             var editBtnRect = new Rect(removeBtnRect);
             editBtnRect.x -= EditorGUIUtility.singleLineHeight - 1;
 
-            bool isCommon = targets.Length > 1 &&
-                            _targetItems.Select(x => x.Components).ToList().TrueForAll(x =>
-                                x.Exists(y => y != null &&
-                                              y.GetType() == component.GetType()));
-
+            bool isCommon = IsCommonComponentInTargets(component);
 
             // 先绘制Enable开关
             if (EditorUtility.GetObjectEnabled(component) != -1)
@@ -345,7 +339,7 @@ namespace UniTool.Editor.Extension
                 if (check.changed)
                 {
                     bool value = InternalEditorUtility.GetIsInspectorExpanded(component);
-                    var targetComponents = GetTargetComponents(component);
+                    var targetComponents = GetTargetComponents(component, false);
                     foreach (var c in targetComponents)
                         InternalEditorUtility.SetIsInspectorExpanded(c, value);
 
@@ -415,24 +409,53 @@ namespace UniTool.Editor.Extension
             // }
         }
 
-        private List<Component> GetTargetComponents(Component component)
+        private List<Component> GetTargetComponents(Component component, bool includeSelf = true)
         {
             var total = new List<Component>();
 
+            if (includeSelf)
+            {
+                total.Add(component);
+            }
+
             if (component != null)
             {
-                foreach (var c in _targetItems.SelectMany(i => i.Components))
+                // 获取自己在GameObject中重复项的索引
+                var ct = component.GetType();
+                var ci = component.GetComponents(ct).IndexOf(component);
+
+                foreach (var comps in _targetItems.Where(i => i.Target != component.gameObject).Select(i => i.Components))
                 {
-                    if (c == null)
-                        continue;
-                    if (c.GetType() == component.GetType())
+                    foreach (var c in comps)
                     {
-                        total.Add(c);
+                        if (c == null) continue;
+                        var ct1 = c.GetType();
+                        // 如果类型相同。再判断他们重复项索引是否相同
+                        if (ct1 == ct)
+                        {
+                            // 获取重复项索引，如果要对比的和当前的都相同，说明是匹配项
+                            var ci2 = c.GetComponents(ct1).IndexOf(c);
+                            if (ci == ci2)
+                            {
+                                total.Add(c);
+                            }
+                        }
                     }
                 }
             }
 
             return total;
+        }
+
+        private bool IsRepeatedComponent(Component component)
+        {
+            var comps = component.gameObject.GetComponents<Component>();
+            if (comps.Length > 1)
+            {
+                var i = comps.IndexOf(component);
+                return i != 0;
+            }
+            return false;
         }
 
         private bool TryGetComponentScript(Component component, out MonoScript script)
@@ -453,6 +476,11 @@ namespace UniTool.Editor.Extension
                 script = _allScripts.FirstOrDefault(s => s.GetClass() == component.GetType());
                 return script != null;
             }
+        }
+
+        private bool IsCommonComponentInTargets(Component component)
+        {
+            return GetTargetComponents(component, false).Count > 0;
         }
 
         private static bool IsVisibleComponent(Component component)
