@@ -3,7 +3,7 @@
 // using Sirenix.OdinInspector;
 // using UnityEngine;
 //
-// namespace UniTool.Components
+// namespace UniTool.Tools
 // {
 //     public class CinemachineCameraShaker : MonoBehaviour
 //     {

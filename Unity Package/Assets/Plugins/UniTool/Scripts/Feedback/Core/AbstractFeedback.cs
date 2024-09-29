@@ -6,7 +6,7 @@ using UniTool.Attributes;
 using UniTool.Utilities;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     public class AddFeedbackMenuAttribute : Attribute
     {

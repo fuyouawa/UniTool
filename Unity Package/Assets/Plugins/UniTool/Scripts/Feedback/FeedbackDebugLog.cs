@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UniTool.Attributes;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("打印调试信息")]
     [AddFeedbackMenu("调试/打印")]

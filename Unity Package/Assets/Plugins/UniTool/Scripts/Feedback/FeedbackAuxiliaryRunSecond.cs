@@ -1,6 +1,6 @@
 using Sirenix.OdinInspector;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("运行指定时间(秒)")]
     [AddFeedbackMenu("辅助/运行指定时间(秒)")]

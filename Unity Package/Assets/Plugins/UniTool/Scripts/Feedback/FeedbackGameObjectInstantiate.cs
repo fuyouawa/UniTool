@@ -1,8 +1,8 @@
 using Sirenix.OdinInspector;
-using UniTool.Components;
+using UniTool.Tools;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("实例化一个GameObject")]
     [AddFeedbackMenu("游戏物体/实例化")]

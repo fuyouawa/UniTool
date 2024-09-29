@@ -5,7 +5,7 @@
 // using UniTool.Utilities;
 // using UnityEngine;
 //
-// namespace UniTool.Feedbacks
+// namespace UniTool.Tools
 // {
 //     [FeedbackHelper("使用UniTool的事件系统触发指定事件\n" +
 //                     "在FullName中填写事件的类名(完整命名空间), " +

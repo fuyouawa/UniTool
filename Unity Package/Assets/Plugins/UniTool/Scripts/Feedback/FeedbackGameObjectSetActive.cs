@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("设置GameObject激活状态")]
     [AddFeedbackMenu("游戏物体/设置激活")]

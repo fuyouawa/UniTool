@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 using UniTool.Utilities;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     public class Feedbacks : SerializedMonoBehaviour
     {

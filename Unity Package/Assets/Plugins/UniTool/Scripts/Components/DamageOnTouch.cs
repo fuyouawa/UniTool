@@ -5,7 +5,7 @@ using UniTool.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UniTool.Components
+namespace UniTool.Tools
 {
     public class DamageOnTouch : MonoBehaviour
     {
@@ -47,9 +47,9 @@ namespace UniTool.Components
         public bool DamageOverTimeInterruptible = true;
 
         [Title("Feedbacks")]
-        public Feedbacks.Feedbacks HitDamageableFeedbacks;
-        public Feedbacks.Feedbacks HitNonDamageableFeedbacks;
-        public Feedbacks.Feedbacks HitAnythingFeedbacks;
+        public Feedbacks HitDamageableFeedbacks;
+        public Feedbacks HitNonDamageableFeedbacks;
+        public Feedbacks HitAnythingFeedbacks;
 
         [Title("Events")]
         public UnityEvent<AbstractHealth> OnHitDamageable = new();

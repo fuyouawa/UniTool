@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UniTool.Utilities;
 using UnityEngine;
 
- namespace UniTool.Feedbacks
+ namespace UniTool.Tools
 {
     [FeedbackHelper("光照控制")]
     [AddFeedbackMenu("光照/光照控制")]

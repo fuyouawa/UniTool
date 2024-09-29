@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("配置一个声音用于播放, 在初始化时会自动创建对应的AudioSource")]
     [AddFeedbackMenu("音效/播放声音")]

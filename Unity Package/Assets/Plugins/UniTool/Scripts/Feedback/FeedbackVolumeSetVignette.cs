@@ -6,7 +6,7 @@
 // using UnityEngine;
 // using UnityEngine.Rendering.PostProcessing;
 //
-// namespace UniTool.Feedbacks
+// namespace UniTool.Tools
 // {
 //     [AddFeedbackMenu("Volume/Set Vignette")]
 //

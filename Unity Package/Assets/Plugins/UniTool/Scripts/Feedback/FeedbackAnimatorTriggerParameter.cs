@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UniTool.Utilities;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("触发指定Animator的Trigger参数")]
     [AddFeedbackMenu("动画器/触发参数")]

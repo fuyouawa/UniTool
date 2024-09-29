@@ -1,9 +1,8 @@
 using Sirenix.OdinInspector;
 using System;
-using UniTool.Utilities;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("设置指定Animator的参数")]
     [AddFeedbackMenu("动画器/设置参数")]

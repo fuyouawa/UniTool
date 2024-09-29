@@ -3,7 +3,7 @@ using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("在指定的SpriteRenderer上循环赋值图集中的精灵, 实现帧动画的效果")]
     [AddFeedbackMenu("精灵/帧动画")]

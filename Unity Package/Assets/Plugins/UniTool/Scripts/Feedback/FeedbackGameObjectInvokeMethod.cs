@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UniTool.Utilities;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("调用GameObject上的一个函数")]
     [AddFeedbackMenu("游戏物体/调用函数")]

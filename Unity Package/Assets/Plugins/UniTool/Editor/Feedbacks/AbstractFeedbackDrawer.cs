@@ -1,8 +1,8 @@
-using UniTool.Feedbacks;
+using UniTool.Tools;
 using UnityEditor;
 using UnityEngine;
 
-namespace UniTool.Editor.Feedbacks
+namespace UniTool.Editor.Tools
 {
     [CustomPropertyDrawer(typeof(AbstractFeedback))]
     public class AbstractFeedbackDrawer : PropertyDrawer

@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("播放场景中指定的AudioSource")]
     [AddFeedbackMenu("音效/播放音效源")]

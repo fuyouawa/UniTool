@@ -1,7 +1,7 @@
 using System.Collections;
 using Sirenix.OdinInspector;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Tools
 {
     [FeedbackHelper("运行指定帧数")]
     [AddFeedbackMenu("辅助/运行指定帧数")]
