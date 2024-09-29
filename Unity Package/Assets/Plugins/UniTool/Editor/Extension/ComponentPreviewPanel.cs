@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using UniTool.Utilities;
@@ -18,10 +19,6 @@ namespace UniTool.Editor.Extension
 
         private static class Icons
         {
-            public static readonly GUIContent Expand = EditorGUIUtility.IconContent("winbtn_win_max");
-            public static readonly GUIContent Collapse = EditorGUIUtility.IconContent("winbtn_win_min");
-            public static readonly GUIContent Add = EditorGUIUtility.IconContent("d_Toolbar Plus More@2x");
-            public static readonly GUIContent Remove = EditorGUIUtility.IconContent("CrossIcon");
             public static readonly GUIContent Edit = EditorGUIUtility.IconContent("d_Grid.PaintTool@2x");
             public static readonly GUIContent Warn = EditorGUIUtility.IconContent("d_console.warnicon");
         }
@@ -64,57 +61,38 @@ namespace UniTool.Editor.Extension
                 if (_initialized) return;
                 _initialized = true;
 
-                _listDrawer = new UniReorderableList(new List<Component>(Components), true, true, true, false);
-                _listDrawer.DrawElementBackgroundCallback += (rect, index, active, focused) =>
-                {
-                    if (index % 2 == 0)
-                    {
-                        EditorGUI.DrawRect(rect, new Color(0.23f, 0.23f, 0.23f));
-                    }
-                    else
-                    {
-                        EditorGUI.DrawRect(rect, new Color(0.2f, 0.2f, 0.2f));
-                    }
-                };
+                _listDrawer = new UniReorderableList(new List<Component>(Components), UniReorderableListThemes.SquareLike);
                 _foldout = true;
+
+                _listDrawer.OnAddDropdownCallback += buttonRect =>
+                {
+                    AddComponentWindowHelper.Show(
+                        new Rect(Screen.width / 2 - 230 / 2, buttonRect.y + BlockWidth, 230, 0),
+                        _editor._targetItems.Select(i => i.Target).ToArray());
+                };
+
+                _listDrawer.OnExpandCallback += () =>
+                {
+                    foreach (var c in Components)
+                    {
+                        InternalEditorUtility.SetIsInspectorExpanded(c, true);
+                    }
+
+                    EditorHelper.ForceRebuildInspectors();
+                };
+
+                _listDrawer.OnCollapseCallback += () =>
+                {
+                    foreach (var c in Components)
+                    {
+                        InternalEditorUtility.SetIsInspectorExpanded(c, false);
+                    }
+
+                    EditorHelper.ForceRebuildInspectors();
+                };
+
                 _listDrawer.DrawHeaderCallback += rect =>
                 {
-                    var rightBtnRect = new Rect(rect)
-                    {
-                        x = rect.xMax - BlockWidth,
-                        width = BlockWidth
-                    };
-                    if (GUI.Button(rightBtnRect, new GUIContent(Icons.Add.image, "添加组件"), Styles.Footer))
-                    {
-                        AddComponentWindowHelper.Show(
-                            new Rect(Screen.width / 2 - 230 / 2, rect.y + BlockWidth, 230, 0),
-                            _editor._targetItems.Select(i => i.Target).ToArray());
-                    }
-
-                    rightBtnRect.x -= BlockWidth + 3;
-
-                    if (GUI.Button(rightBtnRect, new GUIContent(Icons.Collapse.image, "折叠所有"), Styles.Footer))
-                    {
-                        foreach (var c in Components)
-                        {
-                            InternalEditorUtility.SetIsInspectorExpanded(c, false);
-                        }
-
-                        EditorHelper.ForceRebuildInspectors();
-                    }
-
-                    rightBtnRect.x -= BlockWidth + 3;
-
-                    if (GUI.Button(rightBtnRect, new GUIContent(Icons.Expand.image, "展开所有"), Styles.Footer))
-                    {
-                        foreach (var c in Components)
-                        {
-                            InternalEditorUtility.SetIsInspectorExpanded(c, true);
-                        }
-
-                        EditorHelper.ForceRebuildInspectors();
-                    }
-
                     var foldoutRect = new Rect(rect);
                     if (_editor._targetItems.Count > 1)
                     {
@@ -125,12 +103,14 @@ namespace UniTool.Editor.Extension
                         _foldout = EditorGUI.Foldout(foldoutRect, _foldout, new GUIContent("组件预览面板"), true);
                     }
                 };
+
                 _listDrawer.DrawElementCallback += (rect, index, active, focused) =>
                 {
                     rect.y += 2;
                     _editor.DrawElement(rect, Components[index], index);
                 };
-                _listDrawer.OnReorderDecide = (list, index, newIndex) =>
+
+                _listDrawer.OnReorderDecide += (index, newIndex) =>
                 {
                     if (index == 0)
                     {
@@ -144,12 +124,13 @@ namespace UniTool.Editor.Extension
 
                     return true;
                 };
-                _listDrawer.OnReorderCallback += internalList =>
+
+                _listDrawer.OnReorderCallback += () =>
                 {
                     //Move Down
                     for (int i = 0; i < Components.Count; i++)
                     {
-                        int indexOf = internalList.List.IndexOf(Components[i]);
+                        int indexOf = _listDrawer.List.IndexOf(Components[i]);
                         int difference = indexOf - i;
                         if (difference <= 0) continue;
 
@@ -168,7 +149,7 @@ namespace UniTool.Editor.Extension
                     Components = GetComponents();
                     for (int i = Components.Count - 1; i >= 0; i--)
                     {
-                        int indexOf = internalList.List.IndexOf(Components[i]);
+                        int indexOf = _listDrawer.List.IndexOf(Components[i]);
                         int difference = indexOf - i;
                         if (difference >= 0) continue;
 
@@ -183,13 +164,42 @@ namespace UniTool.Editor.Extension
                         }
                     }
                 };
+
+                _listDrawer.OnCanRemoveCallback += index =>
+                {
+                    var component = (Component)_listDrawer.List[index];
+                    return IsRemovableComponent(component);
+                };
+
+                _listDrawer.OnRemoveCallback += index =>
+                {
+                    var component = (Component)_listDrawer.List[index];
+                    var targetComponents = _editor.GetTargetComponents(component);
+                    foreach (var t in targetComponents)
+                    {
+                        if (IsDependantComponent(t, out var dependantTarget))
+                        {
+                            EditorUtility.DisplayDialog("错误",
+                                $"不能删除\"{t.GetType()}\"因为\"{dependantTarget.GetType()}\"依赖于它",
+                                "确认");
+                        }
+                        else
+                        {
+                            Undo.SetCurrentGroupName("Remove " + t.GetType().Name);
+                            Undo.DestroyObjectImmediate(t);
+                        }
+                    }
+
+                    GUIUtility.ExitGUI();
+                };
             }
 
             public void DrawList()
             {
                 Initialize();
                 _listDrawer.HasListElementTopPadding = false;
-                _listDrawer.DoLayoutList(true, _foldout, false);
+                _listDrawer.DisplayElements = _foldout;
+                _listDrawer.DoLayoutList();
             }
         }
 
@@ -265,14 +275,12 @@ namespace UniTool.Editor.Extension
             };
             componentLabelRect.x += BlockWidth + 1;
 
-            var removeBtnRect = new Rect(rect)
+            var editBtnRect = new Rect(rect)
             {
                 x = rect.xMax
             };
-            removeBtnRect.width = removeBtnRect.height = BlockWidth;
-            removeBtnRect.x -= EditorGUIUtility.singleLineHeight;
-
-            var editBtnRect = new Rect(removeBtnRect);
+            editBtnRect.width = editBtnRect.height = BlockWidth;
+            editBtnRect.x -= EditorGUIUtility.singleLineHeight;
             editBtnRect.x -= EditorGUIUtility.singleLineHeight - 1;
 
             bool isCommon = IsCommonComponentInTargets(component);
@@ -291,28 +299,6 @@ namespace UniTool.Editor.Extension
                         EditorUtility.SetObjectEnabled(t, newValue);
                     }
                 }
-            }
-
-            // 删除按钮
-            if (IsRemovableComponent(component) &&
-                GUI.Button(removeBtnRect, new GUIContent(Icons.Remove.image, "删除组件"), Styles.Footer))
-            {
-                var targetComponents = GetTargetComponents(component);
-                foreach (var t in targetComponents)
-                {
-                    if (IsDependantComponent(t, out var dependantTarget))
-                    {
-                        EditorUtility.DisplayDialog("错误", $"不能删除\"{t.GetType()}\"因为\"{dependantTarget.GetType()}\"依赖于它",
-                            "确认");
-                    }
-                    else
-                    {
-                        Undo.SetCurrentGroupName("Remove " + t.GetType().Name);
-                        Undo.DestroyObjectImmediate(t);
-                    }
-                }
-
-                GUIUtility.ExitGUI();
             }
 
             if (TryGetComponentScript(component, out var script))

@@ -275,7 +275,7 @@ namespace UniTool.Tools
 
         public static void GenerateDropdownItem()
         {
-            s_allFeedbackDropdownItems = new ValueDropdownList<AbstractFeedback> { { "None", null } };
+            s_allFeedbackDropdownItems = new ValueDropdownList<AbstractFeedback>();
 
             foreach (var kv in s_allFeedbackTypes)
             {
