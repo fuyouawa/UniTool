@@ -2,10 +2,9 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Linq;
 using System.Reflection;
-using UniTool.Utilities;
 using UnityEngine;
 
-namespace UniTool.PropertyPicker
+namespace UniTool.Utilities
 {
     public abstract class MemberPicker
     {

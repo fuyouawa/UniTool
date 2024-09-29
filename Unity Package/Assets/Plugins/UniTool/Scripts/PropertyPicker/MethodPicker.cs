@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Sirenix.OdinInspector;
-using UniTool.Utilities;
 
-namespace UniTool.PropertyPicker
+namespace UniTool.Utilities
 {
     [Serializable]
     public class MethodPicker : MemberPicker

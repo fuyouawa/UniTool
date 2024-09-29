@@ -1,8 +1,7 @@
 using System;
 using Sirenix.OdinInspector;
-using UniTool.Utilities;
 
-namespace UniTool.PropertyPicker
+namespace UniTool.Utilities
 {
     [Serializable]
     public class VisualObject

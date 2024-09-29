@@ -1,8 +1,7 @@
 using Sirenix.OdinInspector;
-using UniTool.Utilities;
 using UnityEngine;
 
-namespace UniTool.Feedbacks
+namespace UniTool.Components
 {
     public class LifeTime : MonoBehaviour
     {

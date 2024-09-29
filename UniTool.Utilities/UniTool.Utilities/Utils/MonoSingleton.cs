@@ -47,6 +47,17 @@ namespace UniTool.Utilities
             }
         }
 
+        protected virtual void Awake()
+        {
+            if (_instance != null)
+            {
+                Destroy(_instance.gameObject);
+            }
+
+            _instance = (T)this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         public virtual void OnSingletonInit()
         {
         }

@@ -1,8 +1,7 @@
 using System;
 using System.Reflection;
-using UniTool.Utilities;
 
-namespace UniTool.PropertyPicker
+namespace UniTool.Utilities
 {
     [Serializable]
     public class ValueGetter : MemberPicker
