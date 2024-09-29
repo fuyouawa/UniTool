@@ -26,7 +26,7 @@ namespace UniTool.Utilities.Editor
                     disableMethod.Invoke(DefaultEditor, null);
                 DestroyImmediate(DefaultEditor);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // ignored
             }

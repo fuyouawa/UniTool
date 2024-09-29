@@ -59,11 +59,9 @@
     <Compile Include="EditorHelper.cs" />
     <Compile Include="ExtendEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\ResLoader.cs" />
+    <Compile Include="Resources\IconResManager.cs" />
+    <Compile Include="InternalReorderableList.cs" />
     <Compile Include="UniReorderableList.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\winbtn_win_max.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
