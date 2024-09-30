@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace UniTool.Utilities.Editor
+namespace UniTool.Editor.Utilities
 {
     public abstract class ExtendEditor : UnityEditor.Editor
     {

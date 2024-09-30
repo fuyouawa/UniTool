@@ -1,7 +1,7 @@
 using UniTool.Utilities;
 using UnityEditor;
 
-namespace UniTool.Editor.Extension
+namespace UniTool.Editor.Utilities
 {
     public static class EditorHelper
     {

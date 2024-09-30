@@ -7,8 +7,8 @@
     <ProjectGuid>{04F95CAE-AB75-4B7C-8898-807F599D1889}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UniTool.Utilities.Editor</RootNamespace>
-    <AssemblyName>UniTool.Utilities.Editor</AssemblyName>
+    <RootNamespace>UniTool.Editor.Utilities</RootNamespace>
+    <AssemblyName>UniTool.Editor.Utilities</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,6 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Sirenix.OdinInspector.Editor">
+      <HintPath>..\third-party\Sirenix.OdinInspector.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities">
+      <HintPath>..\third-party\Sirenix.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities.Editor">
+      <HintPath>..\third-party\Sirenix.Utilities.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,16 +61,22 @@
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>..\third-party\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\third-party\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddComponentWindowHelper.cs" />
-    <Compile Include="EditorGUIHelper.cs" />
-    <Compile Include="EditorHelper.cs" />
+    <Compile Include="Helper\EditorGUIHelper.cs" />
+    <Compile Include="Helper\EditorHelper.cs" />
     <Compile Include="ExtendEditor.cs" />
+    <Compile Include="Helper\OdinDrawerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\IconResManager.cs" />
-    <Compile Include="InternalReorderableList.cs" />
-    <Compile Include="UniReorderableList.cs" />
+    <Compile Include="ReorderableList\InternalReorderableList.cs" />
+    <Compile Include="ReorderableList\UniReorderableList.cs" />
+    <Compile Include="Utilities\FoldableObjectDrawer.cs" />
+    <Compile Include="Utilities\SelectorUtility.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -223,16 +223,6 @@ namespace UniTool.Tools
         // }
 
 #if UNITY_EDITOR
-        private string TitleLabel
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(Label))
-                    return "TODO";
-                return Label;
-            }
-        }
-
         private string _message;
         private string FeedbackHelpMessage
         {

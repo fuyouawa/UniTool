@@ -3,7 +3,7 @@ using Sirenix.OdinInspector.Editor.ValueResolvers;
 using Sirenix.Utilities.Editor;
 using UniTool.Attributes;
 using UniTool.Editor.Configs;
-using UniTool.Editor.Helper;
+using UniTool.Editor.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -47,7 +47,7 @@ namespace UniTool.Editor.Attributes
 
             if (valid)
             {
-                SirenixEditorGUIHelper.Title(
+                EditorGUIHelper.Title(
                     titleResolver.GetValue(),
                     subtitleResolver.GetValue(),
                     (TextAlignment)base.Attribute.TitleAlignment,

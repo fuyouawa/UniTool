@@ -1,39 +1,35 @@
-using System;
-using Sirenix.Utilities;
+using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities.Editor;
+using Sirenix.Utilities;
+using System;
+using UniTool.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace UniTool.Editor.Helper
+namespace UniTool.Editor.Utilities
 {
-    public static class SirenixEditorGUIHelper
+    public static class EditorGUIHelper
     {
-        // public static bool Foldout(Rect labelRect, bool isVisible, GUIContent label, out Rect valueRect,
-        //     GUIStyle style = null)
-        // {
-        //     valueRect = labelRect;
-        //     if (label == null)
-        //     {
-        //         label = new GUIContent(" ");
-        //         if (EditorGUIUtility.hierarchyMode)
-        //         {
-        //             labelRect.width = 2f;
-        //         }
-        //         else
-        //         {
-        //             labelRect.width = 18f;
-        //             valueRect.xMin += 18f;
-        //         }
-        //     }
-        //     else
-        //     {
-        //         float indent = GUIHelper.CurrentIndentAmount;
-        //         labelRect = new Rect(labelRect.x, labelRect.y, GUIHelper.BetterLabelWidth - indent, labelRect.height);
-        //         valueRect.xMin = labelRect.xMax;
-        //     }
-        //
-        //     return SirenixEditorGUI.Foldout(labelRect, isVisible, label);
-        // }
+        private static readonly GUIContent _text = new GUIContent();
+
+        public static GUIContent TempContent(string text)
+        {
+            _text.image = null;
+            _text.text = text;
+            _text.tooltip = null;
+            return _text;
+        }
+
+        public static bool HasKeyboardFocus(int controlID)
+        {
+            return (bool)typeof(EditorGUI).InvokeMethod("HasKeyboardFocus", null, controlID);
+        }
+
+        public static void EndEditingActiveTextField()
+        {
+            typeof(EditorGUI).InvokeMethod("EndEditingActiveTextField", null);
+        }
+        
         public static void Title(string title, string subtitle, TextAlignment textAlignment, bool horizontalLine, bool boldLabel, int fontSize, Font font)
         {
             //IL_0004: Unknown result type (might be due to invalid IL or missing references)
@@ -93,6 +89,37 @@ namespace UniTool.Editor.Helper
                 SirenixEditorGUI.DrawSolidRect(rect.AlignBottom(1f), SirenixGUIStyles.LightBorderColor);
                 GUILayout.Space(3f);
             }
+        }
+
+        public static void FoldoutProperty(string label, string rightLabel, InspectorProperty property, Action<Rect> onTitleBarGUI, Action onContentGUI)
+        {
+            SirenixEditorGUI.BeginBox();
+            SirenixEditorGUI.BeginBoxHeader();
+            var headerRect = EditorGUILayout.GetControlRect(false);
+
+            if (headerRect.position != Vector2.zero)
+            {
+                if (rightLabel.IsNotNullOrEmpty())
+                {
+                    var r = GUIHelper.TempContent(rightLabel);
+                    var s = SirenixGUIStyles.Label.CalcSize(r);
+                    EditorGUI.PrefixLabel(headerRect.AlignRight(s.x), r);
+                }
+
+                property.State.Expanded = SirenixEditorGUI.Foldout(headerRect, property.State.Expanded, GUIHelper.TempContent(label));
+
+                onTitleBarGUI?.Invoke(headerRect);
+            }
+
+            SirenixEditorGUI.EndBoxHeader();
+
+            if (SirenixEditorGUI.BeginFadeGroup(property, property.State.Expanded))
+            {
+                onContentGUI?.Invoke();
+            }
+
+            SirenixEditorGUI.EndFadeGroup();
+            SirenixEditorGUI.EndBox();
         }
     }
 }

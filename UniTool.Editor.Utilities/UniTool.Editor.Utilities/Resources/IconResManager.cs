@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UniTool.Utilities.Editor
+namespace UniTool.Editor.Utilities
 {
     internal static class IconResManager
     {

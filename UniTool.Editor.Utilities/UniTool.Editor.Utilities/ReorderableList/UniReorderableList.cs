@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace UniTool.Utilities.Editor
+namespace UniTool.Editor.Utilities
 {
     public enum UniReorderableListThemes
     {

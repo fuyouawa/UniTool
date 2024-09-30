@@ -4,7 +4,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace UniTool.Editor.Helper
+namespace UniTool.Editor.Utilities
 {
     public static class OdinDrawerHelper
     {

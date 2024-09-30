@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniTool.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace UniTool.Utilities.Editor
+namespace UniTool.Editor.Utilities
 {
     //TODO: better handling for serializedObjects with mixed values
     //TODO: make it not rely on GUILayout at all, so its safe to use under PropertyDrawers.

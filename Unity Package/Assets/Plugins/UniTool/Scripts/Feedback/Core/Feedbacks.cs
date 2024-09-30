@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Sirenix.OdinInspector;
+using Sirenix.OdinInspector.Editor;
+using UniTool.Editor.Utilities;
 using UniTool.Utilities;
 using UnityEngine;
 
@@ -11,16 +13,24 @@ namespace UniTool.Tools
 {
     public class Feedbacks : SerializedMonoBehaviour
     {
-        public enum InitializationModes { Awake, Start }
+        public enum InitializationModes
+        {
+            Awake,
+            Start
+        }
+
         [FoldoutGroup("Settings")]
         [Title("Initialization")]
         public InitializationModes InitializationMode = InitializationModes.Awake;
+
         [FoldoutGroup("Settings")]
         [Tooltip("确保Play前所有Feedbacks都初始化")]
         public bool AutoInitialization = true;
+
         [FoldoutGroup("Settings")]
         [Tooltip("在Start时自动Play一次")]
         public bool AutoPlayOnStart;
+
         [FoldoutGroup("Settings")]
         [Tooltip("在OnEnable时自动Play一次")]
         public bool AutoPlayOnEnable;
@@ -29,17 +39,19 @@ namespace UniTool.Tools
         [Title("Play Settings")]
         [Tooltip("是否可以Play")]
         public bool CanPlay = true;
+
         [FoldoutGroup("Settings")]
         [Tooltip("在当前Play还没结束时是否可以开始新的Play")]
         public bool CanPlayWhileAlreadyPlaying = true;
+
         [FoldoutGroup("Settings")]
         [ShowIf("CanPlayWhileAlreadyPlaying")]
         [Tooltip("在当前Play还没结束时, 如果有新的Play, 是否要结束当前Play")]
         public bool StopCurrentPlayIfNewPlay = true;
 
         [LabelText("Feedbacks")]
-        [ValueDropdown("GetAbstractFeedbackDropdown", CopyValues = true)]
-        [ListDrawerSettings(ShowIndexLabels = true, ListElementLabelName = "TitleLabel")]
+        [HideReferenceObjectPicker]
+        [ListDrawerSettings(CustomAddFunction = "OnAddFeedback")]
         public List<AbstractFeedback> FeedbackList = new List<AbstractFeedback>();
 
         public bool IsInitialized { get; private set; }
@@ -59,6 +71,7 @@ namespace UniTool.Tools
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -169,6 +182,7 @@ namespace UniTool.Tools
                     StopCoroutine(co);
                 }
             }
+
             _coroutines.Clear();
             foreach (var feedback in FeedbackList)
             {
@@ -261,8 +275,8 @@ namespace UniTool.Tools
                 item.OnSceneGUI();
             }
         }
+
         private static Type[] s_allFeedbackTypes;
-        private static ValueDropdownList<AbstractFeedback> s_allFeedbackDropdownItems;
 
         static Feedbacks()
         {
@@ -273,25 +287,16 @@ namespace UniTool.Tools
                 select t).ToArray();
         }
 
-        private IEnumerable GetAbstractFeedbackDropdown()
+        private void OnAddFeedback()
         {
-            if (s_allFeedbackDropdownItems == null)
-            {
-                s_allFeedbackDropdownItems = new ValueDropdownList<AbstractFeedback>();
-
-                foreach (var type in s_allFeedbackTypes)
-                {
-                    var inst = type.CreateInstance<AbstractFeedback>();
-                    Debug.Assert(inst != null, $"创建`{type.Name}`的实例失败");
-
-                    var attr = type.GetCustomAttribute<AddFeedbackMenuAttribute>();
-                    inst.Label = attr.Path.Split('/').Last();
-                    s_allFeedbackDropdownItems.Add($"{attr.Path}", inst);
-                }
-            }
-            return s_allFeedbackDropdownItems;
+            SelectorUtility.ShowPopup("", false, f => FeedbackList.Add(f.CreateInstance<AbstractFeedback>()),
+                f => f.GetCustomAttribute<AddFeedbackMenuAttribute>().Path,
+                s_allFeedbackTypes);
         }
 #endif
     }
-    public class FeedbacksCoroutineHelper : MonoBehaviour { }
+
+    public class FeedbacksCoroutineHelper : MonoBehaviour
+    {
+    }
 }

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
+using UniTool.Editor.Utilities;
 using UniTool.Utilities;
-using UniTool.Utilities.Editor;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;

@@ -1,7 +1,8 @@
 ﻿using System;
+using UniTool.Utilities;
 using UnityEngine;
 
-namespace UniTool.Utilities.Editor
+namespace UniTool.Editor.Utilities
 {
     public static class AddComponentWindowHelper
     {
