@@ -10,14 +10,12 @@ namespace UniTool.Utilities
 {
     internal class SingletonCreator
     {
-        public static T GetScriptableObjectSingleton<T>(string assetPath)
+        public static T GetScriptableObjectSingleton<T>(string assetPath, string assetName)
             where T : ScriptableObject, ISingleton
         {
-            string fileName = typeof(T).Name;
-
             if (!assetPath.Contains("/resources/", StringComparison.OrdinalIgnoreCase))
             {
-                throw new ArgumentException($"{fileName}的资源路径必须在Resources目录下！");
+                throw new ArgumentException($"{assetName}的资源路径必须在Resources目录下！");
             }
 
             string resourcesPath = assetPath;
@@ -27,15 +25,15 @@ namespace UniTool.Utilities
                 resourcesPath = resourcesPath.Substring(i + "/resources/".Length);
             }
 
-            var instance = Resources.Load<T>(resourcesPath + fileName);
+            var instance = Resources.Load<T>(resourcesPath + assetName);
 #if UNITY_EDITOR
-            
+
             if (!assetPath.StartsWith("Assets/"))
             {
                 assetPath = "Assets/" + assetPath;
             }
 
-            var assetFilePath = assetPath + fileName + ".asset";
+            var assetFilePath = assetPath + assetName + ".asset";
 
             if (instance == null)
             {
@@ -68,7 +66,7 @@ namespace UniTool.Utilities
                     Directory.CreateDirectory(new DirectoryInfo(assetPath).FullName);
                     AssetDatabase.Refresh();
                 }
-                
+
                 AssetDatabase.CreateAsset(instance, assetFilePath);
                 AssetDatabase.SaveAssets();
                 EditorUtility.SetDirty(instance);
@@ -95,14 +93,21 @@ namespace UniTool.Utilities
     [AttributeUsage(AttributeTargets.Class)]
     public class ScriptableObjectSingletonAssetPathAttribute : Attribute
     {
-        private readonly string _assetPath;
+        public string AssetPath;
 
-        public string AssetPath => _assetPath.Trim().TrimEnd('/', '\\').TrimStart('/', '\\')
-            .Replace('\\', '/') + "/";
+        public string AssetName;
+
+        public ScriptableObjectSingletonAssetPathAttribute(string assetPath, string assetName)
+        {
+            AssetPath = assetPath.Trim().TrimEnd('/', '\\').TrimStart('/', '\\')
+                .Replace('\\', '/') + "/";
+
+            AssetName = assetName;
+        }
 
         public ScriptableObjectSingletonAssetPathAttribute(string assetPath)
+            : this(assetPath, string.Empty)
         {
-            _assetPath = assetPath;
         }
     }
 
@@ -136,8 +141,12 @@ namespace UniTool.Utilities
             {
                 if (_instance == null)
                 {
-                    _instance = SingletonCreator.GetScriptableObjectSingleton<T>(AssetPathAttribute.AssetPath);
+                    _instance = SingletonCreator.GetScriptableObjectSingleton<T>(AssetPathAttribute.AssetPath,
+                        AssetPathAttribute.AssetName.IsNotNullOrEmpty()
+                            ? AssetPathAttribute.AssetName
+                            : typeof(T).Name);
                 }
+
                 return _instance;
             }
         }

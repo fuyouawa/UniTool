@@ -261,7 +261,7 @@ namespace UniTool.Tools
                 item.OnSceneGUI();
             }
         }
-        private static Dictionary<string, Type> s_allFeedbackTypes;
+        private static Type[] s_allFeedbackTypes;
         private static ValueDropdownList<AbstractFeedback> s_allFeedbackDropdownItems;
 
         static Feedbacks()
@@ -270,29 +270,24 @@ namespace UniTool.Tools
                 from t in Assembly.GetExecutingAssembly().GetTypes()
                 where typeof(AbstractFeedback).IsAssignableFrom(t) && !t.IsAbstract &&
                       t.HasCustomAttribute<AddFeedbackMenuAttribute>()
-                select t).ToDictionary(x => x.FullName, y => y);
-        }
-
-        public static void GenerateDropdownItem()
-        {
-            s_allFeedbackDropdownItems = new ValueDropdownList<AbstractFeedback>();
-
-            foreach (var kv in s_allFeedbackTypes)
-            {
-                var inst = kv.Value.CreateInstance<AbstractFeedback>();
-                Debug.Assert(inst != null, $"创建`{kv.Value.Name}`的实例失败");
-
-                var attr = kv.Value.GetCustomAttribute<AddFeedbackMenuAttribute>();
-                inst.Label = attr.Path.Split('/').Last();
-                s_allFeedbackDropdownItems.Add($"{attr.Path}", inst);
-            }
+                select t).ToArray();
         }
 
         private IEnumerable GetAbstractFeedbackDropdown()
         {
-            if (s_allFeedbackDropdownItems.IsNullOrEmpty())
+            if (s_allFeedbackDropdownItems == null)
             {
-                GenerateDropdownItem();
+                s_allFeedbackDropdownItems = new ValueDropdownList<AbstractFeedback>();
+
+                foreach (var type in s_allFeedbackTypes)
+                {
+                    var inst = type.CreateInstance<AbstractFeedback>();
+                    Debug.Assert(inst != null, $"创建`{type.Name}`的实例失败");
+
+                    var attr = type.GetCustomAttribute<AddFeedbackMenuAttribute>();
+                    inst.Label = attr.Path.Split('/').Last();
+                    s_allFeedbackDropdownItems.Add($"{attr.Path}", inst);
+                }
             }
             return s_allFeedbackDropdownItems;
         }
