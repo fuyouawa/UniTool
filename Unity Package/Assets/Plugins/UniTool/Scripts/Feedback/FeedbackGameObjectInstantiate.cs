@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using UniTool.Tools;
+using UniTool.Utilities;
 using UnityEngine;
 
 namespace UniTool.Tools
@@ -44,7 +45,7 @@ namespace UniTool.Tools
 
             if (HasLiftTime)
             {
-                inst.AddComponent<LifeTime>().Run(LiftTime);
+                inst.DestroyAfterSeconds(LiftTime);
             }
         }
 

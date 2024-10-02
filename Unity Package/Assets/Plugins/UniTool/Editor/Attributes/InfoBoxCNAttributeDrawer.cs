@@ -1,12 +1,9 @@
+[assembly: Sirenix.OdinInspector.Editor.Validation.RegisterValidator(typeof(UniTool.Attributes.Editor.InformationValidator))]
 
-
-
-[assembly: Sirenix.OdinInspector.Editor.Validation.RegisterValidator(typeof(UniTool.Editor.Attributes.InformationValidator))]
-
-namespace UniTool.Editor.Attributes
+namespace UniTool.Attributes.Editor
 {
-    using UniTool.Attributes;
-    using Helper;
+    using UniTool.Editor.Utilities;
+    using Attributes;
     using Sirenix.OdinInspector;
     using Sirenix.OdinInspector.Editor;
     using Sirenix.OdinInspector.Editor.Validation;

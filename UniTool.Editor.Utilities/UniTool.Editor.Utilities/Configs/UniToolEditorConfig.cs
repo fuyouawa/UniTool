@@ -1,17 +1,17 @@
 using Sirenix.OdinInspector;
-using UniTool.Utilities;
+using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace UniTool.Editor.Configs
+namespace UniTool.Editor.Utilities
 {
-    public class UniToolEditorConfigAssetPathAttribute : ScriptableObjectSingletonAssetPathAttribute
+    public class UniToolEditorConfigAssetPathAttribute : GlobalConfigAttribute
     {
         public UniToolEditorConfigAssetPathAttribute() : base(UniToolEditorAssetsPath.ConfigsPath) {}
     }
 
     [UniToolEditorConfigAssetPath]
-    public class UniToolEditorConfig : ScriptableObjectSingleton<UniToolEditorConfig>
+    public class UniToolEditorConfig : GlobalConfig<UniToolEditorConfig>
     {
         public Font Font =>
             AssetDatabase.LoadAssetAtPath<Font>(UniToolEditorAssetsPath.FontsPath+ "/" + FontAssetName);

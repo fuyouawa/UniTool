@@ -1,12 +1,11 @@
 using Sirenix.Utilities.Editor;
-using UniTool.Editor.Configs;
 using UnityEngine;
 
-namespace UniTool.Editor.Helper
+namespace UniTool.Editor.Utilities
 {
     public static class GUIStylesHelper
     {
-        public static GUIStyle InfoBoxCN => new(SirenixGUIStyles.MessageBox)
+        public static GUIStyle InfoBoxCN => new GUIStyle(SirenixGUIStyles.MessageBox)
         {
             font = UniToolEditorConfig.Instance.Font,
             fontSize = UniToolEditorConfig.Instance.InfoBoxFontSize,

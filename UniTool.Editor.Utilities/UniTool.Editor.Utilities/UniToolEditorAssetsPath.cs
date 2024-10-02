@@ -1,4 +1,4 @@
-namespace UniTool.Editor
+namespace UniTool.Editor.Utilities
 {
     public static class UniToolEditorAssetsPath
     {
@@ -8,7 +8,7 @@ namespace UniTool.Editor
 
         static UniToolEditorAssetsPath()
         {
-            ResPath = UniToolAssetPaths.PluginPath + "/Editor/Resources";
+            ResPath = "Assets/Plugins/UniTool/Editor/Resources";
             ConfigsPath = ResPath + "/Config";
             FontsPath = ResPath + "/Fonts";
         }

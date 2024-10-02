@@ -56,10 +56,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\UnityMainThreadDispatcher.cs" />
     <Compile Include="Event\EventManager.cs" />
+    <Compile Include="Extensions\AnimatorExtension.cs" />
+    <Compile Include="Extensions\AudioExtension.cs" />
     <Compile Include="Extensions\CollectionsExtension.cs" />
-    <Compile Include="Extensions\GameObjectExtension.cs" />
-    <Compile Include="Extensions\ComponentExtension.cs" />
+    <Compile Include="Extensions\TextureExtension.cs" />
     <Compile Include="Extensions\TransformExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Extensions\VectorIntExtension.cs" />

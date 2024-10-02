@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace UniTool.Utilities
 {
@@ -15,30 +17,34 @@ namespace UniTool.Utilities
             return component;
         }
 
-        public static bool HasParam(this Animator animator, string name)
+        public static void CallInNextFrame(this MonoBehaviour mono, Action callback)
         {
-            return animator.parameters.FirstOrDefault(x => x.name == name) != null;
+            mono.StartCoroutine(CallInNextFrameCo(callback));
         }
 
-        public static bool HasParam(this Animator animator, string name, AnimatorControllerParameterType typeCheck)
+        public static T GetOrAddComponent<T>(this Component component) where T : Component
         {
-            return animator.parameters.FirstOrDefault(x => x.name == name && x.type == typeCheck) != null;
+            return component.gameObject.GetOrAddComponent<T>();
         }
 
-        public static Sprite ToSprite(this Texture2D texture)
+        private static IEnumerator CallInNextFrameCo(Action callback)
         {
-            return Sprite.Create(
-                texture,
-                new Rect(0, 0, texture.width, texture.height),
-                new Vector2(0.5f, 0.5f));
+            yield return null;
+            callback();
         }
 
-        public static void PlayWithChildren(this AudioSource audio)
+        public static void DestroyAfterSeconds(this Object go, float seconds)
         {
-            foreach (var a in audio.GetComponentsInChildren<AudioSource>())
+            UnityInvoker.Invoke(DestroyAfterSecondsCo(go, seconds));
+        }
+
+        private static IEnumerator DestroyAfterSecondsCo(Object go, float seconds)
+        {
+            if (seconds > 0)
             {
-                a.Play();
+                yield return new WaitForSeconds(seconds);
             }
+            Object.Destroy(go);
         }
     }
 }

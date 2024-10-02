@@ -1,13 +1,11 @@
 using Sirenix.OdinInspector.Editor;
 using Sirenix.OdinInspector.Editor.ValueResolvers;
 using Sirenix.Utilities.Editor;
-using UniTool.Attributes;
-using UniTool.Editor.Configs;
 using UniTool.Editor.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace UniTool.Editor.Attributes
+namespace UniTool.Attributes.Editor
 {
     [DrawerPriority(1.0, 0.0, 0.0)]
     public class TitleCNAttributeDrawer : OdinAttributeDrawer<TitleCNAttribute>

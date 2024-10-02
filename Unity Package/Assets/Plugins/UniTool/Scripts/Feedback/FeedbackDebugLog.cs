@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using UniTool.Attributes;
+using UniTool.Utilities;
 using UnityEngine;
 
 namespace UniTool.Tools
@@ -10,7 +11,6 @@ namespace UniTool.Tools
     {
         [FoldoutGroup("Log")]
         public string Message;
-
 
         protected override void OnFeedbackPlay()
         {

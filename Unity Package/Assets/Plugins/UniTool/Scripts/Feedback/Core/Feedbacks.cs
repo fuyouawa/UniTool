@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor;
-using UniTool.Editor.Utilities;
 using UniTool.Utilities;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UniTool.Editor.Utilities;
+#endif
 
 namespace UniTool.Tools
 {
@@ -289,8 +291,8 @@ namespace UniTool.Tools
 
         private void OnAddFeedback()
         {
-            SelectorUtility.ShowPopup("", false, f => FeedbackList.Add(f.CreateInstance<AbstractFeedback>()),
-                f => f.GetCustomAttribute<AddFeedbackMenuAttribute>().Path,
+            SelectorUtility.ShowPopup("", false, t => FeedbackList.Add(t.CreateInstance<AbstractFeedback>()),
+                t => t.GetCustomAttribute<AddFeedbackMenuAttribute>().Path,
                 s_allFeedbackTypes);
         }
 #endif

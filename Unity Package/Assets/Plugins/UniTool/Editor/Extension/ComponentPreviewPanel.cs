@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace UniTool.Editor.Extension
+namespace UniTool.Extension.Editor
 {
     [CustomEditor(typeof(GameObject))]
     [CanEditMultipleObjects]
