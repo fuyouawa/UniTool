@@ -27,7 +27,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;UNITY_EDITOR</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -55,8 +55,9 @@
     <Reference Include="UniTool.Utilities">
       <HintPath>..\..\Unity Package\Assets\Plugins\UniTool\Assemblies\UniTool.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.CoreModule">
-      <HintPath>..\third-party\UnityEditor.CoreModule.dll</HintPath>
+    <Reference Include="UnityEditor.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\UniTool.Utilities\third-party\UnityEditor.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\third-party\UnityEngine.CoreModule.dll</HintPath>

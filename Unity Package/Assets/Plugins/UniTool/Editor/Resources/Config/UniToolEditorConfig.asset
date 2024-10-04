@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 601311928, guid: f5ea3a4eec5b5894390fd7febdcc2720, type: 3}
   m_Name: UniToolEditorConfig
   m_EditorClassIdentifier: 
-  FontAssetName: YaHeiMonacoHybrid.ttf
-  InfoBoxFontSize: 12
+  InfoBoxFontSize: 14
   InfoBoxMargin:
     m_Left: 4
     m_Right: 4
@@ -24,5 +23,5 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 4
     m_Bottom: 4
-  TitleFontSize: 12
-  BigTitleFontSize: 15
+  TitleFontSize: 13
+  BigTitleFontSize: 16

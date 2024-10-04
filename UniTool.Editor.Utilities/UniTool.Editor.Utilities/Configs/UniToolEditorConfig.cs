@@ -13,11 +13,6 @@ namespace UniTool.Editor.Utilities
     [UniToolEditorConfigAssetPath]
     public class UniToolEditorConfig : GlobalConfig<UniToolEditorConfig>
     {
-        public Font Font =>
-            AssetDatabase.LoadAssetAtPath<Font>(UniToolEditorAssetsPath.FontsPath+ "/" + FontAssetName);
-
-        public string FontAssetName;
-
         [FoldoutGroup("InfoBox Style")]
         [LabelText("Font Size")]
         public int InfoBoxFontSize;
@@ -27,6 +22,9 @@ namespace UniTool.Editor.Utilities
         [FoldoutGroup("InfoBox Style")]
         [LabelText("Padding")]
         public RectOffset InfoBoxPadding;
+        [FoldoutGroup("InfoBox Style")]
+        [LabelText("Font Style")]
+        public FontStyle InfoBoxFontStyle;
 
         [FoldoutGroup("Title Style")]
         public int TitleFontSize;

@@ -139,21 +139,10 @@ using UnityEngine;
 
         protected virtual void SetLightValues(float time)
         {
-            float normalizedTime = MathUtility.Remap(time, 0, Duration, 0, 1);
+            var intensity = IntensityCurve.EvaluateWithRemap(time, Duration, RemapIntensityZero, RemapIntensityOne);
+            var range = RangeCurve.EvaluateWithRemap(time, Duration, RemapRangeZero, RemapRangeOne);
 
-
-            var intensity = MathUtility.Remap(
-                IntensityCurve.Evaluate(normalizedTime),
-                0f, 1f,
-                RemapIntensityZero,
-                RemapIntensityOne);
-            var range = MathUtility.Remap(
-                RangeCurve.Evaluate(normalizedTime),
-                0f, 1f,
-                RemapRangeZero,
-                RemapRangeOne);
-
-            var color = ColorOverTime.Evaluate(normalizedTime);
+            var color = ColorOverTime.EvaluateWithRemap(time, Duration);
 
             if (RelativeValues)
             {

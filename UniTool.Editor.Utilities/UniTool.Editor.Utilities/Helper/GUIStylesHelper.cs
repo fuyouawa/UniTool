@@ -7,10 +7,10 @@ namespace UniTool.Editor.Utilities
     {
         public static GUIStyle InfoBoxCN => new GUIStyle(SirenixGUIStyles.MessageBox)
         {
-            font = UniToolEditorConfig.Instance.Font,
             fontSize = UniToolEditorConfig.Instance.InfoBoxFontSize,
             margin = UniToolEditorConfig.Instance.InfoBoxMargin,
-            padding = UniToolEditorConfig.Instance.InfoBoxPadding
+            padding = UniToolEditorConfig.Instance.InfoBoxPadding,
+            fontStyle = UniToolEditorConfig.Instance.InfoBoxFontStyle
         };
     }
 }

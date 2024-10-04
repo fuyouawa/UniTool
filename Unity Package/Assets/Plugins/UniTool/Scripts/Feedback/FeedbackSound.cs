@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UniTool.Attributes;
 
 namespace UniTool.Tools
 {
@@ -28,7 +29,7 @@ namespace UniTool.Tools
         public bool StopSoundOnFeedbackStop = true;
 
         [FoldoutGroup("Sound Properties")]
-        [Title("Volume")]
+        [TitleCN("Volume")]
         [Range(0f, 2f)]
         public float MinVolume = 1f;
         [FoldoutGroup("Sound Properties")]
@@ -36,7 +37,7 @@ namespace UniTool.Tools
         public float MaxVolume = 1f;
 
         [FoldoutGroup("Sound Properties")]
-        [Title("Pitch")]
+        [TitleCN("Pitch")]
         [Range(-3f, 3f)]
         public float MinPitch = 1f;
         [FoldoutGroup("Sound Properties")]
@@ -44,7 +45,7 @@ namespace UniTool.Tools
         public float MaxPitch = 1f;
 
         [FoldoutGroup("Sound Properties")]
-        [Title("Mixer")]
+        [TitleCN("Mixer")]
         public AudioMixerGroup SfxAudioMixerGroup;
         [FoldoutGroup("Sound Properties")]
         public int Priority = 128;

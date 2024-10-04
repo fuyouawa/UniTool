@@ -14,6 +14,25 @@ namespace UniTool.Utilities
             }
         }
 
+        public static bool HasDuplicate<T, E>(this IEnumerable<T> enumerator, Func<T, E> selector)
+        {
+            var set = new HashSet<E>();
+
+            foreach (var e in enumerator)
+            {
+                if (!set.Add(selector(e)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool HasDuplicate<T>(this IEnumerable<T> enumerator)
+        {
+            return enumerator.HasDuplicate(e => e);
+        }
+
         // public static int IndexOf<T>(this IEnumerable<T> enumerator, T value, int startIndex, int count)
         // {
         //     return Array.IndexOf(enumerator.ToArray(), value, startIndex, count);

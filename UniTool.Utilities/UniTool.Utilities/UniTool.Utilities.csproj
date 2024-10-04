@@ -61,6 +61,9 @@
     <Compile Include="Extensions\AnimatorExtension.cs" />
     <Compile Include="Extensions\AudioExtension.cs" />
     <Compile Include="Extensions\CollectionsExtension.cs" />
+    <Compile Include="Extensions\ComponentExtension.cs" />
+    <Compile Include="Extensions\CurveExtension.cs" />
+    <Compile Include="Extensions\MonoBehaviourExtension.cs" />
     <Compile Include="Extensions\TextureExtension.cs" />
     <Compile Include="Extensions\TransformExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Helper\AppDomainHelper.cs" />
     <Compile Include="Helper\GameObjectHelper.cs" />
     <Compile Include="Helper\Physics2DHelper.cs" />
+    <Compile Include="Helper\RandomHelper.cs" />
     <Compile Include="Helper\TransformHelper.cs" />
     <Compile Include="Helper\VectorHelper.cs" />
     <Compile Include="Helper\ColorHelper.cs" />
@@ -75,7 +79,7 @@
     <Compile Include="Extensions\LayerExtension.cs" />
     <Compile Include="Extensions\LinqExtension.cs" />
     <Compile Include="Extensions\ReflectExtension.cs" />
-    <Compile Include="Extensions\UnityExtension.cs" />
+    <Compile Include="Extensions\UnityObjectExtension.cs" />
     <Compile Include="Extensions\ValueExtension.cs" />
     <Compile Include="Extensions\VectorExtension.cs" />
     <Compile Include="Graphic\GizmosHelper.cs" />

@@ -10,7 +10,6 @@ namespace UniTool.Attributes.Editor
     public sealed class TitleGroupCNAttributeDrawer : OdinGroupDrawer<TitleGroupCNAttribute>
     {
         public ValueResolver<string> TitleHelper;
-
         public ValueResolver<string> SubtitleHelper;
 
         protected override void Initialize()
@@ -36,9 +35,7 @@ namespace UniTool.Attributes.Editor
                 SubtitleHelper.GetValue(),
                 (TextAlignment)attribute.Alignment,
                 attribute.HorizontalLine,
-                attribute.BoldTitle,
-                UniToolEditorConfig.Instance.TitleFontSize,
-                UniToolEditorConfig.Instance.Font);
+                attribute.BoldTitle);
 
             GUIHelper.PushIndentLevel(EditorGUI.indentLevel + (attribute.Indent ? 1 : 0));
             for (int i = 0; i < property.Children.Count; i++)

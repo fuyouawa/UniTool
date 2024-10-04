@@ -19,5 +19,15 @@ namespace UniTool.Utilities
             }
             return true;
         }
+
+        public static float GetSize(this Transform transform)
+        {
+            return transform.localScale.magnitude;
+        }
+
+        public static void SetSize(this Transform transform, float size)
+        {
+            transform.localScale = transform.localScale.normalized * size;
+        }
     }
 }

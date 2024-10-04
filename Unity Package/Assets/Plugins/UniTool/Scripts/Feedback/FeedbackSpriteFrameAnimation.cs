@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Sirenix.OdinInspector;
+using UniTool.Attributes;
 using UnityEngine;
 
 namespace UniTool.Tools
@@ -54,7 +55,7 @@ namespace UniTool.Tools
         public Frame[] Frames = Array.Empty<Frame>();
 
         [FoldoutGroup("Frames Settings")]
-        [Title("Default New Frame")]
+        [TitleCN("Default New Frame")]
         [LabelText("Delay Mode")]
         public DelayModes DefaultDelayMode;
 
@@ -69,7 +70,7 @@ namespace UniTool.Tools
         public float DefaultDelaySeconds = 0.1f;
 
         [FoldoutGroup("Frames Settings")]
-        [Title("Batch Modifying")]
+        [TitleCN("Batch Modifying")]
         public int BeginIndex;
         [FoldoutGroup("Frames Settings")]
         public int EndIndex;

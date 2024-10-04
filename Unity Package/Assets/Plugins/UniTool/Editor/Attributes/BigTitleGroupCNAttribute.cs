@@ -32,14 +32,12 @@ namespace UniTool.Attributes.Editor
                 EditorGUILayout.Space();
             }
 
-            EditorGUIHelper.Title(
+            EditorGUIHelper.BigTitle(
                 TitleHelper.GetValue(),
                 SubtitleHelper.GetValue(),
                 (TextAlignment)attribute.Alignment,
                 attribute.HorizontalLine,
-                attribute.BoldTitle,
-                UniToolEditorConfig.Instance.BigTitleFontSize,
-                UniToolEditorConfig.Instance.Font);
+                attribute.BoldTitle);
 
             GUIHelper.PushIndentLevel(EditorGUI.indentLevel + (attribute.Indent ? 1 : 0));
             for (int i = 0; i < property.Children.Count; i++)

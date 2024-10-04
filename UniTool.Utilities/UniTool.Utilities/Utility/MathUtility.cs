@@ -41,13 +41,21 @@ namespace UniTool.Utilities
         {
             return GetRandomPointInRotatedRectangle(rect.center, rect.size, angle);
         }
+        
 
-        public static Vector3 GetRandomPointInBox(Vector3 position, Vector3 size)
+        public static Vector3 GetRandomBetweenTwoVector2(Vector2 min, Vector2 max)
         {
             return new Vector3(
-                Random.Range(position.x, position.x + size.x),
-                Random.Range(position.y, position.y + size.y),
-                Random.Range(position.z, position.z + size.z));
+                Random.Range(min.x, max.x),
+                Random.Range(min.y, max.y));
+        }
+
+        public static Vector3 GetRandomBetweenTwoVector3(Vector3 min, Vector3 max)
+        {
+            return new Vector3(
+                Random.Range(min.x, max.x),
+                Random.Range(min.y, max.y),
+                Random.Range(min.z, max.z));
         }
 
         public static Vector2 GetRandomPointInRotatedRectangle(Vector2 center, Vector2 size, float angle)

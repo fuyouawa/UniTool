@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine.Audio;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UniTool.Attributes;
 
 namespace UniTool.Tools
 {
@@ -19,23 +20,23 @@ namespace UniTool.Tools
         public Modes Mode = Modes.Play;
 
         [FoldoutGroup("Audio Source")]
-        [Title("Random Sound")]
+        [TitleCN("Random Sound")]
         public AudioClip[] RandomSfx = Array.Empty<AudioClip>();
 
         [FoldoutGroup("Audio Settings")]
-        [Title("Volume")]
+        [TitleCN("Volume")]
         public float MinVolume = 1f;
         [FoldoutGroup("Audio Settings")]
         public float MaxVolume = 1f;
 
         [FoldoutGroup("Audio Settings")]
-        [Title("Pitch")]
+        [TitleCN("Pitch")]
         public float MinPitch = 1f;
         [FoldoutGroup("Audio Settings")]
         public float MaxPitch = 1f;
 
         [FoldoutGroup("Audio Settings")]
-        [Title("Mixer")]
+        [TitleCN("Mixer")]
         public AudioMixerGroup SfxAudioMixerGroup;
 
         private AudioClip _randomClip;

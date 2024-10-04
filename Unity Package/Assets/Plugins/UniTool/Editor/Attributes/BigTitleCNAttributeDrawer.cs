@@ -46,14 +46,12 @@ namespace UniTool.Attributes.Editor
 
             if (valid)
             {
-                EditorGUIHelper.Title(
+                EditorGUIHelper.BigTitle(
                     titleResolver.GetValue(),
                     subtitleResolver.GetValue(),
                     (TextAlignment)base.Attribute.TitleAlignment,
                     base.Attribute.HorizontalLine,
-                    base.Attribute.Bold,
-                    UniToolEditorConfig.Instance.BigTitleFontSize,
-                    UniToolEditorConfig.Instance.Font);
+                    base.Attribute.Bold);
             }
 
             CallNextDrawer(label);

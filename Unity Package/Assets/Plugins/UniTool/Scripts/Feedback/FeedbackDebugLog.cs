@@ -1,6 +1,4 @@
 using Sirenix.OdinInspector;
-using UniTool.Attributes;
-using UniTool.Utilities;
 using UnityEngine;
 
 namespace UniTool.Tools

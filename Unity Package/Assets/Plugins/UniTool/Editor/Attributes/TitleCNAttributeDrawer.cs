@@ -50,9 +50,7 @@ namespace UniTool.Attributes.Editor
                     subtitleResolver.GetValue(),
                     (TextAlignment)base.Attribute.TitleAlignment,
                     base.Attribute.HorizontalLine,
-                    base.Attribute.Bold,
-                    UniToolEditorConfig.Instance.TitleFontSize,
-                    UniToolEditorConfig.Instance.Font);
+                    base.Attribute.Bold);
             }
 
             CallNextDrawer(label);

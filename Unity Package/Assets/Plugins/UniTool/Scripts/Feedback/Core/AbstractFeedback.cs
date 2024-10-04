@@ -44,7 +44,7 @@ namespace UniTool.Tools
         public bool Enable = true;
 
         [FoldoutGroup("Feedback Settings")]
-        [Title("Time")]
+        [TitleCN("Time")]
         [Tooltip("在正式Play前经过多少时间的延迟(s)")]
         public float DelayBeforePlay;
         [FoldoutGroup("Feedback Settings")]
@@ -52,7 +52,7 @@ namespace UniTool.Tools
         public bool Blocking;
 
         [FoldoutGroup("Feedback Settings")]
-        [Title("Repeat")]
+        [TitleCN("Repeat")]
         [Tooltip("无限循环播放")]
         public bool RepeatForever = false;
         [FoldoutGroup("Feedback Settings")]
@@ -63,7 +63,7 @@ namespace UniTool.Tools
         public float DelayBetweenRepeats = 0f;
 
         [FoldoutGroup("Feedback Settings")]
-        [Title("Stop")]
+        [TitleCN("Stop")]
         public bool StopAfterDuration = true;
 
         public Feedbacks Owner { get; private set; }

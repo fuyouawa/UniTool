@@ -5,6 +5,7 @@ using System;
 using UniTool.Utilities;
 using UnityEditor;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace UniTool.Editor.Utilities
 {
@@ -28,6 +29,18 @@ namespace UniTool.Editor.Utilities
         public static void EndEditingActiveTextField()
         {
             typeof(EditorGUI).InvokeMethod("EndEditingActiveTextField", null);
+        }
+
+        public static void BigTitle(string title, string subtitle, TextAlignment textAlignment, bool horizontalLine,
+            bool boldLabel)
+        {
+            Title(title, subtitle, textAlignment, horizontalLine, boldLabel, UniToolEditorConfig.Instance.BigTitleFontSize, null);
+        }
+
+        public static void Title(string title, string subtitle, TextAlignment textAlignment, bool horizontalLine,
+            bool boldLabel)
+        {
+            Title(title, subtitle, textAlignment, horizontalLine, boldLabel, UniToolEditorConfig.Instance.TitleFontSize, null);
         }
         
         public static void Title(string title, string subtitle, TextAlignment textAlignment, bool horizontalLine, bool boldLabel, int fontSize, Font font)

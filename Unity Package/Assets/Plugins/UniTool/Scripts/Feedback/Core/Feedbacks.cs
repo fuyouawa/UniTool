@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Sirenix.OdinInspector;
+using UniTool.Attributes;
 using UniTool.Utilities;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace UniTool.Tools
         }
 
         [FoldoutGroup("Settings")]
-        [Title("Initialization")]
+        [TitleCN("Initialization")]
         public InitializationModes InitializationMode = InitializationModes.Awake;
 
         [FoldoutGroup("Settings")]
@@ -38,7 +39,7 @@ namespace UniTool.Tools
         public bool AutoPlayOnEnable;
 
         [FoldoutGroup("Settings")]
-        [Title("Play Settings")]
+        [TitleCN("Play Settings")]
         [Tooltip("是否可以Play")]
         public bool CanPlay = true;
 
