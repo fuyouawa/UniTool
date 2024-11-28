@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -8,6 +9,7 @@ using UnityEditor;
 
 namespace UniTool.Utilities
 {
+    [Serializable]
     public struct NoLabelVector2
     {
         public float X;
@@ -40,17 +42,16 @@ namespace UniTool.Utilities
     {
         protected override void DrawPropertyLayout(GUIContent label)
         {
-            Rect labelRect;
-            Rect contentRect = SirenixEditorGUI.BeginHorizontalPropertyLayout(label, out labelRect);
+            Rect contentRect = SirenixEditorGUI.BeginHorizontalPropertyLayout(label, out Rect labelRect);
             EditorGUI.BeginChangeCheck();
-            Vector4 val = SirenixEditorFields.VectorPrefixSlideRect(labelRect, base.ValueEntry.SmartValue.ToVec2());
+            Vector4 val = SirenixEditorFields.VectorPrefixSlideRect(labelRect, ValueEntry.SmartValue.ToVec2());
             if (EditorGUI.EndChangeCheck())
             {
-                base.ValueEntry.SmartValue = new NoLabelVector2(val.x, val.y);
+                ValueEntry.SmartValue = new NoLabelVector2(val.x, val.y);
             }
             GUIHelper.PushLabelWidth(SirenixEditorFields.SingleLetterStructLabelWidth);
-            base.Property.Children[0].Draw(null);
-            base.Property.Children[1].Draw(null);
+            Property.Children[0].Draw(null);
+            Property.Children[1].Draw(null);
             GUIHelper.PopLabelWidth();
             SirenixEditorGUI.EndHorizontalPropertyLayout();
         }

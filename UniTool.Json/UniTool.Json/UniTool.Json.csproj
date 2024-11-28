@@ -68,6 +68,6 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)..\Unity Package\Assets\Plugins\UniTool\Assemblies\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
