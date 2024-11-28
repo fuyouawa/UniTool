@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Linq;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace UniTool.Tools
 {
+    [Serializable]
     public abstract class MemberPicker
     {
         [HideLabel]
