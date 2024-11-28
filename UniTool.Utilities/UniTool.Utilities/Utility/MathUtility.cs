@@ -151,5 +151,12 @@ namespace UniTool.Utilities
 
             return new Vector2(center.x + x, center.y + y);
         }
+
+        public static Vector2 QuadraticBezierCurve(Vector2 startPoint, Vector2 endPoint, Vector2 controlPoint, float t)
+        {
+            return Mathf.Pow(1 - t, 2) * startPoint +
+                    2 * (1 - t) * t * controlPoint +
+                    Mathf.Pow(t, 2) * endPoint;
+        }
     }
 }

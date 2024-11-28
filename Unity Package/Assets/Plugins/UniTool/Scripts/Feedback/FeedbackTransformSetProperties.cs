@@ -14,25 +14,25 @@ namespace UniTool.Tools
         [FoldoutGroup("Set Parent")]
         public bool ModifyParent = true;
         [FoldoutGroup("Set Parent")]
-        [ShowIf("ModifyParent")]
+        [ShowIf(nameof(ModifyParent))]
         public Transform ParentToSet;
         [FoldoutGroup("Set Parent")]
-        [ShowIf("ModifyParent")]
+        [ShowIf(nameof(ModifyParent))]
         public bool WorldPositionStay = true;
 
         [FoldoutGroup("Set Transform")]
         public bool ModifyTransform = true;
         [FoldoutGroup("Set Transform")]
-        [ShowIf("ModifyTransform")]
+        [ShowIf(nameof(ModifyTransform))]
         public bool Local;
         [FoldoutGroup("Set Transform")]
-        [ShowIf("ModifyTransform")]
+        [ShowIf(nameof(ModifyTransform))]
         public Vector3 PositionToSet;
         [FoldoutGroup("Set Transform")]
-        [ShowIf("ModifyTransform")]
+        [ShowIf(nameof(ModifyTransform))]
         public Vector3 RotationToSet;
         [FoldoutGroup("Set Transform")]
-        [ShowIf("ModifyTransform")]
+        [ShowIf(nameof(ModifyTransform))]
         public Vector3 LocalScaleToSet;
 
         protected override void OnFeedbackPlay()

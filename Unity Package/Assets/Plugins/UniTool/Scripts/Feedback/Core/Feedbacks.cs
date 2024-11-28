@@ -48,7 +48,7 @@ namespace UniTool.Tools
         public bool CanPlayWhileAlreadyPlaying = true;
 
         [FoldoutGroup("Settings")]
-        [ShowIf("CanPlayWhileAlreadyPlaying")]
+        [ShowIf(nameof(CanPlayWhileAlreadyPlaying))]
         [Tooltip("在当前Play还没结束时, 如果有新的Play, 是否要结束当前Play")]
         public bool StopCurrentPlayIfNewPlay = true;
 

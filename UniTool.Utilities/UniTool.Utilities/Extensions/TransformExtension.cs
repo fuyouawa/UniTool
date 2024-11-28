@@ -29,5 +29,15 @@ namespace UniTool.Utilities
         {
             transform.localScale = transform.localScale.normalized * size;
         }
+
+        public static void SetPositionXY(this Transform transform, Vector3 position)
+        {
+            SetPositionXY(transform, position.ToVec2());
+        }
+
+        public static void SetPositionXY(this Transform transform, Vector2 position)
+        {
+            transform.position = position.ToVec3(transform.position.z);
+        }
     }
 }

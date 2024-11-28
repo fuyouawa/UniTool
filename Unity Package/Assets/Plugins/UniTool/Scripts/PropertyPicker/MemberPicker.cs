@@ -10,17 +10,18 @@ namespace UniTool.Utilities
     {
         [HideLabel]
         [HorizontalGroup("Picker")]
+        [OnValueChanged(nameof(OnTargetObjectChanged))]
         public GameObject TargetObject;
 
         [HideLabel]
         [HorizontalGroup("Picker")]
-        [ValueDropdown("GetTargetComponentNamesDropdown")]
-        [OnValueChanged("OnTargetComponentNameChanged")]
+        [ValueDropdown(nameof(GetTargetComponentNamesDropdown))]
+        [OnValueChanged(nameof(OnTargetComponentNameChanged))]
         public string TargetComponentName;
 
         [HideLabel]
-        [ValueDropdown("GetComponentMemberNamesDropdown")]
-        [OnValueChanged("OnTargetMemberNameChanged")]
+        [ValueDropdown(nameof(GetComponentMemberNamesDropdown))]
+        [OnValueChanged(nameof(OnTargetMemberNameChanged))]
         public string TargetMemberName = string.Empty;
 
         private Component _targetComponent;
@@ -71,7 +72,14 @@ namespace UniTool.Utilities
         protected virtual void OnTargetComponentNameChanged()
         {
             _targetComponent = null;
+            TargetMemberName = string.Empty;
             OnTargetMemberNameChanged();
+        }
+
+        protected virtual void OnTargetObjectChanged()
+        {
+            TargetComponentName = string.Empty;
+            OnTargetComponentNameChanged();
         }
 
         protected virtual void OnTargetMemberNameChanged()
@@ -84,10 +92,20 @@ namespace UniTool.Utilities
             var total = new ValueDropdownList<string>() { { "None", string.Empty } };
             if (TargetObject == null)
                 return total;
-            total.AddRange(
-                from c in TargetObject.GetComponents<Component>()
-                let n = c.GetType().Name
-                select new ValueDropdownItem<string>(n, n));
+            int missingCount = 1;
+            foreach (var comp in TargetObject.GetComponents<Component>())
+            {
+                if (comp == null)
+                {
+                    total.Add(new ValueDropdownItem<string>($"Missing<{missingCount}>", string.Empty));
+                    missingCount++;
+                }
+                else
+                {
+                    var n = comp.GetType().Name;
+                    total.Add(new ValueDropdownItem<string>(n, n));
+                }
+            }
             return total;
         }
 

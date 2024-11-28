@@ -12,19 +12,19 @@ namespace UniTool.Utilities
         }
 
         [LabelText("@Label")]
-        [ShowIf("IsInteger")]
+        [ShowIf(nameof(IsInteger))]
         public int IntegralValue;
         [LabelText("@Label")]
-        [ShowIf("IsFloat")]
+        [ShowIf(nameof(IsFloat))]
         public float FloatingPointValue;
         [LabelText("@Label")]
-        [ShowIf("IsBool")]
+        [ShowIf(nameof(IsBool))]
         public bool BooleanValue;
         [LabelText("@Label")]
-        [ShowIf("IsString")]
+        [ShowIf(nameof(IsString))]
         public string StringValue;
         [LabelText("@Label")]
-        [ShowIf("IsUnityObject")]
+        [ShowIf(nameof(IsUnityObject))]
         public UnityEngine.Object UnityObjectValue;
 
         public string Label { get; private set; }
