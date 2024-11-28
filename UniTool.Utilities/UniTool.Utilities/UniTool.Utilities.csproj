@@ -29,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\UniTool.Utilities.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -102,6 +103,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetFileName)"
+copy "$(TargetDir)\$(TargetName).xml" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetName).xml"
+copy "$(TargetDir)\$(TargetName).pdb" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetName).pdb"</PostBuildEvent>
   </PropertyGroup>
 </Project>

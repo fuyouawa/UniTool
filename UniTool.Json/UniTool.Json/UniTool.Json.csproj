@@ -29,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\UniTool.Json.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -68,6 +69,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetFileName)"
+copy "$(TargetDir)\$(TargetName).xml" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetName).xml"
+copy "$(TargetDir)\$(TargetName).pdb" "$(SolutionDir)..\Assets\Plugins\UniTool\Assemblies\$(TargetName).pdb"</PostBuildEvent>
   </PropertyGroup>
 </Project>
