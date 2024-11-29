@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TestReference:
-    _absolutePath: New Scene/2222/234345/45645645/GameObject (2)
+    _absolutePath: /New Scene/2222/234345
 --- !u!4 &1542541736
 Transform:
   m_ObjectHideFlags: 0

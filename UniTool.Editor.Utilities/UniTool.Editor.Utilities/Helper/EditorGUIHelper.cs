@@ -103,8 +103,8 @@ namespace UniTool.Editor.Utilities
                 GUILayout.Space(3f);
             }
         }
-
-        public static void FoldoutProperty(string label, string rightLabel, InspectorProperty property, Action<Rect> onTitleBarGUI, Action onContentGUI)
+        
+        public static bool FoldoutGroup(string label, bool expand, object key, string rightLabel = null, Action<Rect> onTitleBarGui = null, Action onContentGui = null)
         {
             SirenixEditorGUI.BeginBox();
             SirenixEditorGUI.BeginBoxHeader();
@@ -119,20 +119,27 @@ namespace UniTool.Editor.Utilities
                     EditorGUI.PrefixLabel(headerRect.AlignRight(s.x), r);
                 }
 
-                property.State.Expanded = SirenixEditorGUI.Foldout(headerRect, property.State.Expanded, GUIHelper.TempContent(label));
+                expand = SirenixEditorGUI.Foldout(headerRect, expand, GUIHelper.TempContent(label));
 
-                onTitleBarGUI?.Invoke(headerRect);
+                onTitleBarGui?.Invoke(headerRect);
             }
 
             SirenixEditorGUI.EndBoxHeader();
 
-            if (SirenixEditorGUI.BeginFadeGroup(property, property.State.Expanded))
+            if (SirenixEditorGUI.BeginFadeGroup(key, expand))
             {
-                onContentGUI?.Invoke();
+                onContentGui?.Invoke();
             }
 
             SirenixEditorGUI.EndFadeGroup();
             SirenixEditorGUI.EndBox();
+
+            return expand;
+        }
+
+        public static void FoldoutGroup(string label, InspectorProperty property, string rightLabel = null, Action<Rect> onTitleBarGui = null, Action onContentGui = null)
+        {
+            property.State.Expanded = FoldoutGroup(label, property.State.Expanded, property, rightLabel, onTitleBarGui, onContentGui);
         }
     }
 }

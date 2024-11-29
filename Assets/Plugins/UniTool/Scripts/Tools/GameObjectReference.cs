@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using UniTool.Utilities;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace UniTool.Tools
 {

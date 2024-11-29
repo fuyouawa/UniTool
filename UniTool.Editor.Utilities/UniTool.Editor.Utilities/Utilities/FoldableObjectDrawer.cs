@@ -7,7 +7,7 @@ namespace UniTool.Editor.Utilities
     {
         protected override void DrawPropertyLayout(GUIContent label)
         {
-            EditorGUIHelper.FoldoutProperty(GetLabel(label), GetRightLabel(label), Property, OnTitleBarGUI, OnContentGUI);
+            EditorGUIHelper.FoldoutGroup(GetLabel(label), Property, GetRightLabel(label), OnTitleBarGUI, OnContentGUI);
         }
 
         protected virtual string GetLabel(GUIContent label)

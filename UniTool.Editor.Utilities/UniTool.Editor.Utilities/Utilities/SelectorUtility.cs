@@ -14,7 +14,6 @@ namespace UniTool.Editor.Utilities
             params T[] collection)
         {
             var selector = new GenericSelector<T>(title, collection, supportsMultiSelect, getMenuItemName);
-
             selector.SelectionConfirmed += types =>
             {
                 var f = types.FirstOrDefault();
