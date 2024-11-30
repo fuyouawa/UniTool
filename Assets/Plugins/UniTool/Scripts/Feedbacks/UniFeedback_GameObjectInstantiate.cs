@@ -1,3 +1,4 @@
+using System.Collections;
 using Sirenix.OdinInspector;
 using UniTool.Tools;
 using UniTool.Utilities;
@@ -31,7 +32,7 @@ namespace UniTool.Feedbacks
 
         protected override void OnFeedbackPlay()
         {
-            var inst = GameObject.Instantiate(Prefab, Parent);
+            var inst = Object.Instantiate(Prefab, Parent);
             if (Relative != null)
             {
                 inst.transform.position = Relative.transform.position + Position;
@@ -43,10 +44,16 @@ namespace UniTool.Feedbacks
             }
             inst.transform.localScale = LocalScale;
 
-            if (HasLiftTime)
+            if (HasLiftTime && LiftTime > 0)
             {
-                inst.DestroyAfterSeconds(LiftTime);
+                StartCoroutine(DestroyCo(inst));
             }
+        }
+
+        private IEnumerator DestroyCo(GameObject inst)
+        {
+            yield return new WaitForSeconds(LiftTime);
+            Object.Destroy(inst);
         }
 
         protected override void OnFeedbackStop()

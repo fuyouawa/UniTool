@@ -19,7 +19,7 @@ namespace UniTool.Tools
 
         public GameObject DeRef()
         {
-            return GameObjectHelper.FindByAbsolutePath(_absolutePath);
+            return GameObjectUtility.FindByAbsolutePath(_absolutePath);
         }
     }
 }

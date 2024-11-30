@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UniTool.Utilities
 {
@@ -157,6 +157,15 @@ namespace UniTool.Utilities
             return Mathf.Pow(1 - t, 2) * startPoint +
                     2 * (1 - t) * t * controlPoint +
                     Mathf.Pow(t, 2) * endPoint;
+        }
+        
+        public static float Round(this float value, int decimals)
+        {
+            return (float)System.Math.Round(value, decimals);
+        }
+        public static float Round(this float value)
+        {
+            return (float)System.Math.Round(value);
         }
     }
 }

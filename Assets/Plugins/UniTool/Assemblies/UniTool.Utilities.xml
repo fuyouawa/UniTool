@@ -4,7 +4,17 @@
         <name>UniTool.Utilities</name>
     </assembly>
     <members>
-        <member name="M:UniTool.Utilities.CurveExtension.EvaluateWithRemap(UnityEngine.AnimationCurve,System.Single,System.Single)">
+        <member name="M:UniTool.Utilities.GradientExtension.EvaluateWithRemap(UnityEngine.Gradient,System.Single,System.Single)">
+            <summary>
+            <para>将给定的time从[0-maxTime]映射到[0-1]</para>
+            <para>然后传给Gradient.Evaluate</para>
+            </summary>
+            <param name="gradient"></param>
+            <param name="time"></param>
+            <param name="maxTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UniTool.Utilities.AnimationCurveExtension.EvaluateWithRemap(UnityEngine.AnimationCurve,System.Single,System.Single)">
             <summary>
             <para>将给定的time从[0-maxTime]映射到[0-1]</para>
             <para>然后传给AnimationCurve.Evaluate</para>
@@ -14,7 +24,7 @@
             <param name="maxTime"></param>
             <returns></returns>
         </member>
-        <member name="M:UniTool.Utilities.CurveExtension.EvaluateWithRemap(UnityEngine.AnimationCurve,System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:UniTool.Utilities.AnimationCurveExtension.EvaluateWithRemap(UnityEngine.AnimationCurve,System.Single,System.Single,System.Single,System.Single)">
             <summary>
             <para>将给定的time从[0-maxTime]映射到[0-1]</para>
             <para>然后传给AnimationCurve.Evaluate</para>
@@ -27,16 +37,6 @@
             <param name="minValue"></param>
             <param name="maxValue"></param>
             <returns>[minValue-maxValue]区间的数值</returns>
-        </member>
-        <member name="M:UniTool.Utilities.CurveExtension.EvaluateWithRemap(UnityEngine.Gradient,System.Single,System.Single)">
-            <summary>
-            <para>将给定的time从[0-maxTime]映射到[0-1]</para>
-            <para>然后传给Gradient.Evaluate</para>
-            </summary>
-            <param name="gradient"></param>
-            <param name="time"></param>
-            <param name="maxTime"></param>
-            <returns></returns>
         </member>
         <member name="M:UniTool.Utilities.MathUtility.Remap(System.Single,System.Single,System.Single,System.Single,System.Single)">
             <summary>

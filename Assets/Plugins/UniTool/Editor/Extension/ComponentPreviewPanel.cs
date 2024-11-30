@@ -66,7 +66,7 @@ namespace UniTool.Extension.Editor
                 _listDrawer.OnAddDropdownCallback += buttonRect =>
                 {
                     AddComponentWindowHelper.Show(
-                        new Rect(Screen.width / 2 - 230 / 2, buttonRect.y + BlockWidth, 230, 0),
+                        new Rect(Screen.width / 2f - 230f / 2f, buttonRect.y + BlockWidth, 230, 0),
                         _editor._targetItems.Select(i => i.Target).ToArray());
                 };
 

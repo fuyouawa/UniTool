@@ -27,7 +27,7 @@ namespace UniTool.Tools
 #if UNITY_EDITOR
         protected override bool MemberFilter(MemberInfo member)
         {
-            if (!ReflectionUtility.TryGetValueType(member, out var type))
+            if (!member.TryGetValueType(out var type))
                 return false;
             if (type == typeof(void))
                 return false;
@@ -49,7 +49,7 @@ namespace UniTool.Tools
 #if UNITY_EDITOR
         protected override bool MemberFilter(MemberInfo member)
         {
-            if (base.MemberFilter(member) && ReflectionUtility.TryGetValueType(member, out var type))
+            if (base.MemberFilter(member) && member.TryGetValueType(out var type))
             {
                 return type == typeof(TReturn);
             }

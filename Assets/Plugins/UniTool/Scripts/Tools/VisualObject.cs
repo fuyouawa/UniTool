@@ -61,7 +61,7 @@ namespace UniTool.Tools
         private string GetDefaultLabel()
         {
             var val = GetRawValue();
-            return $"`{TypeUtility.GetAliases(val.GetType())}`";
+            return $"`{val.GetType().GetAliases()}`";
         }
     }
 }

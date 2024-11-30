@@ -9,6 +9,7 @@ using UniTool.Utilities;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using GameObjectUtility = UniTool.Utilities.GameObjectUtility;
 
 namespace UniTool.Editor.Window
 {
@@ -154,7 +155,7 @@ namespace UniTool.Editor.Window
                     if (ValueEntry.SmartValue.Mode == ComponentSearcher.Modes.InScene)
                     {
                         var path = node.Value.GetAbsPath();
-                        var go = GameObjectHelper.FindByAbsolutePath(path);
+                        var go = GameObjectUtility.FindByAbsolutePath(path);
                         if (go != null)
                         {
                             using (new EditorGUI.DisabledScope(true))

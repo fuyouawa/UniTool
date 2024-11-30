@@ -52,7 +52,7 @@ namespace UniTool.Tools
             if (c == null)
                 return null;
             _targetMember = c.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(m => ReflectionUtility.GetSignature(m) == TargetMemberName);
+                .FirstOrDefault(m => m.GetSignature() == TargetMemberName);
 
             return _targetMember;
         }
@@ -126,7 +126,7 @@ namespace UniTool.Tools
                 .Where(MemberFilter)
                 .Select(m => new ValueDropdownItem<string>(
                     GetMemberValueDropdownName(m),
-                    ReflectionUtility.GetSignature(m))));
+                    m.GetSignature())));
             return total;
         }
 
@@ -140,7 +140,7 @@ namespace UniTool.Tools
             var name = $"{member.MemberType}/{member.Name}";
             if (member is MethodInfo m)
             {
-                name += $"({ReflectionUtility.GetMethodParametersSignature(m)})";
+                name += $"({m.GetMethodParametersSignature()})";
             }
             return name;
         }
