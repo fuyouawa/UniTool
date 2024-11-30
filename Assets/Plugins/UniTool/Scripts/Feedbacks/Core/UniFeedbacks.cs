@@ -52,7 +52,7 @@ namespace UniTool.Feedbacks
         [Tooltip("在当前Play还没结束时是否可以开始新的播放")]
         [LabelText("播放时是否可以继续播放")]
         public bool CanPlayWhileAlreadyPlaying = false;
-        
+
         [FoldoutGroup("设置")]
         [Tooltip("是否可以同时存在多个播放\n注意：Feedback的OnFeedbackStop只会在最后一个播放结束时调用")]
         [LabelText("是否可以多重播放")]
@@ -146,6 +146,7 @@ namespace UniTool.Feedbacks
                 if (!CanPlayWhileAlreadyPlaying)
                     return false;
             }
+
             return true;
         }
 
@@ -316,11 +317,12 @@ namespace UniTool.Feedbacks
 
         static UniFeedbacks()
         {
-            s_allFeedbackTypes = (
-                from t in Assembly.GetExecutingAssembly().GetTypes()
-                where typeof(AbstractUniFeedback).IsAssignableFrom(t) && !t.IsAbstract &&
-                      t.HasCustomAttribute<AddUniFeedbackMenuAttribute>()
-                select t).ToArray();
+            s_allFeedbackTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => t.IsSubclassOf(typeof(AbstractUniFeedback))
+                            && !t.IsAbstract
+                            && t.HasCustomAttribute<AddUniFeedbackMenuAttribute>())
+                .ToArray();
         }
 
         private void OnAddFeedback()
@@ -332,11 +334,19 @@ namespace UniTool.Feedbacks
                 {
                     inst.Initialize();
                 }
+
                 FeedbackList.Add(inst);
             }
-            SelectorUtility.ShowPopup("", false, OnConfirm,
-                t => t.GetCustomAttribute<AddUniFeedbackMenuAttribute>().Path,
-                s_allFeedbackTypes);
+
+            var opt = new PopupSelectorOptions()
+            {
+                MenuItemNameGetter = o =>
+                {
+                    var t = (Type)o;
+                    return t.GetCustomAttribute<AddUniFeedbackMenuAttribute>().Path;
+                }
+            };
+            UniEditorGUI.ShowSelectorInPopup(s_allFeedbackTypes, OnConfirm, opt);
         }
 #endif
     }

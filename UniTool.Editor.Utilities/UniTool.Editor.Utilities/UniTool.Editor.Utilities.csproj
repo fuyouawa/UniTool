@@ -73,10 +73,10 @@
   <ItemGroup>
     <Compile Include="AddComponentWindowHelper.cs" />
     <Compile Include="Configs\UniToolEditorConfig.cs" />
-    <Compile Include="Helper\EditorGUIHelper.cs" />
-    <Compile Include="Helper\EditorHelper.cs" />
+    <Compile Include="Utilities\UniEditorGUI.cs" />
+    <Compile Include="Utilities\UniEditorUtility.cs" />
     <Compile Include="ExtendEditor.cs" />
-    <Compile Include="Helper\GUIStylesHelper.cs" />
+    <Compile Include="Utilities\UniGUIStyles.cs" />
     <Compile Include="Helper\OdinDrawerHelper.cs" />
     <Compile Include="MenuItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,7 +85,6 @@
     <Compile Include="ReorderableList\UniReorderableList.cs" />
     <Compile Include="UniToolEditorAssetsPath.cs" />
     <Compile Include="Utilities\FoldableObjectDrawer.cs" />
-    <Compile Include="Utilities\SelectorUtility.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

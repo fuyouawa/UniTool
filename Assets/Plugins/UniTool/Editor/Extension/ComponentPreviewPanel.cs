@@ -77,7 +77,7 @@ namespace UniTool.Extension.Editor
                         InternalEditorUtility.SetIsInspectorExpanded(c, true);
                     }
 
-                    EditorHelper.ForceRebuildInspectors();
+                    UniEditorUtility.ForceRebuildInspectors();
                 };
 
                 _listDrawer.OnCollapseCallback += () =>
@@ -87,7 +87,7 @@ namespace UniTool.Extension.Editor
                         InternalEditorUtility.SetIsInspectorExpanded(c, false);
                     }
 
-                    EditorHelper.ForceRebuildInspectors();
+                    UniEditorUtility.ForceRebuildInspectors();
                 };
 
                 _listDrawer.DrawHeaderCallback += rect =>
@@ -328,7 +328,7 @@ namespace UniTool.Extension.Editor
                     foreach (var c in targetComponents)
                         InternalEditorUtility.SetIsInspectorExpanded(c, value);
 
-                    EditorHelper.ForceRebuildInspectors();
+                    UniEditorUtility.ForceRebuildInspectors();
                 }
             }
 

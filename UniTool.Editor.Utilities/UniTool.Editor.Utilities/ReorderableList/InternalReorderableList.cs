@@ -216,7 +216,7 @@ namespace UniTool.Editor.Utilities
             // draw the default header
             public void DrawHeader(Rect headerRect, SerializedObject serializedObject, SerializedProperty element, IList elementList)
             {
-                EditorGUI.LabelField(headerRect, EditorGUIHelper.TempContent((element != null) ? "Serialized Property" : "IList"));
+                EditorGUI.LabelField(headerRect, UniEditorGUI.TempContent((element != null) ? "Serialized Property" : "IList"));
             }
 
             // draw the default element background
@@ -240,7 +240,7 @@ namespace UniTool.Editor.Utilities
             // draw the default element
             public void DrawElement(Rect rect, SerializedProperty element, System.Object listItem, bool selected, bool focused, bool draggable)
             {
-                EditorGUI.LabelField(rect, EditorGUIHelper.TempContent((element != null) ? element.displayName : listItem.ToString()));
+                EditorGUI.LabelField(rect, UniEditorGUI.TempContent((element != null) ? element.displayName : listItem.ToString()));
             }
 
             // draw the default element
@@ -730,7 +730,7 @@ namespace UniTool.Editor.Utilities
                         break;
 
                     // clicking on the list should end editing any existing edits
-                    EditorGUIHelper.EndEditingActiveTextField();
+                    UniEditorGUI.EndEditingActiveTextField();
                     // pick the active element based on click position
                     m_ActiveElement = GetRowIndex(Event.current.mousePosition.y - listRect.y);
 
@@ -914,7 +914,7 @@ namespace UniTool.Editor.Utilities
 
         public bool HasKeyboardControl()
         {
-            return EditorGUIHelper.HasKeyboardFocus(id);
+            return UniEditorGUI.HasKeyboardFocus(id);
         }
     }
 }

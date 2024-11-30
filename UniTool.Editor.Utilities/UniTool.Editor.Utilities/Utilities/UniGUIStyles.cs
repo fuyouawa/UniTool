@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UniTool.Editor.Utilities
 {
-    public static class GUIStylesHelper
+    public static class UniGUIStyles
     {
         public static GUIStyle InfoBoxCN => new GUIStyle(SirenixGUIStyles.MessageBox)
         {

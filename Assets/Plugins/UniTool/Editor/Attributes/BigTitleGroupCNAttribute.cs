@@ -32,7 +32,7 @@ namespace UniTool.Attributes.Editor
                 EditorGUILayout.Space();
             }
 
-            EditorGUIHelper.BigTitle(
+            UniEditorGUI.BigTitle(
                 TitleHelper.GetValue(),
                 SubtitleHelper.GetValue(),
                 (TextAlignment)attribute.Alignment,

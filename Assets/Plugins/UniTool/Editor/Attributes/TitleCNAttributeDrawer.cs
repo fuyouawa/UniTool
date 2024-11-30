@@ -45,7 +45,7 @@ namespace UniTool.Attributes.Editor
 
             if (valid)
             {
-                EditorGUIHelper.Title(
+                UniEditorGUI.Title(
                     titleResolver.GetValue(),
                     subtitleResolver.GetValue(),
                     (TextAlignment)base.Attribute.TitleAlignment,

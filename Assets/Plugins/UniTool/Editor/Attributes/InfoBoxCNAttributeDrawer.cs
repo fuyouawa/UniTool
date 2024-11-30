@@ -90,7 +90,7 @@ namespace UniTool.Attributes.Editor
             if (_drawMessageBox)
             {
                 string value = _messageResolver.GetValue();
-                SirenixEditorGUI.MessageBox(value, _messageType, GUIStylesHelper.InfoBoxCN, true);
+                SirenixEditorGUI.MessageBox(value, _messageType, UniGUIStyles.InfoBoxCN, true);
             }
 
             if (base.Attribute.GUIAlwaysEnabled)

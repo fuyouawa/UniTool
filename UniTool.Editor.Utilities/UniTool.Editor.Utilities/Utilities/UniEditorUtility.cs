@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace UniTool.Editor.Utilities
 {
-    public static class EditorHelper
+    public static class UniEditorUtility
     {
         public static void ForceRebuildInspectors()
         {
