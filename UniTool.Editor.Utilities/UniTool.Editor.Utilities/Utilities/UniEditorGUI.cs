@@ -31,18 +31,33 @@ namespace UniTool.Editor.Utilities
         private static readonly GUIContent _text = new GUIContent();
         private static readonly GUIContent _text2 = new GUIContent();
 
-        public static GUIContent TempContent(string text)
+        public static GUIContent TempContent(string text, string tooltip = null)
         {
             _text.image = null;
             _text.text = text;
-            _text.tooltip = null;
+            _text.tooltip = tooltip;
             return _text;
         }
-        public static GUIContent TempContent2(string text)
+        public static GUIContent TempContent(Texture image, string text, string tooltip = null)
+        {
+            _text.image = image;
+            _text.text = text;
+            _text.tooltip = tooltip;
+            return _text;
+        }
+        
+        public static GUIContent TempContent2(string text, string tooltip = null)
         {
             _text2.image = null;
             _text2.text = text;
-            _text2.tooltip = null;
+            _text2.tooltip = tooltip;
+            return _text2;
+        }
+        public static GUIContent TempContent2(Texture image, string text, string tooltip = null)
+        {
+            _text2.image = image;
+            _text2.text = text;
+            _text2.tooltip = tooltip;
             return _text2;
         }
 

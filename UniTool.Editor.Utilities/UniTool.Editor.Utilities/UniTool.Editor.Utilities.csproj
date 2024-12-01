@@ -75,12 +75,12 @@
     <Compile Include="AddComponentWindowHelper.cs" />
     <Compile Include="Configs\UniToolEditorConfig.cs" />
     <Compile Include="Utilities\UniEditorGUI.cs" />
+    <Compile Include="Utilities\UniEditorIcons.cs" />
     <Compile Include="Utilities\UniEditorUtility.cs" />
     <Compile Include="ExtendEditor.cs" />
     <Compile Include="Utilities\UniGUIStyles.cs" />
     <Compile Include="Helper\OdinDrawerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\IconResManager.cs" />
     <Compile Include="ReorderableList\InternalReorderableList.cs" />
     <Compile Include="ReorderableList\UniReorderableList.cs" />
     <Compile Include="UniToolEditorAssetsPath.cs" />
