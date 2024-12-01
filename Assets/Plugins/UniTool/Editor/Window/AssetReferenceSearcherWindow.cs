@@ -1,20 +1,27 @@
-using System;
-using Sirenix.OdinInspector.Editor;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
+using Sirenix.OdinInspector.Editor;
 using System.Collections.Generic;
+using System;
 using System.Linq;
-using UniTool.Editor.Utilities;
 using UniTool.Utilities;
 using UnityEditor;
-using UnityEngine.SceneManagement;
 using UnityEngine;
-using GameObjectUtility = UniTool.Utilities.GameObjectUtility;
+using UniTool.Editor.Utilities;
+using Sirenix.Utilities.Editor;
+using UnityEngine.SceneManagement;
 
 namespace UniTool.Editor.Window
 {
-    public class ComponentSearcher
+    internal class AssetReferenceSearcherWindow : EditorWindow
     {
+        private static AssetReferenceSearcherWindow _instance;
+
+        [MenuItem("Tools/UniTool/资源引用查找器")]
+        public static void ShowWindow()
+        {
+            _instance = GetWindow<AssetReferenceSearcherWindow>("资源引用查找器");
+        }
+
         public enum Modes
         {
             [LabelText("在场景中搜索")]
@@ -25,11 +32,14 @@ namespace UniTool.Editor.Window
         }
 
         public Type TypeToSearch;
+
         [LabelText("模式")]
         public Modes Mode;
+
         public List<Component> Results = new List<Component>();
 
         public bool ShowError;
+        private bool _expandResults;
 
         public class ResultTreeNode
         {
@@ -44,6 +54,19 @@ namespace UniTool.Editor.Window
                 Expand = false;
                 Children = new Dictionary<string, ResultTreeNode>();
                 Parent = parent;
+            }
+
+            private GameObject _gameObject;
+
+            public GameObject GameObjectInScene()
+            {
+                if (_gameObject == null)
+                {
+                    var path = GetAbsPath();
+                    _gameObject = UniTool.Utilities.GameObjectUtility.FindByAbsolutePath(path);
+                }
+
+                return _gameObject;
             }
 
             public int CalcHierarchy()
@@ -68,6 +91,7 @@ namespace UniTool.Editor.Window
                     path = p.Name + "/" + path;
                     p = p.Parent;
                 }
+
                 return path;
             }
         }
@@ -123,11 +147,8 @@ namespace UniTool.Editor.Window
                 }
             }
         }
-    }
 
-    public class ComponentSearcherDrawer : OdinValueDrawer<ComponentSearcher>
-    {
-        void DrawResultTree(Dictionary<string, ComponentSearcher.ResultTreeNode> resultTree)
+        void DrawResultTree(Dictionary<string, ResultTreeNode> resultTree)
         {
             if (resultTree == null || resultTree.Count == 0)
                 return;
@@ -138,7 +159,7 @@ namespace UniTool.Editor.Window
             }
         }
 
-        void DrawResultTreeNode(KeyValuePair<string, ComponentSearcher.ResultTreeNode> node)
+        void DrawResultTreeNode(KeyValuePair<string, ResultTreeNode> node)
         {
             var off = node.Value.CalcHierarchy() * 10;
             var rect = EditorGUILayout.GetControlRect();
@@ -147,69 +168,101 @@ namespace UniTool.Editor.Window
 
             if (node.Value.Children.Count == 0)
             {
-                if (node.Value.Parent.Expand)
-                {
-                    rect.x += 5;
-                    rect.width -= 5;
+                rect.x += 5;
+                rect.width -= 5;
 
-                    if (ValueEntry.SmartValue.Mode == ComponentSearcher.Modes.InScene)
+                if (Mode == Modes.InScene)
+                {
+                    var go = node.Value.GameObjectInScene();
+                    if (go != null)
                     {
-                        var path = node.Value.GetAbsPath();
-                        var go = GameObjectUtility.FindByAbsolutePath(path);
-                        if (go != null)
+                        using (new EditorGUI.DisabledScope(true))
                         {
-                            using (new EditorGUI.DisabledScope(true))
-                            {
-                                EditorGUI.ObjectField(rect, go, typeof(GameObject), true);
-                            }
+                            EditorGUI.ObjectField(rect, go, typeof(GameObject), true);
                         }
-                        else
-                        {
-                            GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
-                            style.normal.textColor = style.onNormal.textColor = new Color32(209, 137, 24, 255);
-                            EditorGUI.LabelField(rect, "Missing GameObject!", style);
-                        }
+                    }
+                    else
+                    {
+                        GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
+                        style.normal.textColor = style.onNormal.textColor = new Color32(209, 137, 24, 255);
+                        EditorGUI.LabelField(rect, "Missing GameObject!", style);
                     }
                 }
             }
             else
             {
-                var options = new FoldoutGroupOptions()
+                var config = new FoldoutHeaderConfig(node.Key)
                 {
+                    Expand = node.Value.Expand,
                     HasBox = false,
-                    OnContentGUI = () => { DrawResultTree(node.Value.Children); }
+                    FoldoutRectGetter = () => rect
                 };
-                node.Value.Expand = UniEditorGUI.FoldoutGroup(rect, node.Key, node.Value.Expand, node, options);
+                node.Value.Expand = UniEditorGUI.FoldoutHeader(config);
+                if (SirenixEditorGUI.BeginFadeGroup(node, node.Value.Expand))
+                {
+                    DrawResultTree(node.Value.Children);
+                }
+                SirenixEditorGUI.EndFadeGroup();
             }
         }
 
-        protected override void DrawPropertyLayout(GUIContent label)
+        void OnEnable()
+        {
+            EditorApplication.update += UpdateWindow;
+        }
+
+        void OnDisable()
+        {
+            EditorApplication.update -= UpdateWindow;
+        }
+
+        void UpdateWindow()
+        {
+            Repaint();
+        }
+
+        void OnExpandResultTree(Dictionary<string, ResultTreeNode> tree, bool b)
+        {
+            if (tree == null || tree.Count == 0)
+                return;
+
+            foreach (var node in tree)
+            {
+                OnExpandResultTreeNode(node, b);
+            }
+        }
+
+        void OnExpandResultTreeNode(KeyValuePair<string, ResultTreeNode> node, bool b)
+        {
+            node.Value.Expand = b;
+            OnExpandResultTree(node.Value.Children, b);
+        }
+
+        private void OnGUI()
         {
             UniEditorGUI.Title("参数设置");
-            var val = ValueEntry.SmartValue;
-            if (val.ShowError)
+            if (ShowError)
             {
                 SirenixEditorGUI.ErrorMessageBox("无效类型");
             }
 
-            UniEditorGUI.DrawSelectorDropdown(
+            UniEditorGUI.DrawSelectorDropdown(new SelectorDropdownConfig<Type>(
                 "要查找的类型",
-                val.TypeToSearch == null ? "None" : val.TypeToSearch.FullName,
-                ComponentSearcher.AllComponentTypes,
-                t => { val.TypeToSearch = t; });
+                TypeToSearch == null ? "None" : TypeToSearch.FullName, AllComponentTypes,
+                t => { TypeToSearch = t; }));
 
-            Property.Children["Mode"].Draw();
+            Mode = EnumSelector<Modes>.DrawEnumField(new GUIContent("模式"), Mode);
 
             var btnRect = EditorGUILayout.GetControlRect(true, EditorGUIUtility.singleLineHeight + 2);
             if (SirenixEditorGUI.SDFIconButton(btnRect, "查找引用", SdfIconType.Search))
             {
-                val.Results.Clear();
+                Results.Clear();
 
-                var t = val.TypeToSearch;
-                val.ShowError = t == null;
+                var t = TypeToSearch;
+                ShowError = t == null;
                 if (t != null)
                 {
-                    if (val.Mode == ComponentSearcher.Modes.InScene)
+                    if (Mode == Modes.InScene)
                     {
                         for (int i = 0; i < SceneManager.sceneCount; i++)
                         {
@@ -218,20 +271,30 @@ namespace UniTool.Editor.Window
                             {
                                 foreach (var o in scene.GetRootGameObjects())
                                 {
-                                    val.Results.AddRange(o.GetComponentsInChildren(t));
+                                    Results.AddRange(o.GetComponentsInChildren(t));
                                 }
                             }
                         }
                     }
 
-                    val.GenerateResultTree();
+                    GenerateResultTree();
                 }
             }
 
-            SirenixEditorGUI.BeginBox("结果视图");
+            _expandResults = UniEditorGUI.WindowLikeToolbar(new WindowLikeToolbarConfig("结果视图")
+            {
+                Expand = _expandResults,
+                OnMaximize = () => OnExpandResultTree(ResultTree, true),
+                OnMinimize = () => OnExpandResultTree(ResultTree, false)
+            });
+            EditorGUILayout.Space(-3f);
+            SirenixEditorGUI.BeginBox();
 
-            DrawResultTree(val.ResultTree);
-
+            if (SirenixEditorGUI.BeginFadeGroup(this, _expandResults))
+            {
+                DrawResultTree(ResultTree);
+            }
+            SirenixEditorGUI.EndFadeGroup();
             SirenixEditorGUI.EndBox();
         }
     }

@@ -83,7 +83,7 @@ namespace UniTool.Editor.Utilities
                 {
                     using (new EditorGUI.DisabledScope(!CanAdd()))
                     {
-                        if (GUI.Button(rightBtnRect, UniEditorGUI.TempContent(UniEditorIcons.AddDropdown.image, "添加组件"), Styles.Footer))
+                        if (GUI.Button(rightBtnRect, new GUIContent(UniEditorIcons.AddDropdown.image, "添加组件"), Styles.Footer))
                         {
                             DoAddElement(rightBtnRect);
                         }
@@ -94,7 +94,7 @@ namespace UniTool.Editor.Utilities
 
                 if (DisplayCollapseButton)
                 {
-                    if (GUI.Button(rightBtnRect, UniEditorGUI.TempContent(UniEditorIcons.Collapse.image, "折叠所有"), Styles.Footer))
+                    if (GUI.Button(rightBtnRect, new GUIContent(UniEditorIcons.Collapse.image, "折叠所有"), Styles.Footer))
                     {
                         OnCollapseCallback?.Invoke();
                     }
@@ -104,7 +104,7 @@ namespace UniTool.Editor.Utilities
 
                 if (DisplayExpandButton)
                 {
-                    if (GUI.Button(rightBtnRect, UniEditorGUI.TempContent(UniEditorIcons.Expand.image, "展开所有"), Styles.Footer))
+                    if (GUI.Button(rightBtnRect, new GUIContent(UniEditorIcons.Expand.image, "展开所有"), Styles.Footer))
                     {
                         OnExpandCallback?.Invoke();
                     }
@@ -137,7 +137,7 @@ namespace UniTool.Editor.Utilities
 
                     using (new EditorGUI.DisabledScope(CanRemove(index)))
                     {
-                        if (GUI.Button(removeBtnRect, UniEditorGUI.TempContent(UniEditorIcons.Remove.image, "删除组件"), Styles.Footer))
+                        if (GUI.Button(removeBtnRect, new GUIContent(UniEditorIcons.Remove.image, "删除组件"), Styles.Footer))
                         {
                             DoRemoveElement(index);
                         }

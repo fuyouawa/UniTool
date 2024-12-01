@@ -216,7 +216,7 @@ namespace UniTool.Editor.Utilities
             // draw the default header
             public void DrawHeader(Rect headerRect, SerializedObject serializedObject, SerializedProperty element, IList elementList)
             {
-                EditorGUI.LabelField(headerRect, UniEditorGUI.TempContent((element != null) ? "Serialized Property" : "IList"));
+                EditorGUI.LabelField(headerRect, new GUIContent((element != null) ? "Serialized Property" : "IList"));
             }
 
             // draw the default element background
@@ -240,7 +240,7 @@ namespace UniTool.Editor.Utilities
             // draw the default element
             public void DrawElement(Rect rect, SerializedProperty element, System.Object listItem, bool selected, bool focused, bool draggable)
             {
-                EditorGUI.LabelField(rect, UniEditorGUI.TempContent((element != null) ? element.displayName : listItem.ToString()));
+                EditorGUI.LabelField(rect, new GUIContent((element != null) ? element.displayName : listItem.ToString()));
             }
 
             // draw the default element

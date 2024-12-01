@@ -338,15 +338,11 @@ namespace UniTool.Feedbacks
                 FeedbackList.Add(inst);
             }
 
-            var opt = new PopupSelectorOptions()
+            var config = new PopupSelectorConfig<Type>(s_allFeedbackTypes, OnConfirm)
             {
-                MenuItemNameGetter = o =>
-                {
-                    var t = (Type)o;
-                    return t.GetCustomAttribute<AddUniFeedbackMenuAttribute>().Path;
-                }
+                MenuItemNameGetter = t => t.GetCustomAttribute<AddUniFeedbackMenuAttribute>().Path
             };
-            UniEditorGUI.ShowSelectorInPopup(s_allFeedbackTypes, OnConfirm, opt);
+            UniEditorGUI.ShowSelectorInPopup(config);
         }
 #endif
     }
