@@ -1,5 +1,4 @@
 using Sirenix.OdinInspector.Editor;
-using Sirenix.Utilities.Editor;
 using UnityEngine;
 
 namespace UniTool.Editor.Utilities
@@ -8,23 +7,14 @@ namespace UniTool.Editor.Utilities
     {
         protected override void DrawPropertyLayout(GUIContent label)
         {
-            var config = new FoldoutHeaderConfig(GetLabel(label))
+            var config = new FoldoutGroupConfig(UniqueDrawerKey.Create(Property, this), GetLabel(label),
+                Property.State.Expanded)
             {
-                Expand = Property.State.Expanded,
-                RightLabel = new GUIContent(GetRightLabel(label))
+                OnTitleBarGUI = OnTitleBarGUI,
+                OnContentGUI = OnContentGUI
             };
 
-            SirenixEditorGUI.BeginBox();
-            Property.State.Expanded = UniEditorGUI.BeginFoldoutHeader(config, out var headerRect);
-            OnTitleBarGUI(headerRect);
-            UniEditorGUI.EndFoldoutHeader();
-
-            if (SirenixEditorGUI.BeginFadeGroup(UniqueDrawerKey.Create(Property, this), Property.State.Expanded))
-            {
-                OnContentGUI();
-            }
-            SirenixEditorGUI.EndFadeGroup();
-            SirenixEditorGUI.EndBox();
+            Property.State.Expanded = UniEditorGUI.FoldoutGroup(config);
         }
 
         protected virtual string GetLabel(GUIContent label)

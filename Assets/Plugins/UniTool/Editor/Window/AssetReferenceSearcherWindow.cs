@@ -278,24 +278,29 @@ namespace UniTool.Editor.Window
                     }
 
                     GenerateResultTree();
+
+                    _expandResults = true;
                 }
             }
 
-            _expandResults = UniEditorGUI.WindowLikeToolbar(new WindowLikeToolbarConfig("结果视图")
+            using (new EditorGUILayout.VerticalScope())
             {
-                Expand = _expandResults,
-                OnMaximize = () => OnExpandResultTree(ResultTree, true),
-                OnMinimize = () => OnExpandResultTree(ResultTree, false)
-            });
-            EditorGUILayout.Space(-3f);
-            SirenixEditorGUI.BeginBox();
-
-            if (SirenixEditorGUI.BeginFadeGroup(this, _expandResults))
-            {
-                DrawResultTree(ResultTree);
+                _expandResults = UniEditorGUI.WindowLikeToolbar(new WindowLikeToolbarConfig("结果视图")
+                {
+                    Expand = _expandResults,
+                    OnMaximize = () => OnExpandResultTree(ResultTree, true),
+                    OnMinimize = () => OnExpandResultTree(ResultTree, false),
+                    ShowFoldout = ResultTree.Count > 0
+                });
+                EditorGUILayout.Space(-2);
+                SirenixEditorGUI.BeginBox();
+                if (SirenixEditorGUI.BeginFadeGroup(this, _expandResults))
+                {
+                    DrawResultTree(ResultTree);
+                }
+                SirenixEditorGUI.EndFadeGroup();
+                SirenixEditorGUI.EndBox();
             }
-            SirenixEditorGUI.EndFadeGroup();
-            SirenixEditorGUI.EndBox();
         }
     }
 }
