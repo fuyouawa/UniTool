@@ -31,7 +31,7 @@ namespace UniTool.Feedbacks
     [Serializable]
     public abstract class AbstractUniFeedback
     {
-        [InfoBoxCN("@FeedbackHelpMessage", VisibleIf = nameof(VisibleFeedbackHelper))]
+        [InfoBoxCN("@FeedbackHelpMessage", VisibleIf = "VisibleFeedbackHelper")]
         [LabelText("标签")]
         public string Label;
         // public Color BarColor = Color.black;
@@ -54,7 +54,7 @@ namespace UniTool.Feedbacks
         [LabelText("无限重复")]
         public bool RepeatForever = false;
         [FoldoutGroup("Feedback设置")]
-        [HideIf(nameof(RepeatForever))]
+        [HideIf("RepeatForever")]
         [Tooltip("重复播放的次数")]
         [LabelText("重复次数")]
         public int AmountOfRepeat = 1;

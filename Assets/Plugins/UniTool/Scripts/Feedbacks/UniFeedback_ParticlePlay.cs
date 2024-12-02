@@ -16,7 +16,7 @@ namespace UniTool.Feedbacks
         public Modes Mode = Modes.Play;
 
         [FoldoutGroup("Bound Particles")]
-        [ShowIf(nameof(Mode), Modes.Emit)]
+        [ShowIf("Mode", Modes.Emit)]
         public int EmitCount = 100;
 
         [FoldoutGroup("Bound Particles")]
@@ -36,7 +36,7 @@ namespace UniTool.Feedbacks
         [FoldoutGroup("Simulation Speed")]
         public bool ForceSimulationSpeed = false;
         [FoldoutGroup("Simulation Speed")]
-        [ShowIf(nameof(ForceSimulationSpeed))]
+        [ShowIf("ForceSimulationSpeed")]
         public Vector2 ForcedSimulationSpeed = new(0.1f, 1f);
 
         private ParticleSystem.EmitParams _emitParams;

@@ -27,6 +27,8 @@ namespace UniTool.Editor.Extension
         public override void OnInspectorGUI()
         {
             _contents ??= new Contents();
+            
+            OnComponentViewPanelGUI();
 
             EditorGUILayout.LabelField("局部空间", EditorStyles.boldLabel);
             base.OnInspectorGUI();
@@ -60,7 +62,6 @@ namespace UniTool.Editor.Extension
             {
                 EditorGUILayout.Vector3Field(_contents.ScaleContent, v);
             }
-            OnComponentViewPanelGUI();
             // _expand = UniEditorGUI.WindowLikeToolGroup(new WindowLikeToolGroupConfig(this, "组件预览面板", _expand)
             // {
             //     OnContentGUI = () => OnComponentViewPanelGUI(Target),
@@ -241,7 +242,7 @@ namespace UniTool.Editor.Extension
             _targetItems = new List<TargetItem>();
             foreach (var o in targets)
             {
-                _targetItems.Add(new TargetItem(((Transform)o).gameObject, this));
+                _targetItems.Add(new TargetItem(o == null ? null : ((Transform)o).gameObject, this));
             }
         }
 

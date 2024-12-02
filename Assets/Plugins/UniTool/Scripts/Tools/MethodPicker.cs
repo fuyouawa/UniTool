@@ -11,7 +11,7 @@ namespace UniTool.Tools
     public class MethodPicker : MemberPicker
     {
         [PropertySpace(SpaceBefore = 4)]
-        [HideIf(nameof(HideParameters))]
+        [HideIf("HideParameters")]
         [ListDrawerSettings(IsReadOnly = true)]
         public List<VisualObject> Parameters = new List<VisualObject>();
 

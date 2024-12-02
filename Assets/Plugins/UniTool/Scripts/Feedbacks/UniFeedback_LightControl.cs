@@ -17,7 +17,7 @@ using UnityEngine;
         [FoldoutGroup("Light")]
         public Modes Mode = Modes.OverTime;
         [FoldoutGroup("Light")]
-        [HideIf(nameof(Mode), Modes.Instant)]
+        [HideIf("Mode", Modes.Instant)]
         public float Duration = 0.2f;
         [FoldoutGroup("Light")]
         public bool DisableOnStop = false;
@@ -29,40 +29,40 @@ using UnityEngine;
         [FoldoutGroup("Color")]
         public bool ModifyColor = true;
         [FoldoutGroup("Color")]
-        [ShowIf(nameof(Mode), Modes.OverTime)]
+        [ShowIf("Mode", Modes.OverTime)]
         public Gradient ColorOverTime;
         [FoldoutGroup("Color")]
-        [ShowIf(nameof(Mode), Modes.Instant)]
+        [ShowIf("Mode", Modes.Instant)]
         public Color InstantColor = Color.red;
 
         [FoldoutGroup("Intensity")]
         public bool ModifyIntensity = true;
         [FoldoutGroup("Intensity")]
-        [ShowIf(nameof(Mode), Modes.OverTime)]
+        [ShowIf("Mode", Modes.OverTime)]
         public AnimationCurve IntensityCurve = new(new Keyframe(0, 0), new Keyframe(0.3f, 1f), new Keyframe(1, 0));
         [FoldoutGroup("Intensity")]
-        [ShowIf(nameof(Mode), Modes.OverTime)]
+        [ShowIf("Mode", Modes.OverTime)]
         public float RemapIntensityZero = 0f;
         [FoldoutGroup("Intensity")]
-        [ShowIf(nameof(Mode), Modes.OverTime)]
+        [ShowIf("Mode", Modes.OverTime)]
         public float RemapIntensityOne = 1f;
         [FoldoutGroup("Intensity")]
-        [ShowIf(nameof(Mode), Modes.Instant)]
+        [ShowIf("Mode", Modes.Instant)]
         public float InstantIntensity = 1f;
 
         [FoldoutGroup("Range")]
         public bool ModifyRange = true;
         [FoldoutGroup("Range")]
-        [ShowIf(nameof(Mode), Modes.OverTime)]
+        [ShowIf("Mode", Modes.OverTime)]
         public AnimationCurve RangeCurve = new(new Keyframe(0, 0), new Keyframe(0.3f, 1f), new Keyframe(1, 0));
         [FoldoutGroup("Range")]
-        [ShowIf(nameof(Mode), Modes.OverTime)]
+        [ShowIf("Mode", Modes.OverTime)]
         public float RemapRangeZero = 0f;
         [FoldoutGroup("Range")]
-        [ShowIf(nameof(Mode), Modes.OverTime)]
+        [ShowIf("Mode", Modes.OverTime)]
         public float RemapRangeOne = 1f;
         [FoldoutGroup("Range")]
-        [ShowIf(nameof(Mode), Modes.Instant)]
+        [ShowIf("Mode", Modes.Instant)]
         public float InstantRange = 10f;
 
         protected float _initialRange;

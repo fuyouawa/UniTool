@@ -22,9 +22,9 @@ namespace UniTool.Feedbacks
 
             public Sprite Sprite;
             public DelayModes DelayMode;
-            [ShowIf(nameof(DelayMode), DelayModes.Frame)]
+            [ShowIf("DelayMode", DelayModes.Frame)]
             public int DelayFrames;
-            [ShowIf(nameof(DelayMode), DelayModes.Seconds)]
+            [ShowIf("DelayMode", DelayModes.Seconds)]
             public float DelaySeconds;
 
             public IEnumerator DelayCo()
@@ -60,12 +60,12 @@ namespace UniTool.Feedbacks
         public DelayModes DefaultDelayMode;
 
         [FoldoutGroup("Frames Settings")]
-        [ShowIf(nameof(DefaultDelayMode), DelayModes.Frame)]
+        [ShowIf("DefaultDelayMode", DelayModes.Frame)]
         [LabelText("Delay Frames")]
         public int DefaultDelayFrames = 6;
 
         [FoldoutGroup("Frames Settings")]
-        [ShowIf(nameof(DefaultDelayMode), DelayModes.Seconds)]
+        [ShowIf("DefaultDelayMode", DelayModes.Seconds)]
         [LabelText("Delay Seconds")]
         public float DefaultDelaySeconds = 0.1f;
 
@@ -79,11 +79,11 @@ namespace UniTool.Feedbacks
         public DelayModes DelayModeToModify;
 
         [FoldoutGroup("Frames Settings")]
-        [ShowIf(nameof(DelayModeToModify), DelayModes.Frame)]
+        [ShowIf("DelayModeToModify", DelayModes.Frame)]
         public int DelayFramesToModify = 6;
 
         [FoldoutGroup("Frames Settings")]
-        [ShowIf(nameof(DelayModeToModify), DelayModes.Seconds)]
+        [ShowIf("DelayModeToModify", DelayModes.Seconds)]
         public float DelaySecondsToModify = 0.1f;
 
         [FoldoutGroup("Frames Settings")]

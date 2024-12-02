@@ -23,7 +23,7 @@ namespace UniTool.Feedbacks
         [FoldoutGroup("Play Method")]
         public PlayMethods PlayMethod = PlayMethods.Cached;
         [FoldoutGroup("Play Method")]
-        [ShowIf(nameof(PlayMethod), PlayMethods.Pool)]
+        [ShowIf("PlayMethod", PlayMethods.Pool)]
         public int PoolSize = 10;
         [FoldoutGroup("Play Method")]
         public bool StopSoundOnFeedbackStop = true;
@@ -72,22 +72,22 @@ namespace UniTool.Feedbacks
         [FoldoutGroup("3D Sound Settings")]
         public bool UseCustomRolloffCurve = false;
         [FoldoutGroup("3D Sound Settings")]
-        [ShowIf(nameof(UseCustomRolloffCurve))]
+        [ShowIf("UseCustomRolloffCurve")]
         public AnimationCurve CustomRolloffCurve;
         [FoldoutGroup("3D Sound Settings")]
         public bool UseSpatialBlendCurve = false;
         [FoldoutGroup("3D Sound Settings")]
-        [ShowIf(nameof(UseSpatialBlendCurve))]
+        [ShowIf("UseSpatialBlendCurve")]
         public AnimationCurve SpatialBlendCurve;
         [FoldoutGroup("3D Sound Settings")]
         public bool UseReverbZoneMixCurve = false;
         [FoldoutGroup("3D Sound Settings")]
-        [ShowIf(nameof(UseReverbZoneMixCurve))]
+        [ShowIf("UseReverbZoneMixCurve")]
         public AnimationCurve ReverbZoneMixCurve;
         [FoldoutGroup("3D Sound Settings")]
         public bool UseSpreadCurve = false;
         [FoldoutGroup("3D Sound Settings")]
-        [ShowIf(nameof(UseSpreadCurve))]
+        [ShowIf("UseSpreadCurve")]
         public AnimationCurve SpreadCurve;
 
         private AudioClip _randomClip;

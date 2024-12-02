@@ -13,18 +13,18 @@ namespace UniTool.Tools
     {
         [HideLabel]
         [HorizontalGroup("Picker")]
-        [OnValueChanged(nameof(OnTargetObjectChanged))]
+        [OnValueChanged("OnTargetObjectChanged")]
         public GameObject TargetObject;
 
         [HideLabel]
         [HorizontalGroup("Picker")]
-        [ValueDropdown(nameof(GetTargetComponentNamesDropdown))]
-        [OnValueChanged(nameof(OnTargetComponentNameChanged))]
+        [ValueDropdown("GetTargetComponentNamesDropdown")]
+        [OnValueChanged("OnTargetComponentNameChanged")]
         public string TargetComponentName;
 
         [HideLabel]
-        [ValueDropdown(nameof(GetComponentMemberNamesDropdown))]
-        [OnValueChanged(nameof(OnTargetMemberNameChanged))]
+        [ValueDropdown("GetComponentMemberNamesDropdown")]
+        [OnValueChanged("OnTargetMemberNameChanged")]
         public string TargetMemberName = string.Empty;
 
         private Component _targetComponent;

@@ -56,7 +56,7 @@ namespace UniTool.Feedbacks
         [FoldoutGroup("设置")]
         [Tooltip("是否可以同时存在多个播放\n注意：Feedback的OnFeedbackStop只会在最后一个播放结束时调用")]
         [LabelText("是否可以多重播放")]
-        [ShowIf(nameof(CanPlayWhileAlreadyPlaying))]
+        [ShowIf("CanPlayWhileAlreadyPlaying")]
         public bool CanMultiPlay = false;
 
         [LabelText("反馈列表")]
@@ -285,7 +285,7 @@ namespace UniTool.Feedbacks
         private bool DisableTestInit => IsInitialized || !UnityEditor.EditorApplication.isPlaying;
 
         [ButtonGroup]
-        [DisableIf(nameof(DisableTestInit))]
+        [DisableIf("DisableTestInit")]
         private void TestInit()
         {
             Initialize();

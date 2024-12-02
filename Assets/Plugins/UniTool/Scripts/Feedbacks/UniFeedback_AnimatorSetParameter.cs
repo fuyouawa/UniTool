@@ -23,13 +23,13 @@ namespace UniTool.Feedbacks
         [FoldoutGroup("Set Parameter")]
         public ParameterTypes ParameterType;
         [FoldoutGroup("Set Parameter")]
-        [ShowIf(nameof(ParameterType), ParameterTypes.Int)]
+        [ShowIf("ParameterType", ParameterTypes.Int)]
         public int IntToSet;
         [FoldoutGroup("Set Parameter")]
-        [ShowIf(nameof(ParameterType), ParameterTypes.Float)]
+        [ShowIf("ParameterType", ParameterTypes.Float)]
         public float FloatToSet;
         [FoldoutGroup("Set Parameter")]
-        [ShowIf(nameof(ParameterType), ParameterTypes.Bool)]
+        [ShowIf("ParameterType", ParameterTypes.Bool)]
         public bool BoolToSet;
 
         private int _paramId;

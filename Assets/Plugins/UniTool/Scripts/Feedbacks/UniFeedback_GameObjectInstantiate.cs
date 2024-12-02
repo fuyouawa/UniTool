@@ -16,7 +16,7 @@ namespace UniTool.Feedbacks
         [FoldoutGroup("Instantiate")]
         public bool HasLiftTime;
         [FoldoutGroup("Instantiate")]
-        [ShowIf(nameof(HasLiftTime))]
+        [ShowIf("HasLiftTime")]
         public float LiftTime;
 
         [FoldoutGroup("Transform")]
