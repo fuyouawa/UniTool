@@ -14,6 +14,11 @@ namespace UniTool.Editor.Utilities
         protected virtual void OnEnable()
         {
             DefaultEditor = CreateEditor(targets, Type.GetType(EditorTypeName));
+            
+            var onEnable = DefaultEditor.GetType().GetMethod("OnEnable",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            onEnable?.Invoke(DefaultEditor, null);
         }
 
         protected virtual void OnDisable()
@@ -34,7 +39,14 @@ namespace UniTool.Editor.Utilities
 
         public override void OnInspectorGUI()
         {
-            DefaultEditor.OnInspectorGUI();
+            try
+            {
+                DefaultEditor.OnInspectorGUI();
+            }
+            catch (NullReferenceException e)    //TODO 可能是unity的bug，有时会有null异常
+            {
+                // ignored
+            }
         }
 
         protected override void OnHeaderGUI()

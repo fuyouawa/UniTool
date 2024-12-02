@@ -14,12 +14,12 @@ namespace UniTool.Utilities
         public Transform Parent;
         public Transform Target;
 
-        TransformRecorder(Transform target)
+        public TransformRecorder(Transform target)
         {
             Reset(target);
         }
 
-        void Reset(Transform target)
+        public void Reset(Transform target)
         {
             LocalPosition = target.localPosition;
             LocalRotation = target.localRotation;
@@ -28,7 +28,7 @@ namespace UniTool.Utilities
             Target = target;
         }
 
-        void Apply()
+        public void Restore()
         {
             Target.SetParent(Parent);
             Target.localPosition = LocalPosition;
