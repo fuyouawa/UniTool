@@ -87,4 +87,18 @@ namespace UniTool.Editor.Utilities
             DefaultEditor.OnInteractivePreviewGUI(r, background);
         }
     }
+
+    public abstract class ExtendEditor<T> : ExtendEditor where T : class
+    {
+        public T Target
+        {
+            get
+            {
+                var t = target as T;
+                if (t == null)
+                    throw new Exception("T is different from the type in the CustomEditor attribute");
+                return t;
+            }
+        }
+    }
 }

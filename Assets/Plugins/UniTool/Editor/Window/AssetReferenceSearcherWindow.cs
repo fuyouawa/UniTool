@@ -191,18 +191,26 @@ namespace UniTool.Editor.Window
             }
             else
             {
-                var config = new FoldoutHeaderConfig(node.Key)
+                // var config = new FoldoutHeaderConfig(node.Key)
+                // {
+                //     Expand = node.Value.Expand,
+                //     HasBox = false,
+                //     FoldoutRectGetter = () => rect
+                // };
+                // node.Value.Expand = UniEditorGUI.FoldoutHeader(config);
+                // if (SirenixEditorGUI.BeginFadeGroup(node, node.Value.Expand))
+                // {
+                //     DrawResultTree(node.Value.Children);
+                // }
+                // SirenixEditorGUI.EndFadeGroup();
+                
+                var config = new FoldoutGroupConfig(node, node.Key, node.Value.Expand)
                 {
-                    Expand = node.Value.Expand,
                     HasBox = false,
-                    FoldoutRectGetter = () => rect
+                    HeaderRectGetter = () => rect,
+                    OnContentGUI = () => DrawResultTree(node.Value.Children)
                 };
-                node.Value.Expand = UniEditorGUI.FoldoutHeader(config);
-                if (SirenixEditorGUI.BeginFadeGroup(node, node.Value.Expand))
-                {
-                    DrawResultTree(node.Value.Children);
-                }
-                SirenixEditorGUI.EndFadeGroup();
+                node.Value.Expand = UniEditorGUI.FoldoutGroup(config);
             }
         }
 
@@ -282,25 +290,15 @@ namespace UniTool.Editor.Window
                     _expandResults = true;
                 }
             }
-
-            using (new EditorGUILayout.VerticalScope())
+            
+            _expandResults = UniEditorGUI.WindowLikeToolGroup(new WindowLikeToolGroupConfig(this, "结果视图")
             {
-                _expandResults = UniEditorGUI.WindowLikeToolbar(new WindowLikeToolbarConfig("结果视图")
-                {
-                    Expand = _expandResults,
-                    OnMaximize = () => OnExpandResultTree(ResultTree, true),
-                    OnMinimize = () => OnExpandResultTree(ResultTree, false),
-                    ShowFoldout = ResultTree.Count > 0
-                });
-                EditorGUILayout.Space(-2);
-                SirenixEditorGUI.BeginBox();
-                if (SirenixEditorGUI.BeginFadeGroup(this, _expandResults))
-                {
-                    DrawResultTree(ResultTree);
-                }
-                SirenixEditorGUI.EndFadeGroup();
-                SirenixEditorGUI.EndBox();
-            }
+                Expand = _expandResults,
+                OnMaximize = () => OnExpandResultTree(ResultTree, true),
+                OnMinimize = () => OnExpandResultTree(ResultTree, false),
+                ShowFoldout = ResultTree.Count > 0,
+                OnContentGUI = () => DrawResultTree(ResultTree)
+            });
         }
     }
 }

@@ -7,6 +7,7 @@ using UniTool.Utilities;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
+using static Sirenix.OdinInspector.SelfValidationResult;
 
 namespace UniTool.Editor.Utilities
 {
@@ -14,7 +15,7 @@ namespace UniTool.Editor.Utilities
     {
         public GUIContent Label;
         public bool Expand;
-        public Func<Rect> FoldoutRectGetter = null;
+        public Func<Rect> HeaderRectGetter = null;
         public GUIContent RightLabel = GUIContent.none;
         public bool HasBox = true;
 
@@ -88,17 +89,19 @@ namespace UniTool.Editor.Utilities
     public class FoldoutToolbarConfig
     {
         public GUIContent Label;
-        public bool Expand = true;
+        public bool Expand;
         public bool ShowFoldout = true;
 
-        public FoldoutToolbarConfig(string label)
+        public FoldoutToolbarConfig(string label, bool expand = true)
         {
             Label = new GUIContent(label);
+            Expand = expand;
         }
 
-        public FoldoutToolbarConfig(GUIContent label)
+        public FoldoutToolbarConfig(GUIContent label, bool expand = true)
         {
             Label = label;
+            Expand = expand;
         }
     }
 
@@ -110,12 +113,29 @@ namespace UniTool.Editor.Utilities
         public string ExpandButtonTooltip = "展开所有";
         public string CollapseButtonTooltip = "折叠所有";
         
-        public WindowLikeToolbarConfig(string label) : base(label)
+        public WindowLikeToolbarConfig(string label, bool expand = true) : base(label, expand)
         {
         }
 
-        public WindowLikeToolbarConfig(GUIContent label) : base(label)
+        public WindowLikeToolbarConfig(GUIContent label, bool expand = true) : base(label, expand)
         {
+        }
+    }
+
+    public class WindowLikeToolGroupConfig : WindowLikeToolbarConfig
+    {
+        public object Key;
+        public Action<Rect> OnTitleBarGUI = null;
+        public Action OnContentGUI = null;
+
+        public WindowLikeToolGroupConfig(object key, string label, bool expand = true) : base(label, expand)
+        {
+            Key = key;
+        }
+
+        public WindowLikeToolGroupConfig(object key, GUIContent label, bool expand = true) : base(label, expand)
+        {
+            Key = key;
         }
     }
 
@@ -353,12 +373,12 @@ namespace UniTool.Editor.Utilities
             }
 
             config.Expand = BeginFoldoutHeader(config, out var headerRect);
-            config.OnTitleBarGUI(headerRect);
+            config.OnTitleBarGUI?.Invoke(headerRect);
             EndFoldoutHeader();
 
             if (SirenixEditorGUI.BeginFadeGroup(config.Key, config.Expand))
             {
-                config.OnContentGUI();
+                config.OnContentGUI?.Invoke();
             }
             SirenixEditorGUI.EndFadeGroup();
 
@@ -371,10 +391,10 @@ namespace UniTool.Editor.Utilities
 
         public static bool BeginFoldoutHeader(FoldoutHeaderConfig config)
         {
-            return BeginFoldoutHeader(config, out var rect);
+            return BeginFoldoutHeader(config, out _);
         }
 
-        public static bool BeginFoldoutHeader(FoldoutHeaderConfig config, out Rect foldoutRect)
+        public static bool BeginFoldoutHeader(FoldoutHeaderConfig config, out Rect headerRect)
         {
             PushContext(new FoldoutHeaderContext() { HasBox = config.HasBox });
             if (config.HasBox)
@@ -382,15 +402,15 @@ namespace UniTool.Editor.Utilities
                 SirenixEditorGUI.BeginBoxHeader();
             }
 
-            foldoutRect = config.FoldoutRectGetter == null ? EditorGUILayout.GetControlRect(false) : config.FoldoutRectGetter();
+            headerRect = config.HeaderRectGetter == null ? EditorGUILayout.GetControlRect(false) : config.HeaderRectGetter();
 
             if (config.RightLabel != null && config.RightLabel != GUIContent.none)
             {
                 var s = SirenixGUIStyles.Label.CalcSize(config.RightLabel);
-                EditorGUI.PrefixLabel(foldoutRect.AlignRight(s.x), config.RightLabel);
+                EditorGUI.PrefixLabel(headerRect.AlignRight(s.x), config.RightLabel);
             }
 
-            config.Expand = SirenixEditorGUI.Foldout(foldoutRect, config.Expand, config.Label);
+            config.Expand = SirenixEditorGUI.Foldout(headerRect, config.Expand, config.Label);
 
             return config.Expand;
         }
@@ -404,6 +424,27 @@ namespace UniTool.Editor.Utilities
             }
         }
 
+        public static bool WindowLikeToolGroup(WindowLikeToolGroupConfig config)
+        {
+            using (new EditorGUILayout.VerticalScope())
+            {
+                config.Expand = BeginWindowLikeToolbar(config, out var headerRect);
+                config.OnTitleBarGUI?.Invoke(headerRect);
+                EndWindowLikeToolbar();
+
+                EditorGUILayout.Space(-2);
+                SirenixEditorGUI.BeginBox();
+                if (SirenixEditorGUI.BeginFadeGroup(config.Key, config.Expand))
+                {
+                    config.OnContentGUI?.Invoke();
+                }
+                SirenixEditorGUI.EndFadeGroup();
+                SirenixEditorGUI.EndBox();
+            }
+
+            return config.Expand;
+        }
+
         public static bool WindowLikeToolbar(WindowLikeToolbarConfig config)
         {
             var e = BeginWindowLikeToolbar(config);
@@ -413,7 +454,12 @@ namespace UniTool.Editor.Utilities
 
         public static bool BeginWindowLikeToolbar(WindowLikeToolbarConfig config)
         {
-            var expand = BeginFoldoutToolbar(config);
+            return BeginWindowLikeToolbar(config, out _);
+        }
+
+        public static bool BeginWindowLikeToolbar(WindowLikeToolbarConfig config, out Rect headerRect)
+        {
+            var expand = BeginFoldoutToolbar(config, out headerRect);
 
             if (ToolbarButton(
                     TempContent(UniEditorIcons.Expand.image, tooltip: config.ExpandButtonTooltip),
@@ -423,7 +469,7 @@ namespace UniTool.Editor.Utilities
             }
 
             if (ToolbarButton(
-                    TempContent(UniEditorIcons.Collapse.image, tooltip: config.ExpandButtonTooltip),
+                    TempContent(UniEditorIcons.Collapse.image, tooltip: config.CollapseButtonTooltip),
                     SirenixEditorGUI.currentDrawingToolbarHeight))
             {
                 config.OnMinimize?.Invoke();
@@ -443,26 +489,31 @@ namespace UniTool.Editor.Utilities
             EndFoldoutToolbar();
             return e;
         }
-        
+
         public static bool BeginFoldoutToolbar(FoldoutToolbarConfig config)
         {
+            return BeginFoldoutToolbar(config, out _);
+        }
+
+        public static bool BeginFoldoutToolbar(FoldoutToolbarConfig config, out Rect headerRect)
+        {
             SirenixEditorGUI.BeginHorizontalToolbar();
-            
-            Rect foldoutRect = default;
+
             if (!config.ShowFoldout)
             {
                 GUILayout.Label(config.Label, GUILayoutOptions.ExpandWidth(expand: false));
+                headerRect = GUILayoutUtility.GetLastRect();
             }
             else
             {
                 float tmp = EditorGUIUtility.fieldWidth;
                 EditorGUIUtility.fieldWidth = 10f;
-                foldoutRect = EditorGUILayout.GetControlRect(false);
+                headerRect = EditorGUILayout.GetControlRect(false);
                 EditorGUIUtility.fieldWidth = tmp;
             }
             GUILayout.FlexibleSpace();
         
-            config.Expand = !config.ShowFoldout || SirenixEditorGUI.Foldout(foldoutRect, config.Expand, config.Label);
+            config.Expand = !config.ShowFoldout || SirenixEditorGUI.Foldout(headerRect, config.Expand, config.Label);
         
             return config.Expand;
         }
